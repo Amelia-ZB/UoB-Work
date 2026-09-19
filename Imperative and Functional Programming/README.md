@@ -2,11 +2,9 @@
 
 Notes & Practice for the Imperative & Functional Programming unit - COMS10016.
 
-> [!IMPORTANT]
+[unit guide](https://uob-coms10016.github.io/2026/)
 
-> [unit guide](https://uob-coms10016.github.io/2026/).
-
-> [Blackboard page](https://www.ole.bris.ac.uk/ultra/courses/_269189_1/outline)
+[Blackboard page](https://www.ole.bris.ac.uk/ultra/courses/_269189_1/outline)
 
 
 ## C

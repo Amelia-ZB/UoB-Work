@@ -2,9 +2,9 @@
 
 Notes & Practice for the Software Tools unit - COMS10012.
 
-> [!IMPORTANT]
-> [unit guide GitHub page](https://github.com/cs-uob/software-tools/).
-> [Blackboard page](https://www.ole.bris.ac.uk/ultra/courses/_269185_1/outline)
+[unit guide GitHub page](https://github.com/cs-uob/software-tools/)
+
+[Blackboard page](https://www.ole.bris.ac.uk/ultra/courses/_269185_1/outline)
 
 Learning in this unit is structured around hands-on exercises in the weekly lab
 session.  To support you in this, we give lectures and provide pre-reading that
