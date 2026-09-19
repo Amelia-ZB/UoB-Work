@@ -1,0 +1,13 @@
+#!/bin/bash
+mkdir animals
+mkdir animals/dogs
+mkdir animals/cats
+echo "I'm a coyote" > animals/coyotes
+echo "I'm a kitten - purr" > animals/kittens
+echo "I'm a monkey" > animals/monkeys
+echo "I'm a chimp" > animals/chimps
+echo "I'm a hyena" > animals/dogs/hyenas
+echo "I'm a dingo" > animals/dogs/dingoes
+echo "I'm a wolf" > animals/dogs/wolves
+echo "I'm a lion" > animals/cats/lions
+echo "I'm a tiger" > animals/cats/tigers

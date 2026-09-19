@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [[ -d auto && -z "$1" ]]; then
+	read -p 'Reset? [y/N]' -n 1 -r
+fi
+
+if [[ $REPLY =~ ^[yY]$  ||  ! -d auto ]]; then
+	rm -r auto
+	mkdir auto
+	cd auto
+
+	wget seis.bristol.ac.uk/~sh1670/make_tut
+	chmod a+x make_tut
+	./make_tut
+else
+	cd auto
+fi
+tree
+
+
+
+printf 'starting the actual excersise: \n'
+
+cd animals
+
+printf '\nls the cats directory:\n'
+ls cats
+
+printf '\nmore the lions file:\n'
+more cats/tigers
+
