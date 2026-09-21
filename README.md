@@ -1,4 +1,4 @@
-# UoB-Practice
+# UoB Work
 all work for the course to be put here
 
 > [!IMPORTANT]

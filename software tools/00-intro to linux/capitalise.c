@@ -5,7 +5,7 @@ int main(int argc, char **argv) {
 
 	while (*input != 0) {
 		if (*input >= 97 && *input <= 122) {
-			 *input -= 32;
+			*input -= 32;
 		}
 		putchar((char) *input);
 		input++;
