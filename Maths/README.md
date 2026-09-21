@@ -1,24 +1,24 @@
 # Overview
 
-> [unit webpage](https://cs-uob.github.io/COMS10014/materials.html)
+* [unit webpage](https://cs-uob.github.io/COMS10014/materials.html)
 
-> [course materials](https://uob.sharepoint.com/teams/MathematicsforComputerScien_a25ddc36-68d6-11f1-bf67-9d9551d49f9e/Class%20Materials/Forms/AllItems.aspx)
+* [course materials](https://uob.sharepoint.com/teams/MathematicsforComputerScien_a25ddc36-68d6-11f1-bf67-9d9551d49f9e/Class%20Materials/Forms/AllItems.aspx)
 
-> multiple - choice exam somewhere between 14-18 December
+* multiple - choice exam somewhere between 14-18 December
 
 ## topics
 
-> Logic & Proofs: wk1-4
+* Logic & Proofs: wk1-4
 
-> Sets, Functions, and Relations: wk5-8
+* Sets, Functions, and Relations: wk5-8
 
-> Probability: wk 9-?
+* Probability: wk 9-?
 
 # 00 - Intro
 
-> maths makes problem solving easier through abstraction
+* maths makes problem solving easier through abstraction
 
-> try to understand how problems are answered, not just what the answer is
+* try to understand how problems are answered, not just what the answer is
 
 # 01 - Booleans & Truth Tables
 
@@ -49,7 +49,7 @@ Negation - NOT $\neg$
 
 Implication - IF .. THEN .. $\Rightarrow$
 
-> for it to be false, condition met, but not the consequence
+* for it to be false, condition met, but not the consequence
 
 ### Vacuous Truths
 
@@ -84,7 +84,7 @@ $p \Rightarrow (q \Rightarrow r) \equiv (p \land q) \Rightarrow r$
 
 expressions can be written as trees. Nodes are operators and Leaves are variables.
 
-> Means that parenthases are not needed
+* Means that parenthases are not needed
 
 ## Functional Completeness
 

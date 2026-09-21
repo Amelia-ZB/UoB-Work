@@ -1,22 +1,19 @@
-# 01 - Introduction
+# 01.1 - Introduction
 
-> gcc not deterministic!
-
-> 5 hrs / week of programming practice self study + 5-6 in labs
+* gcc not deterministic!
+* 5 hrs / week of programming practice self study + 5-6 in labs
 
 
 ## resources
 
-> use provided unit tests for C
-
-> use sample / tutorial code for formative coursework
+* use provided unit tests for C
+* use sample / tutorial code for formative coursework
 
 
 ## exams
 
-> Sumative: 80% exam + 2x 10% mini coursework
-
-> coursework split in half: closed & open ended tasks
+* Sumative: 80% exam + 2x 10% mini coursework
+* coursework split in half: closed & open ended tasks
 
 
 ## what is C
@@ -39,7 +36,7 @@ int f(int x, int y) {
 }
 ```
 
-> think: what does it do / achieve?
+* think: what does it do / achieve?
 
 ### procedures
 
@@ -49,7 +46,7 @@ C is procedural; programs are made of procedures
 
 procedures _can_ take arguments and return a result
 
-> think: what is it doing to the state?
+* think: what is it doing to the state?
 
 ### examples:
 
@@ -98,3 +95,34 @@ while (!quit) {
 raise(SIGINT);
 } // does volatile influence execution, why?
 ```
+
+
+
+# 01.2 - Procedures & Programs
+
+Simplest possible program
+
+```C
+int main(void) {
+    return 0;
+}
+```
+
+build settings:
+```
+gcc -std=c11 -Wall *.c -o *.out && ./*.out
+```
+
+## compilation
+
+* syntack checked
+* semantics _not_ checked e.g. halting problem
+* compiled binaries are system specific
+
+### Libraries
+
+in a `#include` call putting angle brackets arround the library tell the compiler to look in the "standard place" (`/usr/include/`) and double quotes tell it to go to a specific path
+
+# 01.3 - Types, Variables, and Scope
+
+variadic functions have a _varied_ number of arguments
