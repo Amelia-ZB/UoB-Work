@@ -7,6 +7,21 @@ Notes & Practice for the Imperative & Functional Programming unit - COMS10016.
 [Blackboard page](https://www.ole.bris.ac.uk/ultra/courses/_269189_1/outline)
 
 
+## Notes
+
+### Languages
+
+> inperative -> oop & procedural programming
+
+> declarative -> logic & functional programming
+
+> programming is not just writing it; what you think about to solve it
+
+> in logical programming, there is no state
+
+> you can proove the correctness of an output by proving the steps
+
+
 ## C
 
 [wikibook](https://en.wikibooks.org/wiki/C_programming)
