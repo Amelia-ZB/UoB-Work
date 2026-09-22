@@ -51,6 +51,8 @@ Implication - IF .. THEN .. $\Rightarrow$
 
 * for it to be false, condition met, but not the consequence
 
+* Paren, Neg, conj, disj, impl 
+
 ### Vacuous Truths
 
 |$x$|$y$|$x \Rightarrow y$|
