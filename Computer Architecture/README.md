@@ -15,9 +15,7 @@
   - available now, but meant to start wk7
   - not just hardware oriented, e.g. how to write better software
 
-# 01 - propositional Logic & Boolean Algebra
-
-## propositional logic
+# 01.1 propositional logic
 
 propositions are basically statements e.g. 
 _"the temperature is 20°C"_
@@ -28,24 +26,29 @@ _"the temperature is 20°C"_
 4. can be represented using a short-hand variable or function: f = ... or g(x) = ...
 
 
-### Conectives can combine statements
+## Conectives can combine statements
 
-- not $\neg$ NOT
-- and $\land$ AND
-- inclusive or $\lor$ OR
-- exclusive or $\oplus$ XOR
+- NOT $\neg$
+- AND $\land$
+- NAND $\overline\land$ (universal / functionaly complete)
+- OR $\lor$
+- NOR $\overline\lor$ (universal / functionaly complete)
+<!-- - XOR $\oplus$ (derived)
+- XNOR $\overline\oplus$ (derived) -->
+
 - implication $\Rightarrow$
-- equivalence $\equiv$ XNOR
+- equivalence $\equiv$ (XNOR)
 
 
-### Data-flow Diagram
+
+## Data-flow Diagram
 
 very similar to the mathematical tree approach
 
 ![data-flow diagram](./images/data%20flow%20diagram.png)
 
 
-### Truth Tables
+## Truth Tables
 
 |$x$|$y$|$x \oplus y$|
 |-|-|-|
@@ -64,7 +67,7 @@ very similar to the mathematical tree approach
 
 
 
-## Boolean Algebra
+# 01.2 Boolean Algebra
 
 $x \lor \text{false} \equiv x$
 
@@ -74,7 +77,7 @@ AND, OR, NOT are _native_ operators
 
 XOR, NAND, NOR, XNOR are _derived_ operators
 
-### Rules
+## Rules
 
 1. $ \mathbb{B} = \{0, 1\} $
 2. shorten every statement to either a _variable_ or _function_
@@ -82,7 +85,7 @@ XOR, NAND, NOR, XNOR are _derived_ operators
 4. manimulate expressions according to axioms
 
 
-### New Truth Tables
+## New Truth Tables
 
 |$x$|$y$|$x \oplus y$|
 |-|-|-|
@@ -92,10 +95,40 @@ XOR, NAND, NOR, XNOR are _derived_ operators
 |1|1|0|
 
 
-### Axioms
+## Axioms
 
 ![axioms of boolean algebra](./images/axioms1.png)
 ![axioms of boolean algebra](./images/axioms2.png)
 ![axioms of boolean algebra](./images/axioms3.png)
 ![axioms of boolean algebra](./images/axioms4.png)
+
+## Practical Use-Cases
+
+- simplifying complex statements
+
+### Simplification methods
+
+**SoP:**
+- make minterms and $\lor$ together
+- disjunctive normal form
+
+**PoS**
+- make maxterms and $\land$ togeter
+- conjunctive normal form
+
+### Electronic Design AUtomation (EDA)
+
+- manipulation
+- translation
+- simulation
+- verification
+
+### truth tables
+
+- using 'don't care' values
+- don't care $\not=$ don't know
+
+- as an input it can remove rows in the table
+
+- as an output it can simplify other logic; help optimise
 
