@@ -2,6 +2,9 @@
 
 > functions are almost always pure
 
+> [!IMPORTANT]
+> run with `ghci *.hs`
+
 - functional programming is a paradigm
 - focus on applying, composing, manipulating, and functions
 
@@ -68,4 +71,43 @@ $ S = \{ x\cdot 2\ |\ x \in \mathbb N,\; x \leqslant 10 \}$
 $\equiv$
 
 $ S = \{ x\cdot 2\ |\ x \in \mathbb N,\; x \leqslant 10\ \land x\cdot 2 \geqslant 12\}$
+
+## evaluating functions
+
+- **taken directly from lambda calculus**
+    - sub the value in for every instance of the variable
+
+## functions
+
+- **church turing thesis -> turing machines**
+- **church invented lambda calculus**
+
+- lambdas are nameless function
+
+```hs
+f = \y -> y * 10
+
+>>> f 2
+--> (\y -> y * 10) 2
+--> {y = 2} (2 * 10)
+--> 20
+```
+
+you can nest lambdas to have multiple inputs
+```hs
+add = \x -> (\y -> x + y)
+
+-- >>> add 4 5
+-- 9
+```
+
+Haskell has some syntactic sugar to make it more readable than pure lambda calculus
+```hs
+add = \x y -> x + y
+```
+or even better
+
+```hs
+add x y = x + y
+```
 

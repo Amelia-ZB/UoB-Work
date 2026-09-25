@@ -116,13 +116,32 @@ gcc -std=c11 -Wall *.c -o *.out && ./*.out
 ## compilation
 
 - syntack checked
-- semantics _not_ checked e.g. halting problem
+- semantics _not_ checked, it is impossible; halting problem
 - compiled binaries are system specific
 
 ### Libraries
 
 in a `#include` call putting angle brackets arround the library tell the compiler to look in the "standard place" (`/usr/include/`) and double quotes tell it to go to a specific path
 
-# 01.3 - Types, Variables, and Scope
+## 01.3 - Types, Variables, and Scope
 
 variadic functions have a _varied_ number of arguments
+
+- variables are not initialised to 0
+- strongly typed
+
+- a **platform** is a combination of processor, OS, dirvers, libraries, compiler, runtime, versions, and settings. This is the environment
+    - this is why contanerisation is usefull, it abstracts away the environment
+
+### Types
+
+- the properties of each type may differ on different platforms
+    - int is _usualy_ 32 bits
+    - long is _usualy_ 64 bits
+
+## Input
+
+```C
+int length
+scanf("%d", &length)
+```
