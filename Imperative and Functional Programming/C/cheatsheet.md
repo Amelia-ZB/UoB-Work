@@ -18,6 +18,22 @@
 |n|	Nothing printed. The corresponding argument must be a pointer to a signed int. The number of characters written so far is stored in the pointed location.|
 |%|	A % followed by another % character will write a single % to the stream.	|%
 
+# Operator Precedence
+
+# Arithmetic types
+
+type|size|format
+-|-|-
+char|>=8|%c
+short|>=16|%hd
+int|>=16 (usualy 32)|%d
+long|>=32|%ld
+long long|>=64|%lld
+|||
+float||%f
+double||%lf
+long double||%Lf
+
 # ANSI Escape Codes
 
 text effects: `\033[nm`

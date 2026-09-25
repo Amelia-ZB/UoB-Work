@@ -7,6 +7,7 @@
             "command": "/usr/bin/clang",
             "args": [
                 "-fdiagnostics-color=always",
+                "-std=c23",
                 "-g",                     // Required: Generates debug symbols
                 "${file}",                // Compiles the currently active C file
                 "-o",
