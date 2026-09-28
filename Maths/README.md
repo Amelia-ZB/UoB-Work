@@ -146,9 +146,9 @@ $\Phi \land \Phi \equiv \Phi \quad \Phi \lor \Phi \equiv \Phi$
 > [!NOTE]
 > All expressions are _either_ true or false. $\\ \Phi \lor \neg \Phi \equiv \top$ and $\Phi \land \neg \Phi \equiv \bot$ and $\neg \neg \Phi \equiv \Phi$
 
-- **Tautology**
+- **Tautology** (Valid)
     - A proposition that is always true i.e. $\Phi \equiv \top$
-    - Valid $x > 0 \Rightarrow x > -100$
+    - $x > 0 \Rightarrow x > -100$
 
 - **Invalid**
     - not always true i.e. $\Phi \not\equiv \top$
@@ -171,3 +171,79 @@ $\neg(\Phi \lor \Psi) \equiv \neg\Phi \land \neg\Psi$
 ## Implication!?
 
 $p \Rightarrow (q \Rightarrow r) \equiv (p \land q) \Rightarrow r$
+
+
+# 02.1 - Natural Deduction
+
+$P \Rightarrow P$ - tautology
+
+
+$x>0 \Rightarrow x>-1$ - tautology.
+But it has infinite cases
+
+$\sqrt 2$ cannot be expressed as a fraction
+
+**Proof ≈ a way of demonstrating truth**
+- follow proof steps to move from what is know to what is proven
+
+> [!IMPORTANT]
+> dont start with the goal, work towards it
+
+## Formal Proofs
+
+- natural deduction
+    - within a true formual there is some evidence
+    - propositions as evidence for their own truth
+    - proof ≈ providing evidence
+
+1. introduction
+    - constructs evidence
+        - assume something, which then implies something else
+2. elimination
+    - uses / extracts evidence from an assumption or proven statement
+
+### Example
+
+with have meaning proven or assumed true
+
+$\Phi \Rightarrow \Psi$
+
+# Implication
+
+Introcucion:
+- to prove, assume $\Phi$ is true, then prove $\Psi$
+
+Elimination:
+- if we have $\Phi \Rightarrow \Psi\\$ and we have $\Phi\\$ then $\Psi$.
+
+### Example
+
+<!-- Goal: $((p \Rightarrow p) \Rightarrow q) \Rightarrow q$
+
+1. assume $(p \Rightarrow p) \Rightarrow q\\$ goal: $q$
+
+goal: $p \Rightarrow p\\$
+
+3. assume: $p\\$ goal: p
+
+4. conclusion: $p \Rightarrow p\\$
+
+steps 1 + 4 = Implication Elimination -->
+
+![](./images/proof%20example%201.png)
+
+indentation shows the scope of each assumption
+
+## Conjunction
+Introduction rule:
+- to prove $\Phi \land \Psi$ we must prove $\Phi$ and $\Psi$ independantly
+
+Elimination rule
+- if we have $\Phi \land \Psi$
+    - we may conlude $\Phi$ and $\Psi$
+
+### example
+
+![](./images/proof%20example%202.png)
+![](./images/proof%20example%203.png)
+
