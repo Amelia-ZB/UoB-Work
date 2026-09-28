@@ -1,4 +1,4 @@
-# 01.1 - Introduction
+# 00.1 - Introduction
 
 - gcc not deterministic!
 - 5 hrs / week of programming practice self study + 5-6 in labs
@@ -98,7 +98,7 @@ raise(SIGINT);
 
 
 
-# 01.2 - Procedures & Programs
+# 01.1 - Procedures & Programs
 
 Simplest possible program
 
@@ -123,7 +123,7 @@ gcc -std=c11 -Wall *.c -o *.out && ./*.out
 
 in a `#include` call putting angle brackets arround the library tell the compiler to look in the "standard place" (`/usr/include/`) and double quotes tell it to go to a specific path
 
-## 01.3 - Types, Variables, and Scope
+## 01.2 - Types, Variables, and Scope
 
 variadic functions have a _varied_ number of arguments
 
@@ -144,4 +144,144 @@ variadic functions have a _varied_ number of arguments
 ```C
 int length
 scanf("%d", &length)
+// there are better ways to do this
 ```
+
+# 01.3 Decisions & Recursion
+
+## Relational Expressions
+
+- can be evaluated true or false
+```C
+              0 //false
+       (0 || 1) //true
+      (15 < 18) //true
+((15 + 4) < 18) //false
+           (37) //true
+          (!21) //false
+((1 – 1) && 21) //false
+     (11 != 11) //false
+((1 – 1) || 11) //true
+ ((1 – 1) == 0) //true
+
+        (x = 5) //usually a bug, but true
+        (x = 0) //usually a bug, but false
+```
+## Scope
+
+>[!IMPORTANT]
+> avoid global variables at all costs
+
+the scope of variables are the block in which they are defined, or any blocks defined within.
+
+## Tracing
+
+Tracing variables can be very helpful. Either mentaly, with pen & paper, or a debugger like gdb.
+
+```C
+                            // x y min return value
+int minimum(int x, int y) { // 7 8 n/a ?
+int min;                    // 7 8 ?   ?
+if (x < y) min = x;         // 7 8 7   ?
+else min = y;               // 7 8 7   ?
+return min;                 // 7 8 7   7
+}
+```
+
+## Conditional chains
+```C
+/* Transform mark into grade. */
+int grade(int mark) {
+int grade;
+if (mark >= 70) grade = 1;
+else if (mark >= 50) grade = 2;
+else if (mark >= 40) grade = 3;
+else grade = 4;
+return grade;
+}
+```
+
+you can use decision trees to represent them
+
+## Prototypes
+
+Foreward decleration, says what but not how
+```C
+...
+int grade(int mark); // declaration of signature only
+...
+int main(void) { ...
+grade(mark)); ...
+}
+...
+int grade(int mark) { ... } // full definition with body
+```
+
+## Shadowing
+
+- identifier clash
+
+when a variable is given the same name as another from a scope above it, the innermost variable is used. the other is not overwritten.
+```C
+int a = 7;
+{
+    int a = 12;
+    printf("%d", a); // will print 12
+}
+printf("%d", a); // will print 7
+```
+
+if it is within the same scope this is not allowed (except for overloading)
+
+```C
+// not allowed
+int a = 7;
+float a = 3.5;
+
+// allowed
+void foo(int);
+void foo(float);
+```
+
+if it is after the end of the scope it was first defined in, there is not a problem as the origional no longer exists.
+
+```C
+// no problem
+{
+    int a = 5;
+}
+float a = 3.13;
+// the first a is out of scope so its fine
+```
+
+
+## Switch statements
+
+```C
+int nextHailstone(int x) {
+    int next;
+    switch (x % 2) {
+        case 1: next = 3 * x + 1; break;
+        case 0: next = x / 2; break;
+        default: return -1 // something has gone wrong
+    }
+    return next;
+} 
+```
+
+you must break, or excecution will fall through to the next case. the default case is optional and must be the last one
+
+## Recursion
+
+self referential functions
+
+```C
+// Find the sum of the numbers from 1 to n.
+int sum(int n) {
+    if (n == 1) return 1;
+    else return n + sum(n - 1);
+}
+```
+![](./images/recursion.png)
+
+each call a frame is pushed to the stack
