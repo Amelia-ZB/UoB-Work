@@ -95,27 +95,21 @@ using shellscript with a shebang `#!`
 
 ## boring list
 
-awk :: useful tool for
-dealing with files
-basename :: just the
-filename
+awk :: useful tool for dealing with files
+basename :: just the filename
 bc :: maths stuff
 cat :: join files
 comm :: find common lines
 cp :: copy files
-crontab :: run commands
-at a time
+crontab :: run commands at a time
 cut :: extract fields
 from lines
 dd :: bulk write to
 disks/tapes
 df :: find free space
 diff :: find differences
-du :: how much space is
-this using
-ed :: the standard text
-editor… (for use when you
-don’t have a screen)
+du :: how much space is this using
+ed :: the standard text editor… (for use when you don’t have a screen)
 env :: inspect
 environment variables
 file :: what are you
@@ -123,61 +117,35 @@ looking it?
 finger :: what are other
 people doing
 gz :: compress stuff
-head :: get the top of a
-file
-install :: like cp with
-permissions
+head :: get the top of a file
+install :: like cp with permissions
 kill :: kill a process
-less/more :: view a long
-file
-ln :: alias files and
-folder
+less/more :: view a long file
+ln :: alias files and folder
 man :: THE MANUAL
 mkdir :: make a directory
 mv :: rename stuff
-patch :: automated
-changing of stuff
-perl :: better (?)
-shellscript
+patch :: automated changing of stuff
+perl :: better (?) shellscript
 ps :: what’s running?
 read :: input
 rm :: delete stuff
-screen :: suspend
-terminal sessions and
-have multiple sessions in
-a single terminal (and
-connect to a serial
-console) (see also tmux)
-sendmail :: send email on
-a commandline (you’ll
-need a mailserver though)
-source :: read another
-file
+screen :: suspend terminal sessions and have multiple sessions in a single terminal (and connect to a serial console) (see also tmux)
+sendmail :: send email ona commandline (you’llneed a mailserver though)
+source :: read anotherfile
 sed :: editing pipes
 sort :: sorts
-strings :: get things
-that look like text from
-a file
-stty :: configure your
-terminal
+strings :: get things that look like text from a file
+stty :: configure your terminal
 tail :: get the bottom
 tar :: archive stuff
-tee :: write stuff to a
-file and look at it
+tee :: write stuff to a file and look at it
 trap :: signals
 uniq :: remove duplicates
-wait :: wait for
-backgrounded processes
+wait :: wait for backgrounded processes
 wall :: terrible chat
-wc :: count lines, words
-or characters
-xargs :: helps avoid
-looping
-yes :: helps avoid typing
-yes a lot
-(also these logic ops)
-&& :: if command on left
-succeeds run command on
-right
-|| :: if command on left
-fails run command on
+wc :: count lines, words or characters
+xargs :: helps avoid looping
+yes :: helps avoid typing yes a lot (also these logic ops)
+&& :: if command on left succeeds run command on right
+|| :: if command on left fails run command on
