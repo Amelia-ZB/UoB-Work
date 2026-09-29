@@ -285,3 +285,10 @@ int sum(int n) {
 ![](./images/recursion.png)
 
 each call a frame is pushed to the stack
+
+## 4 laws of Programs
+
+0. programs must **work correctly**
+1. must be **readable**
+2. must be **compact**
+3. must be **efficient**
