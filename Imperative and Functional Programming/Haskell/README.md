@@ -24,6 +24,9 @@
 > [!IMPORTANT]
 > paper: "chatGPT is bullshit"
 
+- must pass exam 80%
+- coursework 20%
+
 ## how to do well
 
 - do the stared questions on the worksheets
@@ -109,5 +112,207 @@ or even better
 
 ```hs
 add x y = x + y
+```
+
+## recap from minute sheet
+
+- everything in haskell is an expression
+- functions are a special type of expression, 
+
+## environment and scope
+
+- parameters to lambdas are scoped to only that lamda function
+
+``` hs
+foo = ((\x -> x) 5) + ((\x -> x) 2) -- the two x variables are different
+-- y = 7
+```
+
+``` hs
+bar = 5
+baz = bar + bar
+fizz = bar + (\bar -> bar) 2 -- the bar within the lambda is different to the global one
+-- fizz = 7
+```
+
+## Branching (Pattern matching)
+
+- all branches are done with pattern matching, using a case statement
+
+```hs
+foo x = case x of
+    1 -> "bish"
+    2 -> "bash"
+    _ -> "bosh"
+{-
+>>> foo 1
+"bish"
+
+>>> foo 2
+"bash"
+
+>>> foo 3
+"bosh"
+-}
+```
+
+```hs
+foo' x = case x of
+    1 -> "bish"
+        2 -> "bash" -- throws error (whitespace is significant)
+    1 -> "bing" -- gets a yellow squiggle, repeted case
+{-
+>>> foo' 1
+"bish"
+
+>>> foo' 3
+-- Exception: Non-exaustive patterns in case
+-}
+```
+
+syntactic sugar allows for:
+```hs
+foo x = case x of
+    1 -> "bish"
+    2 -> "bash"
+    _ -> "bosh"
+
+-- to be written as
+
+foo 1 = "bish"
+foo 2 = "bash"
+foo _ = "bosh"
+
+```
+
+### syntactic sugar
+
+```hs
+bar n = if n < 0
+        then "negative"
+        else if n <= 9 
+            then "single digit"
+            else "multi digit" -- must provide else
+
+-- this is equivalent to
+
+bar' n
+    | n < 0     = "negative" -- the | is a guard, it will check a condition after the case matches
+    | n <= 9    = "single digit"
+    | otherwise = "multi digit" -- otherwise is just defined as True
+
+-- is equivalent to
+
+bar'' = \n ->
+    case n < 0 of
+        True -> "bigger than 10"
+        False -> case n <= 9 of
+            True -> "single digit"
+            False -> "multi digit"
+```
+
+you can use let to create local varables
+
+```hs
+baz x =
+    let
+        xSquared = x*x
+        twox = 2*x
+        result = twox + xSquared
+    in result
+
+-- or
+
+baz x = result
+    where
+        xSquared = x*x
+        twox = 2*x
+        result = twox + xSquared
+
+```
+
+## Recursion
+
+- there are not loops, only recursion
+
+```hs
+triangle n = if n == 1
+             then 1 -- base case
+             else n + triangle (n - 1) -- recurse
+
+triangle' n = case n of
+    1 -> 1
+    _ -> n + triangle (n - 1)
+
+triangle'' n
+    | n == 1 = 1
+    | otherwise = n + triangle (n - 1)
+
+{-
+>>> triangle 1
+>>> triangle 2
+>>> triangle 3
+>>> triangle 4
+1
+3
+6
+10
+-}
+
+
+```
+
+### examples
+
+#### [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence)
+
+```hs
+fibonacci n = case n of
+    1 -> 1
+    2 -> 2
+    _ -> fibonacci (n-1) + fibonacci (n-2)
+```
+
+#### [Padovan Sequence](https://en.wikipedia.org/wiki/Padovan_sequence)
+
+- 1 1 1 2 2 3 4 5 7 9 12 16 21 28 37 49 65 86 114 151 200 265 ...
+
+```hs
+padovan n = case n of
+    1 -> 1
+    2 -> 1
+    3 -> 1
+    -- 4 -> padovan 2 + padovan 1
+    -- 5 -> (padovan (5 - 2)) + (padovan (5 - 3))
+    _ -> padovan (n - 2) + padovan (n - 3)
+```
+
+
+#### [Lucas Sequence](https://en.wikipedia.org/wiki/Lucas_sequence)
+
+- 2 1 3 4 7 ...
+
+```hs
+lucas n = case n of
+    1 -> 2
+    2 -> 1
+    _ -> lucas (n-1) + lucas (n-2)
+
+-- or
+
+lucas' 1 = 2
+lucas' 2 = 1
+lucas' _ = lucas' (n-1) + lucas' (n-2)
+
+```
+
+#### [Perrin Sequence](https://en.wikipedia.org/wiki/Perrin_number)
+
+```hs
+perrin n = case n of
+    0 -> 3
+    1 -> 0
+    2 -> 2
+    _ -> perrin (n-2) + perrin (n-3)
 ```
 
