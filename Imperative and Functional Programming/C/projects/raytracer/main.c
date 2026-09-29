@@ -19,10 +19,10 @@ int main() {
     fwrite(image.imageData, 1, image.size, fptr);
     fclose(fptr);
 
-    Vec3 a = {1, 2, 3};
-    Vec3 b = {4, 5, 6};
+    Vec a = {1, 2, 3};
+    Vec b = {4, 5, 6};
 
-    Vec3 c = add(a, b);
+    Vec c = add(a, b);
 
     return  1;
 }
