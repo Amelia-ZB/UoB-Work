@@ -189,6 +189,9 @@ $\sqrt 2$ cannot be expressed as a fraction
 > [!IMPORTANT]
 > dont start with the goal, work towards it
 
+> [!IMPORTANT]
+> conjunction in an assumption is like 2 assumptions
+
 ## Formal Proofs
 
 - natural deduction
