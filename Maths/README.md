@@ -173,7 +173,7 @@ $\neg(\Phi \lor \Psi) \equiv \neg\Phi \land \neg\Psi$
 $p \Rightarrow (q \Rightarrow r) \equiv (p \land q) \Rightarrow r$
 
 
-# 02.1 - Natural Deduction
+# 02 - Natural Deduction
 
 $P \Rightarrow P$ - tautology
 
@@ -211,7 +211,7 @@ with have meaning proven or assumed true
 
 $\Phi \Rightarrow \Psi$
 
-# Implication
+## Implication
 
 Introcucion:
 - to prove, assume $\Phi$ is true, then prove $\Psi$
@@ -238,15 +238,71 @@ steps 1 + 4 = Implication Elimination -->
 indentation shows the scope of each assumption
 
 ## Conjunction
+
 Introduction rule:
-- to prove $\Phi \land \Psi$ we must prove $\Phi$ and $\Psi$ independantly
+- to prove $\Phi \land \Psi$
+    - we must prove $\Phi$ _and_ $\Psi$ independantly
 
 Elimination rule
 - if we have $\Phi \land \Psi$
-    - we may conlude $\Phi$ and $\Psi$
+    - we may conlude $\Phi$ and $\Psi$ seperately
 
-### example
+### Example
 
 ![](./images/proof%20example%202.png)
 ![](./images/proof%20example%203.png)
 
+## Disjunction
+
+Introduction rule:
+- to prove $\Phi \lor \Psi$
+    - we must prove $\Phi$ or $\Psi$
+
+Elimination rule
+- if we have $\Phi \lor \Psi$
+    - we must assume $\Phi$ and show $\Rho$ follows
+    - **and** must assume $\Psi$ and show $\Rho$ follows
+
+- effectively proof by case analysis
+
+### Example
+
+![](./images/proof%20example%204.png)
+
+## Negation
+
+$\neg \Phi \equiv \Phi \Rightarrow \bot$
+$\\\qquad\;\;↳\;\; \neg \Phi \lor \bot$
+$\\\qquad\;\;↳\;\; \neg \Phi$
+
+Introduction rule:
+- assume $\Phi$ and show $\bot$
+
+Elimination rule:
+- if we have $\Phi$ and $\bot \Phi$ we can colclude false
+
+> the only way to get $\bot$ is from a contradictory assumptions ($\neg$ elimination)
+
+$\bot$ Elimination rule: if we have $\bot$ then you can have anything, as the assumptions make everything vacuos truths
+
+### Examples
+
+![](./images/proof%20example%205.png)
+
+Claim $p \land ¬p \Rightarrow q$
+1. assume $p \land ¬p$
+2. $\qquad p$
+3. $\qquad \neg p$
+4. $\qquad \bot$
+5. $\qquad q$
+6. $p \land ¬p \Rightarrow q$
+
+## Law of the Excluded Middle - $\Phi \lor \Phi \equiv \top$
+
+- at any point we may use it in a proof, ... by LEM
+
+Claim $\neg\neg p \Rightarrow p$
+
+![](./images/proof%20example%206.png)
+
+- use LEM as a last resort
