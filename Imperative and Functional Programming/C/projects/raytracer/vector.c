@@ -6,7 +6,7 @@ struct Vec {
     float x, y, z;
 };
 
-struct Matrix {
+struct Mat {
     Vec x, y, z;
 };
 
@@ -38,6 +38,17 @@ Vec normalised(const Vec a) {
 }
 void normalise(Vec *a) {
     *a = divide_vec_float(*a, magnitude(*a));
+}
+
+float determenant(const Mat a){
+    return a.x.x * (a.y.y * a.z.z - a.y.z * a.z.y) -
+           a.x.y * (a.y.x * a.z.z - a.y.z * a.z.x) +
+           a.x.z * (a.y.x * a.z.y - a.y.y * a.z.x);
+}
+Mat inverse(const Mat a){
+    const float invDet = 1 / determenant(a);
+    return multiply(a, invDet);
+
 }
 
 
@@ -74,6 +85,42 @@ static Vec add_int_vec(const int a, const Vec b) {
                     a + b.z};
     return c;
 }
+
+static Mat add_mat_mat(const Mat a, const Mat b) {
+    Vec t1 = a.x;
+    Vec t2 = b.x;
+    Vec t3 = add(t1, t2);
+
+    const Mat c = {add(a.x, b.x),
+                   add(a.y, b.y),
+                   add(a.z, b.z)};
+    return c;
+}
+static Mat add_mat_float(const Mat a, const float b) {
+    const Mat c = {add(a.x, b),
+                   add(a.y, b),
+                   add(a.z, b)};
+    return c;
+}
+static Mat add_float_mat(const float a, const Mat b) {
+    const Mat c = {a + b.x,
+                    a + b.y,
+                    a + b.z};
+    return c;
+}
+static Mat add_mat_int(const Mat a, const int b) {
+    const Mat c = {a.x + b,
+                    a.y + b,
+                    a.z + b};
+    return c;
+}
+static Mat add_int_mat(const int a, const Mat b) {
+    const Mat c = {a + b.x,
+                    a + b.y,
+                    a + b.z};
+    return c;
+}
+
 
 
 //MARK: subtraction
