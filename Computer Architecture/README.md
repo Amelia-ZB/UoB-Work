@@ -274,7 +274,7 @@ $\text{char} ≃ \text{int8\_t} \mapsto \{ −2^7 , ..., 0, ..., +2^7 − 1 \}$
 2.
   beyond this knowing various standerd representations is usefull
 
-# 2.02 Integer Arithmatic
+# 02.2 Integer Arithmatic
 
 $\hat x \mapsto x$
 
@@ -348,3 +348,98 @@ conditions for overflow:
 - x +ve y +ve r -ve ⇒    overflow
 - x -ve y -ve r +ve ⇒    overflow
 - x -ve y -ve r -ve ⇒ no overflow
+
+# 02.3 Transistors & Logic gates
+
+Micro-electronic switches (transistors) must be
+- small
+- fast
+- reliable
+- useable - packaged into higher level blocks
+- manufacturble
+
+The most detail we go into is "transistors are just switches"
+
+## Semiconductors
+
+- Atoms are made of
+  1. a group of nucleons, either protons or neutrons, called the nucleus
+  2. a cloud of electrons arranged in _shells_
+      - each shell can hold $2n^2$ electrons
+      - any difference in number of electrons and total capacity are called _holes_
+
+- the binding between particles can be disrupted
+  - if an electron absorbs enough energy, it becomes so excited it will be displaced and becomes _free_
+  - free electrons can move between shells or atoms, 'attracted' to holes
+
+- Current is a flow of electrons
+  - free electrons 'move' from low to high potential
+  - a material can be either conductive or insulating (low or high resistivity)
+
+- Si is very useful because
+  1. it's highly abundant
+  2. it can be _doped_ by adding different elements
+      - P / As $\rightarrow$ extra electrons
+      - B / Al $\rightarrow$ extra holes
+  3. it's fairly inert, so it won't degrade or go wierd over time
+
+  - this results in a sime-conductor
+    - **N-type** = extra electrons 
+    - **P-type** = extra holes
+    - by making a 'sandwich' you can make a switch
+
+Historically the switches were vacuum tubes
+- relatively reliable
+- failed on power on / off
+
+Replaced with transistors relitively quickly for their size
+- many types
+  - 1925: Field Effect Transistor (FET).
+  - 1953: Junction FET (or JFET).
+  - 1959: Metal Oxide Semi-conductor FET (MOSFET).
+
+## MOSFETs
+
+> Metal Oxide Semi-conductor Field-Effect Transistor
+
+![](./images/MOSFET.png)
+
+- source & drain are the input & output
+- gate is the controll
+
+![](./images/MOSFET%20types.png)
+
+- N-MOSFET / N-type MOSFET / N-channel MOSFET / NPN MOSFET
+  - applyinga P.D. to the gate widens the conductive channel, allowing it to conduct from the source to drain
+  - equivalent to a normaly open relay
+
+- P-MOSFET / P-type MOSFET / P-channel MOSFET / PNP MOSFET
+  - applyinga P.D. to the gate narrows the conductive channel, stopping it from conducting from the source to drain
+  - equivalent to a normaly closed relay
+
+- (Complimentary Metal Oxide Semi-conductor) CMOS cell
+  - only switching uses much power and no leakage (static consumption)
+
+![](./images/CMOS.png)
+
+### CMOS fabrication - Photolithography
+
+1. start with a clean wafer
+2. apply a layer of substrate (metal / semiconductor)
+3. apply photoresist
+4. expose plate to a negative or mask of the design, this hardens the photoresist
+5. wash away unhardened photoresist
+6. etch away uncovered substrate
+7. strip hardened photoresist
+
+The algorithm is repeted many times to create a finished wafer. It also works in parallel across the entire wafer, allowing many to be made at once.
+
+The wafers are packaged before use, protecting them from damage and often providing a heat sink. it also provides an interface in the form of an array of pins or contacts
+
+## Moore's Law
+> "The complexity for minimum component costs has increased at a rate of roughly a factor of two per year. Certainly over the short term this rate can be expected to continue, if not to increase. Over the longer term, the rate of increase is a bit more uncertain, although there is no reason to believe it will not remain nearly constant for at least 10 years. That means by 1975, the number of components per integrated circuit for minimum cost will be 65,000."
+
+![](./images/moores%20law.png)
+
+# 03.1 -  Logic Gates
+
