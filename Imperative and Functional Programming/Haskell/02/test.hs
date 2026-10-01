@@ -1,5 +1,12 @@
-perrin n = case n of
-    1 -> 3
-    2 -> 0
-    3 -> 2
-    _ -> perrin (n-2) + perrin (n-3)
+foo :: Double
+foo = 3.14
+
+bar :: Int -> Bool
+bar n = (n `mod` 2 == 0)
+
+baz :: Int -> Double -> (Int, Double)
+baz x y = (x, y)
+
+
+-- >>> :t baz 7
+-- baz 7 :: Double -> (Int, Double)

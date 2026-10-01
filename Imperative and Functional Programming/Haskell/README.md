@@ -47,7 +47,7 @@
 - build from the ground up, on Haskell's terms
 - Same syntax ≠ same semantics
 
-# 01 - Expressions & Evaluation
+# Misc Notes
 
 ```hs
 (\y -> y + 2) 5
@@ -74,6 +74,8 @@ $ S = \{ x\cdot 2\ |\ x \in \mathbb N,\; x \leqslant 10 \}$
 $\equiv$
 
 $ S = \{ x\cdot 2\ |\ x \in \mathbb N,\; x \leqslant 10\ \land x\cdot 2 \geqslant 12\}$
+
+# 01 - Expressions & Evaluation
 
 ## evaluating functions
 
@@ -135,7 +137,7 @@ fizz = bar + (\bar -> bar) 2 -- the bar within the lambda is different to the gl
 -- fizz = 7
 ```
 
-## Branching (Pattern matching)
+# Branching (Pattern matching)
 
 - all branches are done with pattern matching, using a case statement
 
@@ -185,7 +187,7 @@ foo _ = "bosh"
 
 ```
 
-### syntactic sugar
+## syntactic sugar
 
 ```hs
 bar n = if n < 0
@@ -231,7 +233,7 @@ baz x = result
 
 ```
 
-## Recursion
+# Recursion
 
 - there are not loops, only recursion
 
@@ -262,9 +264,9 @@ triangle'' n
 
 ```
 
-### examples
+## examples
 
-#### [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence)
+### [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence)
 
 ```hs
 fibonacci n = case n of
@@ -273,7 +275,7 @@ fibonacci n = case n of
     _ -> fibonacci (n-1) + fibonacci (n-2)
 ```
 
-#### [Padovan Sequence](https://en.wikipedia.org/wiki/Padovan_sequence)
+### [Padovan Sequence](https://en.wikipedia.org/wiki/Padovan_sequence)
 
 - 1 1 1 2 2 3 4 5 7 9 12 16 21 28 37 49 65 86 114 151 200 265 ...
 
@@ -288,7 +290,7 @@ padovan n = case n of
 ```
 
 
-#### [Lucas Sequence](https://en.wikipedia.org/wiki/Lucas_sequence)
+### [Lucas Sequence](https://en.wikipedia.org/wiki/Lucas_sequence)
 
 - 2 1 3 4 7 ...
 
@@ -306,7 +308,7 @@ lucas' _ = lucas' (n-1) + lucas' (n-2)
 
 ```
 
-#### [Perrin Sequence](https://en.wikipedia.org/wiki/Perrin_number)
+### [Perrin Sequence](https://en.wikipedia.org/wiki/Perrin_number)
 
 ```hs
 perrin n = case n of
@@ -315,4 +317,66 @@ perrin n = case n of
     2 -> 2
     _ -> perrin (n-2) + perrin (n-3)
 ```
+
+# Types
+
+- Values
+    - bools
+        - Bool
+    - numbers
+        - Int
+        - Double
+    - text
+        - Char (')
+        - String (")
+    - tuples
+        - (⟨Any⟩, ⟨Any⟩, ...)
+
+- Functions
+    - ⟨input type⟩ -> ⟨output type⟩
+
+## Type Annotations
+
+```hs
+foo :: Double
+foo = 3.14
+
+bar :: Int -> Bool
+bar n = (n `mod` 2 == 0)
+
+baz :: Int -> Double -> (Int, Double)
+baz x y = (x, y)
+
+{-
+>>> :t baz
+       baz        :: Int -> Double -> (Int, Double)
+
+>>> :t baz 7
+       baz 7      :: Double -> (Int, Double)
+
+>>> :t baz 7 3.14
+       baz 7 3.14 :: (Int, Double)
+-}
+```
+
+```hs
+selectSecond :: Int -> String -> Bool -> String
+selectSecond a b c = b
+```
+
+## Type Synonyms
+
+identical to a c typedef
+
+```hs
+type Price = Double
+```
+
+makes the code much more readable by indicating your intentions
+
+## Type Safety
+
+- types stop you from doing something wrong accidentialy
+
+
 

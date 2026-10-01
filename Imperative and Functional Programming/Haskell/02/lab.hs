@@ -58,14 +58,17 @@ fibonacci n = case n of
     2 -> 2
     _ -> fibonacci (n-1) + fibonacci (n-2)
 
-isPrime n = not (anyDivisors n (n `div` 2))
-    where
+isPrime n = 
+    let
         divisor n m = ((n `mod` m) == 0)
+        
         anyDivisors n m = if m == 1
             then False
             else if divisor n m
                 then True
                 else (anyDivisors n (m-1))
+    in
+        not (anyDivisors n (n `div` 2))
     
 root n = getRoot n 1
     where
