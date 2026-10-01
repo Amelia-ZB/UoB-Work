@@ -12,11 +12,8 @@ struct Mat {
 
 
 //MARK: misc
-Vec dotp(const Vec a, const Vec b) {
-    const Vec c = {a.x * b.x,
-                    a.y * b.y,
-                    a.z * b.z};
-    return c;
+float dotp(const Vec a, const Vec b) {
+    return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
 Vec crossp(const Vec a, const Vec b) {
@@ -47,8 +44,7 @@ float determenant(const Mat a){
 }
 Mat inverse(const Mat a){
     const float invDet = 1 / determenant(a);
-    return multiply(a, invDet);
-
+    return multiply_mat_float(a, invDet);
 }
 
 
@@ -87,37 +83,33 @@ static Vec add_int_vec(const int a, const Vec b) {
 }
 
 static Mat add_mat_mat(const Mat a, const Mat b) {
-    Vec t1 = a.x;
-    Vec t2 = b.x;
-    Vec t3 = add(t1, t2);
-
-    const Mat c = {add(a.x, b.x),
-                   add(a.y, b.y),
-                   add(a.z, b.z)};
+    const Mat c = {add_vec_vec(a.x, b.x),
+                   add_vec_vec(a.y, b.y),
+                   add_vec_vec(a.z, b.z)};
     return c;
 }
 static Mat add_mat_float(const Mat a, const float b) {
-    const Mat c = {add(a.x, b),
-                   add(a.y, b),
-                   add(a.z, b)};
+    const Mat c = {add_vec_float(a.x, b),
+                   add_vec_float(a.y, b),
+                   add_vec_float(a.z, b)};
     return c;
 }
 static Mat add_float_mat(const float a, const Mat b) {
-    const Mat c = {a + b.x,
-                    a + b.y,
-                    a + b.z};
+    const Mat c = {add_float_vec(a, b.x),
+                   add_float_vec(a, b.y),
+                   add_float_vec(a, b.z)};
     return c;
 }
 static Mat add_mat_int(const Mat a, const int b) {
-    const Mat c = {a.x + b,
-                    a.y + b,
-                    a.z + b};
+    const Mat c = {add_vec_int(a.x, b),
+                   add_vec_int(a.y, b),
+                   add_vec_int(a.z, b)};
     return c;
 }
 static Mat add_int_mat(const int a, const Mat b) {
-    const Mat c = {a + b.x,
-                    a + b.y,
-                    a + b.z};
+    const Mat c = {add_int_vec(a, b.x),
+                   add_int_vec(a, b.y),
+                   add_int_vec(a, b.z)};
     return c;
 }
 
@@ -155,6 +147,38 @@ static Vec subtract_int_vec(const int a, const Vec b) {
     return c;
 }
 
+static Mat subtract_mat_mat(const Mat a, const Mat b) {
+    const Mat c = {subtract_vec_vec(a.x, b.x),
+                   subtract_vec_vec(a.y, b.y),
+                   subtract_vec_vec(a.z, b.z)};
+    return c;
+}
+static Mat subtract_mat_float(const Mat a, const float b) {
+    const Mat c = {subtract_vec_float(a.x, b),
+                   subtract_vec_float(a.y, b),
+                   subtract_vec_float(a.z, b)};
+    return c;
+}
+static Mat subtract_float_mat(const float a, const Mat b) {
+    const Mat c = {subtract_float_vec(a, b.x),
+                   subtract_float_vec(a, b.y),
+                   subtract_float_vec(a, b.z)};
+    return c;
+}
+static Mat subtract_mat_int(const Mat a, const int b) {
+    const Mat c = {subtract_vec_int(a.x, b),
+                   subtract_vec_int(a.y, b),
+                   subtract_vec_int(a.z, b)};
+    return c;
+}
+static Mat subtract_int_mat(const int a, const Mat b) {
+    const Mat c = {subtract_int_vec(a, b.x),
+                   subtract_int_vec(a, b.y),
+                   subtract_int_vec(a, b.z)};
+    return c;
+}
+
+
 
 //MARK: multiplication
 static Vec multiply_vec_float(const Vec a, const float b) {
@@ -182,6 +206,48 @@ static Vec multiply_int_vec(const int a, const Vec b) {
     return c;
 }
 
+static Vec multiply_mat_vec(const Mat a, const Vec b){
+    const Vec c = {dotp(a.x, b),
+                   dotp(a.y, b),
+                   dotp(a.z, b)};
+    return c;
+}
+static Mat multiply_mat_mat(const Mat a, const Mat b){
+    const Mat c = {
+        {a.x.x * b.x.x + a.x.y * b.y.x + a.x.z * b.z.x},
+        {a.y.x * b.x.y + a.y.y * b.y.y + a.y.z * b.z.y},
+        {a.z.x * b.x.z + a.z.y * b.y.z + a.z.z * b.z.z}
+    };
+    return c;
+}
+
+static Mat multiply_mat_float(const Mat a, const float b) {
+    const Mat c = {multiply_vec_float(a.x, b),
+                   multiply_vec_float(a.y, b),
+                   multiply_vec_float(a.z, b)};
+    return c;
+}
+static Mat multiply_float_mat(const float a, const Mat b) {
+    const Mat c = {multiply_float_vec(a, b.x),
+                   multiply_float_vec(a, b.y),
+                   multiply_float_vec(a, b.z)};
+    return c;
+}
+static Mat multiply_mat_int(const Mat a, const int b) {
+    const Mat c = {multiply_vec_int(a.x, b),
+                   multiply_vec_int(a.y, b),
+                   multiply_vec_int(a.z, b)};
+    return c;
+}
+static Mat multiply_int_mat(const int a, const Mat b) {
+    const Mat c = {multiply_int_vec(a, b.x),
+                   multiply_int_vec(a, b.y),
+                   multiply_int_vec(a, b.z)};
+    return c;
+}
+
+
+
 
 //MARK: division
 static Vec divide_vec_float(const Vec a, const float b) {
@@ -206,5 +272,18 @@ static Vec divide_int_vec(const int a, const Vec b) {
     const Vec c = {a / b.x,
                     a / b.y,
                     a / b.z};
+    return c;
+}
+
+static Mat divide_mat_float(const Mat a, const float b) {
+    const Mat c = {divide_vec_float(a.x, b),
+                   divide_vec_float(a.y, b),
+                   divide_vec_float(a.z, b)};
+    return c;
+}
+static Mat divide_mat_int(const Mat a, const int b) {
+    const Mat c = {divide_vec_int(a.x, b),
+                   divide_vec_int(a.y, b),
+                   divide_vec_int(a.z, b)};
     return c;
 }
