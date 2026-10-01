@@ -10,7 +10,7 @@ typedef struct Mat Mat;
 
 
 //MARK: misc
-Vec dotp(const Vec a, const Vec b);
+float dotp(const Vec a, const Vec b);
 Vec crossp(const Vec a, const Vec b);
 
 float magnitude(const Vec a);
@@ -139,11 +139,8 @@ static Vec divide_float_vec(const float a, const Vec b);
 static Vec divide_vec_int(const Vec a, const int b);
 static Vec divide_int_vec(const int a, const Vec b);
 
-static Mat divide_mat_mat(const Mat a, const Mat b);
 static Mat divide_mat_float(const Mat a, const float b);
-static Mat divide_float_mat(const float a, const Mat b);
 static Mat divide_mat_int(const Mat a, const int b);
-static Mat divide_int_mat(const int a, const Mat b);
 
 #define divide(a, b)                      \
     _Generic((a),                         \

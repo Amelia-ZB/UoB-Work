@@ -22,7 +22,7 @@ int main() {
     Vec a = {1, 2, 3};
     Vec b = {4, 5, 6};
 
-    Vec c = add(a, b);
+    Vec c = add_vec_vec(a, b);
 
     return  1;
 }
