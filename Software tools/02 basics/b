@@ -1,0 +1,39 @@
+#! /usr/bin/bash
+
+compile() {
+        if [[ -f "$1.c" ]]; then
+                gcc -std=c11 -Wall -g "$1.c" -o "$1"
+                return 0
+        else
+                echo "ERROR: $1.c does not exist"
+                return 1
+        fi
+}
+
+run() {
+        if [[ -f "$1.c" ]]; then
+                ./$1
+        else
+                echo "ERROR: $1 does not exist"
+        fi
+}
+
+
+if [[ $1 = "compile" ]]; then
+        compile "${2%.*}"
+
+elif [[ $1 = "run" ]]; then
+        run "${2%.*}"
+
+elif [[ $1 = "build" ]]; then
+        compile "${2%.*}"
+        echo "$?"
+        if (( $? == 0 )); then
+                run "${2%.*}"
+        fi
+fi
+
+
+
+
+

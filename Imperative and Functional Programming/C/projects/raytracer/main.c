@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "lib/bmp.c"
-#include "lib/vector.c"
-#include "lib/rays.c"
+#include "libs/bmp.c"
+#include "libs/vector.c"
+#include "libs/rays.c"
 
 #define PI 3.14159265358979323846
 

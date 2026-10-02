@@ -292,3 +292,54 @@ each call a frame is pushed to the stack
 1. must be **readable**
 2. must be **compact**
 3. must be **efficient**
+
+- avoid exiting loops early
+    - using a break statement
+    - returning from within a loop
+    - using continue
+
+- avoid do while loops
+
+- **Never usa a goto**
+
+# 02.3 - Arrays
+
+the size of an array is always constant
+
+## Initialisation
+
+> [!CAUTION]
+> you can get silent out of bounds errors, if the invalid address is within your allocated memory segment, this means it does not throw a segfault but still accesses invalid memmory
+
+- arrays are allocated to the stack, which is limited in size.
+
+if at least 1 value is specified, any non-specified elements are initialised to 0
+
+```C
+int sequence1[3] = {2, 3, 5} // -> {2, 3, 5}
+int sequence2[6] = {2, 3, 5} // -> {2, 3, 5, 0, 0, 0}
+int sequence3[100] = {0} // -> {0, 0, ..., 0}
+// be carefull, only the first element is 1
+int sequence4[100] = {1} // -> {1, 0, ..., 0}
+
+// the compiler can also infer the size of the array from the initialiser list
+int sequence5 = {2, 3, 5, 7, 11} // -> {2, 3, 5, 7, 11} (5 elements)
+```
+
+you can have a variable length array, where the size is constant but not known at compile-time.
+```C
+    int calculate(int noElements) {
+    int seq[noElements]; // declare array of length noElements
+    ...
+}
+```
+
+## Passing Arrays
+
+arrays are passed by reference, not value
+
+when a function has an array as a parameter `int sum(int array[])` something called pointer decay happens, where the function definition becomes `int sum(int *array)`
+
+## 2d arrays
+
+each sub-array is contiguous within the main array, so a 2 by 3 matrix is identical to a 6 element array. They are _not_ implemented as an array of pointers to arrays. C is **row-major** where the first index value has the most significance
