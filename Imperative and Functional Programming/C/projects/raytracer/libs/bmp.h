@@ -1,7 +1,7 @@
 #ifndef BMP_H
 #define BMP_H
 
-typedef struct RGB RGB;
+#include "rgb.h"
 
 typedef struct BMPheader BMPheader; // 14 bytes
 typedef struct DIBheader DIBheader; // 12 bytes

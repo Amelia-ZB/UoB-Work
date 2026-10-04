@@ -22,7 +22,7 @@ void bs_add ( bs_t* X, int i ) {
     X->data[i/64] = (1 << (i % 64));
 }
 void bs_remove( bs_t* X, int i ) {
-    X->data[i/64]  (1 << (i % 64));
+    X->data[i/64] |= (1 << (i % 64));
 }
 
 

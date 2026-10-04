@@ -7,10 +7,7 @@
 #include <stdint.h>
 
 #include "bmp.h"
-
-struct RGB {
-    uint8_t r, g, b;
-};
+#include "rgb.c"
 
 struct BMPheader {
     uint16_t bfType;      // The header field used to identify the file; it must be BM (the ASCII characters "B" and "M", 0x4D42).

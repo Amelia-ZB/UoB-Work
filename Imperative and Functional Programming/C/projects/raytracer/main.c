@@ -7,8 +7,8 @@
 
 #define PI 3.14159265358979323846
 
-#define WIDTH 256
-#define HEIGHT 256
+#define WIDTH 128
+#define HEIGHT 128
 
 #define FOV 90
 
@@ -17,7 +17,10 @@ int main() {
 
     // define objects ===========================================
 
-    Vec pos1 = {0, 0, 256};
+    Sphere spheres[] = {
+        {{-64, 0, 128+64}, {255, 255, 255}, 0.5, 64},
+        {{64, 0, 128}, {255, 64, 64}, 0, 64},
+    };
 
     // make image ===============================================
     uint8_t *pixelArray = image.imageData + image.headerSize;
@@ -30,16 +33,25 @@ int main() {
         for (int x = 0; x < image.width; x++) {
             unsigned int xOffsettBytes = x * (image.bpp / 8);
 
-            Vec ray = {x - WIDTH / 2, y - HEIGHT / 2, camera_distance};
+            printf("\n(%d, %d): \n", x, y);
+
+            Vec ray = {x - (float) WIDTH / 2, y - (float) HEIGHT / 2, camera_distance};
             normalise(&ray);
+            printf("\tRay: [%f, %f, %f]\n", ray.x, ray.y, ray.z);
 
-            printf("(%d, %d): [%.3f, %.3f, %.3f]\n", x, y, ray.x, ray.y, ray.z);
+            // float intensity = sphereTest((Vec) {64, 0, 128}, 64, normalised((Vec) {1, 0, 0}), ray).intensity;
 
-            float intensity = sphereTest(pos1, 64, normalised((Vec) {1, 0, 0}), ray).intensity;
+            // if (intensity > 0) printf("(%d, %d): [%.3f, %.3f, %.3f]: %f\n", x, y, ray.x, ray.y, ray.z, intensity);
 
-            *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = intensity * 255; // ((float) x) / WIDTH * 255;
-            *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = intensity * 255; // ((float) y) / HEIGHT * 255;
-            *(pixelArray + xOffsettBytes + yOffsettBytes + 0) = intensity * 255;
+            // *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = intensity * 255; // ((float) x) / WIDTH * 255;
+            // *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = intensity * 255; // ((float) y) / HEIGHT * 255;
+            // *(pixelArray + xOffsettBytes + yOffsettBytes + 0) = intensity * 255;
+
+            RGB colour = calculate((Ray) {ray, {0, 0, 0}}, normalised((Vec) {1, 0, 0}), spheres, 2, 2);
+
+            *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
+            *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;
+            *(pixelArray + xOffsettBytes + yOffsettBytes + 0) = colour.b;
         }
 
     }
