@@ -306,3 +306,112 @@ Claim $\neg\neg p \Rightarrow p$
 ![](./images/proof%20example%206.png)
 
 - use LEM as a last resort
+
+
+# 03 - Predicates and Quantifiers
+
+- atomic propostitions: statements that are true or false
+
+- propositions connected with $\land, \lor, \neg, \Rightarrow$
+
+
+properties that hold for all objects of a given type
+
+statements that assert there exists an object with a particular property
+
+relationships between objects
+
+## Predicates
+
+- "The temperature is greater than 18 degrees"
+
+- "the temperature" is the subject
+- "is greater than 18 degrees" is the property about the subject - the _predicate_
+
+- define $P$ to mean "is greater than 18"
+
+- define $P(t)$ to mean "t is greater than 18", where t is a variable representing the temperature
+
+- $P(t)$ represents a propositional function
+    - e.g. $P(10)$ is false
+
+
+by assigning values to the variables in a propositional function, we can determine the truth of it
+
+**Quantification** can also create a proposition from a propositional function, they allow us to express the extent to which
+
+## Quantifiers
+
+- universal quantifer "for all" elements in the domain $\forall x\ P(x)$
+
+- existential qualifer "there exists" one or more elements in the domain $\exists x\ P(x)$
+
+- the domain is the set of all values a variable can take
+    - let P(x) be x^2 over $\Z$ $\forall x\ P(x)$ is true but not $\R$
+
+
+$\forall x\ P(x)$ is true when P(x) is true for _every_ value of x in the domain
+
+$\forall x\ P(x)$ is alse when P(x) is false for _at least one_ value of x in the domain
+
+
+$\exists x\ P(x)$ is true when P(x) is true for _at least one_ value of x in the domain
+
+$\exists x\ P(x)$ is false when P(x) si false for _every_ value of x in the domain
+
+in general: $\forall x\ P(x) \Rightarrow \exists x\ P(x)$
+only true when domain is not empty
+
+## Domains
+
+### Finite
+**you can list every element**
+
+- the universal qualification ($\forall$) is a conjuction of all $P(x_i)$
+    - to check: assume true and search for a counterexample
+
+- the existential qualification ($\exists$) is a disjunction of all $P(x_i)$
+    - to check: assume false and find a case where it is true
+
+### empty
+
+- $\forall$ is true because there are no counterexamples
+
+- $\exists$ is false because there are no true cases
+
+
+## notation
+
+$\forall x.\ P(x)$ and $\exists x.\ P(x)$, the domain is the universe
+
+$\forall x:D.\ P(x)$ and $\exists x:D.\ P(x)$ for a given domain $D$
+
+## how to use them
+
+> they have the highest precedence of all operators from propositional logic
+
+variables are **bound** when a quantifier is used on them, otherwise they are **Free**
+
+so all variables must either be bound or assinged a value to be able to evaluate
+
+bound variables are scoped to the qualifier they are bound in
+
+this means that you can rename bound variables to anything you want
+
+## negation
+
+**negation is the de morang's law**
+
+$\forall x.\ P(x) \equiv \exists x.\ \neg P(x)\\$
+$\exists x.\ P(x) \equiv \forall x.\ \neg P(x)$
+
+## Nesting
+- Let Mother(x, y) denote x is the mother of y
+- "Every person has a mother": $\forall y\ \exists x\ Mother(x, y)$
+- but $\exists x\ \forall y\ Mother(x, y)$ means that there is someone who is everyones mother
+
+
+## translating from NL
+
+be carefull with existential qualifier and vacuous truths
+
