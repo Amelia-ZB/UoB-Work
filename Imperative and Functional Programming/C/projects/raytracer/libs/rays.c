@@ -121,37 +121,6 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
 }
 
-RayData sphereTest(Vec pos, float r, Vec lightRay, Vec ray) {
-
-    
-
-
-
-    Vec distanceVec = subtract_vec_vec(multiply_float_vec(dotp(pos, ray), ray), pos);
-    float distance = magnitude(distanceVec); // correct
-
-    if (distance > r) return (RayData) {0, ray}; // too far away
-
-    Vec closestPoint = add_vec_vec(pos, distanceVec);
-    Vec intersectionPoint = subtract_vec_vec(closestPoint, multiply_vec_float(ray, sqrt(r*r - distance * distance)));
-
-    Vec radialRay = normalised(subtract_vec_vec(intersectionPoint, pos)); // corredt
-    Vec reflectedRay = normalised(subtract_vec_vec(ray, multiply_float_vec(2 * dotp(ray, radialRay), radialRay)));
-
-    // find angle between -reflected ray and 
-    float brightness = dotp(lightRay, minus_vec(radialRay)) / magnitude(radialRay);
-
-    if (brightness < 0) return (RayData) {0, reflectedRay}; // fully in shadow
-
-    printf("%f ", distance);
-    printf("rad[%.3f, %.3f, %.3f]  \t", radialRay.x, radialRay.y, radialRay.z);
-    printf("ref[%.3f, %.3f, %.3f]  \t", reflectedRay.x, reflectedRay.y, reflectedRay.z);
-
-    float theta = acos(brightness) / 3.1415 * 180;
-
-    return (RayData) {brightness, reflectedRay};
-};
-
 int min_float_index(float *arr, int n) {
     int index = 0;
     float min = arr[0];

@@ -39,14 +39,6 @@ int main() {
             normalise(&ray);
             printf("\tRay: [%f, %f, %f]\n", ray.x, ray.y, ray.z);
 
-            // float intensity = sphereTest((Vec) {64, 0, 128}, 64, normalised((Vec) {1, 0, 0}), ray).intensity;
-
-            // if (intensity > 0) printf("(%d, %d): [%.3f, %.3f, %.3f]: %f\n", x, y, ray.x, ray.y, ray.z, intensity);
-
-            // *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = intensity * 255; // ((float) x) / WIDTH * 255;
-            // *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = intensity * 255; // ((float) y) / HEIGHT * 255;
-            // *(pixelArray + xOffsettBytes + yOffsettBytes + 0) = intensity * 255;
-
             RGB colour = calculate((Ray) {ray, {0, 0, 0}}, normalised((Vec) {1, 0, 0}), spheres, 2, 2);
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
