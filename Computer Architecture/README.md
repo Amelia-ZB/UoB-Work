@@ -443,3 +443,82 @@ The wafers are packaged before use, protecting them from damage and often provid
 
 # 03.1 -  Logic Gates
 
+transistor with blob is P-type (normaly open)
+
+## NOT
+
+![](./images/NOT%20gate.png)
+
+- connecting $x$ to $V_{ss}$
+  - top P-MOSFET will be connected
+  - bottom N-MOSFET will be disconnected
+  - $r$ will be connected to $V_{dd}$
+
+- connecting $x$ to $V_{dd}$
+  - top P-MOSFET will be disconnected
+  - bottom N-MOSFET will be connected
+  - $r$ will be connected to $V_{ss}$
+
+## NAND
+
+![](./images/NAND%20gate.png)
+
+structured - p types at the top, n types at the bottom
+
+the bottom is a logical and from $V_{ss}$ to $r$, and at the top a logical or from $V_{dd}$ to $r$
+
+## NOR
+
+![](./images/NOR%20gate.png)
+
+the top is a logical and from $V_{dd}$ to $r$, and at the bottom a logical or from $V_{ss}$ to $r$
+
+## Summary
+
+- assume power rails are everywhere
+
+$V_{ss}$ = 0V ≃ GND |= 0
+
+$V_{dd}$ = 5V |= 1
+
+- logic gates can be moade from a combination of
+  - a pull-up network of P-MOSFETs connected to $V_{dd}$
+  - a pull-down network of N-MOSFETs connected to $V_{ss}$
+
+![](./images/generic%20gate.png)
+
+## Delay
+
+- wire delay + gate delay (typicaly larger)
+
+- critical path is the longest sequential path
+
+ideal vs real MOSFET inverter:
+
+![](./images/MOSFET%20delay.png)
+
+## 3-state logic
+
+as well as $0$ and $1$, add $\textbf Z$, representing high impedance / floating. (think of as null or disconnected)
+
+
+![](./images/3%20state.png)
+
+$x$|$en$|$r$
+-|-|-
+$0$|$0$|$\textbf Z$
+$1$|$0$|$\textbf Z$
+$\textbf Z$|$0$|$\textbf Z$
+$0$|$1$|$0$
+$1$|$1$|$1$
+$\textbf Z$|$1$|$\textbf Z$
+$0$|$\textbf Z$|$\textbf Z$
+$1$|$\textbf Z$|$\textbf Z$
+$\textbf Z$|$\textbf Z$|$\textbf Z$
+
+## terminology
+
+- fan-in number of other gates that produce an input consumed by that logic gate (number of inputs to a gate)
+
+- fan-out the number of other gates that consume the output from a logic gate (number of outputs from a gate)
+
