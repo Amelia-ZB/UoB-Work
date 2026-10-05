@@ -29,9 +29,8 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
 
-    printf("\n");
     tab_pad(TTL + 1);
-    printf("\t%siteration\033[0m %s%d\033[0m:\n", YELLOW, CYAN, MAX_BOUNCES + 2 - TTL);
+    printf("\t%siteration %d\033[0m:\n", YELLOW, MAX_BOUNCES + 2 - TTL);
 
     tab_pad(TTL);
     printVec(MAGENTA, "\tray: \033[0m\tpos", ray.origin);
@@ -83,11 +82,13 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     tab_pad(TTL);
 
     if (surfaceDistances[index] == INFINITY) {
-        printf("\tclosest sphere: none!\n");
+        printf("\tclosest: none!\n");
         return (RGB) {0, 0, 0};
     }
 
-    printf("\t%sclosest sphere%s: %s%d%s\n", GREEN, END, CYAN, index, END);
+    printf("\t%sclosest%s: %s%d%s\n", GREEN, END, GREEN, index, END);
+    tab_pad(TTL);
+    printf("\n");
 
     Sphere sphere = spheres[index];
 
@@ -117,6 +118,8 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     printVec(MAGENTA, "\tr-ray: \033[0m\tpos", ray.origin);
     tab_pad(TTL);
     printVec(MAGENTA, "\t\033[0m\tdir", ray.direction);
+    tab_pad(TTL);
+    printf("\n");
     
     // diffuse
     float brightness = dotp(lightRay, minus_vec(normal));
@@ -128,18 +131,21 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
         diffuseColour = tint(sphere.colour, brightness);
     }
 
-    tab_pad(TTL);
-    printRGB(RED, "\tdiffuse", diffuseColour);
     // specular
     RGB specularColour = calculate(reflectedRay, lightRay, spheres, n, TTL - 1);
     
     // combine
     RGB colour = lerp(specularColour, diffuseColour, sphere.specularity);
-    
+
     tab_pad(TTL);
-    printRGB(END, "\tspecular", specularColour);
+    printRGB("\tdiffuse:  ", diffuseColour);
     tab_pad(TTL);
-    printRGB(END, "\ttotal", colour);
+    printRGB("\tspecular: ", specularColour);
+    tab_pad(TTL);
+    printRGB("\ttotal:    ", colour);
+
+    tab_pad(TTL + 1);
+    printf("\n");
 
 
 
@@ -151,7 +157,7 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
 void tab_pad(int TTL) {
     for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) {
-        printf("\t");
+        printf("\t%s|%s", YELLOW, END);
     }
 }
 

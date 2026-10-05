@@ -43,6 +43,7 @@ int main() {
             printVec(MAGENTA, "\tRay", ray);
 
             RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, normalised((Vec) {1, -1, .5}), spheres, num, MAX_BOUNCES + 1);
+            printRGB("\tcolour:" , colour);
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
             *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;

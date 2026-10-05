@@ -21,6 +21,6 @@ RGB tint(RGB colour, float x);
 RGB lerp(RGB a, RGB b, float x);
 
 void printVec(char* col, char* name, Vec v);
-void printRGB(char* col, char* name, RGB v);
+void printRGB(char* name, RGB v);
 
 #endif
