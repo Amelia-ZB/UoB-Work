@@ -17,6 +17,7 @@
 |p|	Pointer address	|b8000000
 |n|	Nothing printed. The corresponding argument must be a pointer to a signed int. The number of characters written so far is stored in the pointed location.|
 |%|	A % followed by another % character will write a single % to the stream.	|%
+|zu| special case for `size_t`
 
 # Operator Precedence
 

@@ -343,3 +343,43 @@ when a function has an array as a parameter `int sum(int array[])` something cal
 ## 2d arrays
 
 each sub-array is contiguous within the main array, so a 2 by 3 matrix is identical to a 6 element array. They are _not_ implemented as an array of pointers to arrays. C is **row-major** where the first index value has the most significance
+
+# 03.1 - Strings
+
+C has no strings, they are just arrays of (ASCII) characters
+
+- `\0` represents the null character
+
+## non ASCII characters
+
+C uses UTF-8 for other characters
+
+## Initialising
+
+```C
+char textA[3] = {'H', 'i', '\0'}; // a string: must include '\0'
+char textB[]  = {'H', 'i', '\0'}; // size inferred: 3
+char textC[3] = "Hi";             // shortcut: adds the '\0'
+char textD[]  = "Hi";             // shortcut + size inferred
+```
+
+## string.h
+
+`strlen()` retruns the length of a string, the null character is not counted
+
+it returnts a `size_t` so trying to print it with `%d` is wrong, by doing it the number is automatically converted (coerced) to an int, the correct specifier is `%zu`
+
+it also provides:
+- `strcmp` check if strings are equal
+    - returns 0 if they are the same
+    - < 0 if the first string comes before the second one alphabeticaly
+    - finds the numerical difference in the ASCII values
+- `strcpy` copy a string to another array
+    - copies the null terminator
+    - can go out of bounds if the second string is not big enough
+- `strcat` concatenate strings
+    - copies the second string onto the end of the first `s1 = s1 + s2`
+- `sprintf` builds messages similar to python f-strings
+    - printf but puts the result into a string rather than the stream
+
+
