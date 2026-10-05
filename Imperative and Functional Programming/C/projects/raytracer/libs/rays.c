@@ -8,6 +8,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#define MAX_BOUNCES 1
+
 struct Ray {
     Vec direction;
     Vec origin;
@@ -31,7 +33,8 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
 
-    printf("\titteration: %d\n", 3 - TTL);
+    for (int i = 0; i < MAX_BOUNCES + 1 - TTL; i++) printf("\t");
+    printf("\titteration %d:\n", MAX_BOUNCES + 2 - TTL);
 
     float surfaceDistances[n];
 
@@ -70,12 +73,14 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     //int index = min_float_index(surfaceDistances, n);
     int index = (surfaceDistances[0] < surfaceDistances[1]) ? 0 : 1;
 
+    for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) printf("\t");
+
     if (surfaceDistances[index] == INFINITY) {
-        printf("\t%d: closest sphere: none!\n", 3 - TTL);
+        printf("\tclosest sphere: none!\n");
         return (RGB) {0, 0, 0};
     }
 
-    printf("\t%d: closest sphere: %d\n", 3 - TTL, index);
+    printf("\tclosest sphere: %d\n", index);
 
     Sphere sphere = spheres[index];
 
@@ -111,11 +116,24 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
     // specular
     RGB specularColour = calculate(reflectedRay, lightRay, spheres, n, TTL - 1);
+    
+    // combine
 
-    printf("\t%d: diffuse: (%d, %d, %d)\n", 3 - TTL, diffuseColour.r, diffuseColour.g, diffuseColour.b);
-    printf("\t%d: specular: (%d, %d, %d)\n", 3 - TTL, specularColour.r, specularColour.g, specularColour.b);
+    RGB colour = lerp(specularColour, diffuseColour, sphere.specularity);
+    
+    for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) printf("\t");
+    printf("\tdiffuse:  (%d, %d, %d) ", diffuseColour.r, diffuseColour.g, diffuseColour.b);
+    printf("\033[48;2;%d;%d;%dm     \033[0m\n", diffuseColour.r, diffuseColour.g, diffuseColour.b);
+    for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) printf("\t");
+    printf("\tspecular: (%d, %d, %d) ", specularColour.r, specularColour.g, specularColour.b);
+    printf("\033[48;2;%d;%d;%dm     \033[0m\n", specularColour.r, specularColour.g, specularColour.b);
+    for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) printf("\t");
+    printf("\ttotal:    (%d, %d, %d) ", colour.r, colour.g, colour.b);
+    printf("\033[48;2;%d;%d;%dm     \033[0m\n", colour.r, colour.g, colour.b);
 
-    return lerp(specularColour, diffuseColour, sphere.specularity);
+
+
+    return colour;
     
 
 

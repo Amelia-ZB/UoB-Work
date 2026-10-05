@@ -7,8 +7,8 @@
 
 #define PI 3.14159265358979323846
 
-#define WIDTH 128
-#define HEIGHT 128
+#define WIDTH 48
+#define HEIGHT 48
 
 #define FOV 90
 
@@ -18,8 +18,8 @@ int main() {
     // define objects ===========================================
 
     Sphere spheres[] = {
-        {{-64, 0, 128+64}, {255, 255, 255}, 0.5, 64},
         {{64, 0, 128}, {255, 64, 64}, 0, 64},
+        {{-64, 0, 128+64}, {255, 255, 255}, 0.5, 64},
     };
 
     // make image ===============================================
@@ -39,7 +39,7 @@ int main() {
             normalise(&ray);
             printf("\tRay: [%f, %f, %f]\n", ray.x, ray.y, ray.z);
 
-            RGB colour = calculate((Ray) {ray, {0, 0, 0}}, normalised((Vec) {1, 0, 0}), spheres, 2, 2);
+            RGB colour = calculate((Ray) {ray, {0, 0, 0}}, normalised((Vec) {1, 0, -.5}), spheres, 2, MAX_BOUNCES + 1);
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
             *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;
