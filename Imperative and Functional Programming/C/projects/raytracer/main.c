@@ -4,11 +4,10 @@
 #include "libs/bmp.c"
 #include "libs/vector.c"
 #include "libs/rays.c"
+#include "libs/rgb.h"
 
-#define PI 3.14159265358979323846
-
-#define WIDTH 48
-#define HEIGHT 48
+#define WIDTH 512
+#define HEIGHT 512
 
 #define FOV 90
 
@@ -16,19 +15,23 @@ int main() {
     Image image = make_bmp(WIDTH, HEIGHT);
 
     // define objects ===========================================
-
+    int num = 3;
     Sphere spheres[] = {
-        {{64, 0, 128}, {255, 64, 64}, 0, 64},
-        {{-64, 0, 128+64}, {255, 255, 255}, 0.5, 64},
+//       position       colour           specularity    radius
+        {{64, 0, 128},  {255, 64, 64},   0,             64},
+        {{-64, 0, 192}, {255, 255, 255}, 0.5,           64},
+        {{0, -96, 160}, {0, 255, 0},     0,             32},
     };
 
     // make image ===============================================
     uint8_t *pixelArray = image.imageData + image.headerSize;
 
-    float camera_distance = WIDTH / 2.0 / tan((FOV / 2.0) / 180.0 * PI);
+    float camera_distance = WIDTH / 2.0 / tan((FOV / 2.0) / 180.0 * M_PI);
 
     for (int y = 0; y < image.height; y++){
         unsigned int yOffsettBytes = (image.height - y - 1) * image.rowSize;
+
+        printf("%d / %d\n", y, HEIGHT);
 
         for (int x = 0; x < image.width; x++) {
             unsigned int xOffsettBytes = x * (image.bpp / 8);
@@ -37,9 +40,9 @@ int main() {
 
             Vec ray = {x - (float) WIDTH / 2, y - (float) HEIGHT / 2, camera_distance};
             normalise(&ray);
-            printf("\tRay: [%f, %f, %f]\n", ray.x, ray.y, ray.z);
+            printVec(MAGENTA, "\tRay", ray);
 
-            RGB colour = calculate((Ray) {ray, {0, 0, 0}}, normalised((Vec) {1, 0, -.5}), spheres, 2, MAX_BOUNCES + 1);
+            RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, normalised((Vec) {1, -1, .5}), spheres, num, MAX_BOUNCES + 1);
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
             *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;

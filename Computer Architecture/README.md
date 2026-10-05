@@ -522,3 +522,55 @@ $\textbf Z$|$\textbf Z$|$\textbf Z$
 
 - fan-out the number of other gates that consume the output from a logic gate (number of outputs from a gate)
 
+# 03.2 - Combinatorial logic
+
+combining logic gates to do coputation
+
+**there are no states**, the output solely depends on the inputs
+
+## design patterns
+
+### 1. reuse or sharing
+
+if you compute $r = x \land y$
+
+and then somewhere else you compute $r' = x \land y$
+
+you can remove one of the AND gates and share the output ($r = r'$)
+
+### 2. Decomposition
+
+split a big function into many small functions
+
+### 3. independant replication
+
+similar to decomposition but it is split to work on individual bits
+
+### 4. dependant replicatoin
+
+chain small functions together to make a complex circuit
+
+## special-purpose building blocks
+
+- mux and demux
+
+<!--
+__              __
+  \            /
+---mux====demux---
+__/            \__
+-->
+
+- half & full adder
+
+- `=` & `<` comparitors
+
+- encoders & decoders (similar to a mux but with the input always 1)
+
+<!--
+          ______
+         /      \
+==encoder--------decoder==
+         \______/
+-->
+
