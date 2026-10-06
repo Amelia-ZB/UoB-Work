@@ -46,7 +46,7 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
             continue;
         }
 
-        //// printf("%d: \n", i);
+        // printf("%d: \n", i);
         Sphere sphere = spheres[i];
 
         // shortest vector from point to ray
@@ -75,9 +75,9 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     int index = min_float_index(surfaceDistances, n);
 
     tab_pad(TTL);
-    printf("\t%sdistances%s: [", GREEN, END);
-    for (int i = 0; i < n; i++) printf("%s%f%s, ", CYAN, surfaceDistances[i], END);
-    printf("]\n");
+    printf("\t%sdistances%s: [%s", GREEN, END, CYAN);
+    for (int i = 0; i < n; i++) printf("%f ", surfaceDistances[i]);
+    printf("%s]\n", END);
 
     tab_pad(TTL);
 

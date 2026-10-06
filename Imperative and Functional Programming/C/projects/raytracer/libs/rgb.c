@@ -23,7 +23,7 @@ RGB lerp(RGB a, RGB b, float x) {
 
 
 void printVec(char* col, char* name, Vec v) {
-    printf("%s%s\033[0m: [%s%f\033[0m, %s%f\033[0m, %s%f\033[0m]\n", col, name, CYAN, v.x, CYAN, v.y, CYAN, v.z);
+    printf("%s%s\033[0m: [%s%f %f %f\033[0m]\n", col, name, CYAN, v.x, v.y, v.z);
 }
 void printRGB(char* name, RGB c) {
     printf("%s", name);

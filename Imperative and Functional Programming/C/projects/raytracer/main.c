@@ -15,7 +15,7 @@ int main() {
     Image image = make_bmp(WIDTH, HEIGHT);
 
     // define objects ===========================================
-    int num = 3;
+    int num = 5;
     Sphere spheres[] = {
 //       position       colour           specularity    radius
         {{64, 0, 128},  {255, 64, 64},   0,             64},
