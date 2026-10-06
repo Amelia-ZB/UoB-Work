@@ -3,6 +3,25 @@
 > [!IMPORTANT]
 > [course overview](https://cs-uob.github.io/)
 
+## Exams
+
+### Year 1
+
+Imperative & functional coursework 1 - 5th Nov
+
+Imperative & functional coursework 2 - 3rd Dec
+
+Programming Exam - TBC
+
+Maths - TBC
+
+Software Tools Exam - TBC
+
+Software Tools in class test - 10th Dec
+
+Architecture encrypt coursework - 26th Nov
+
+Architecture Exam - TBC
 
 ## Architecture
 

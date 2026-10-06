@@ -402,8 +402,8 @@ this means that you can rename bound variables to anything you want
 
 **negation is the de morang's law**
 
-$\forall x.\ P(x) \equiv \exists x.\ \neg P(x)\\$
-$\exists x.\ P(x) \equiv \forall x.\ \neg P(x)$
+$\neg \forall x.\ P(x) \equiv \exists x.\ \neg P(x)\\$
+$\neg \exists x.\ P(x) \equiv \forall x.\ \neg P(x)$
 
 ## Nesting
 - Let Mother(x, y) denote x is the mother of y
@@ -415,3 +415,6 @@ $\exists x.\ P(x) \equiv \forall x.\ \neg P(x)$
 
 be carefull with existential qualifier and vacuous truths
 
+there exists - should combine things with conjunction
+
+for all - should combine things with implication

@@ -33,7 +33,7 @@ RWX - read write execute
 
 # 02 - Fundementals
 
-# to learn
+## to learn
 
 - sed
 - shebang to compile & run a c program
@@ -149,3 +149,58 @@ xargs :: helps avoid looping
 yes :: helps avoid typing yes a lot (also these logic ops)
 && :: if command on left succeeds run command on right
 || :: if command on left fails run command on
+
+
+
+
+# 03 - RegEx
+
+grep: search
+- -E extended RegEx
+- -i case insensitive
+- -o match strings instead of lines
+- -v invert
+- -R recursive (for folders)
+- -c count matches instead of printing them
+
+
+sed: replace
+- -n dont print lines by default
+- -E extended RegEx
+- -i edit files in place
+
+awk: general, for semi-structured data
+
+
+"write only" code, you will forget how it works
+
+- use just POSIX BRE (Basic RegEx)
+
+## how to read
+
+- left to right
+    - if the char matches, keep going
+    - otherwise go back
+
+## syntax
+
+- `.` any character
+- `^` start of a line
+- `$` end of a line
+-
+- `[]` any char in set
+- `[^]` any char not in set
+- `a-z A-Z 0-9 a-Z` shorthands for sets
+- `:name:` named groups
+- `\(\)` **group**: match whatever is inside it as a standalone thing
+-
+- `\?` match 0 or 1 times
+- `\+` match 1 or more times
+- `\*` match 0 or more times
+-
+- `\{n\}` match exactly n times
+- `\{n,m\}` match between n and m times
+- `\{n,\}` match n or more times
+- `\{,n\}` match 0 to n times
+-
+- \n match whatever was matched in the nth group
