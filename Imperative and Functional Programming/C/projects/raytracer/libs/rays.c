@@ -19,7 +19,7 @@ struct Ray {
 struct Sphere {
     Vec pos;
     RGB colour;
-    float specularity;
+    float reflectivity;
 
     float r;
 };
@@ -36,6 +36,10 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     printVec(MAGENTA, "\tray: \033[0m\tpos", ray.origin);
     tab_pad(TTL);
     printVec(MAGENTA, "\t\033[0m\tdir", ray.direction);
+
+
+    tab_pad(TTL);
+    printf("\t%sLambdas:\033[0m\n", BLUE);
     
     float surfaceDistances[n];
 
@@ -48,25 +52,36 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
         // printf("%d: \n", i);
         Sphere sphere = spheres[i];
+        
+        // lambda at closest approach
+        float lambda = dotp(subtract_vec_vec(ray.origin, sphere.pos), ray.direction);
 
-        // shortest vector from point to ray
-        Vec distanceVec = subtract_vec_vec(subtract_vec_vec(ray.origin, sphere.pos), multiply_float_vec(dotp(subtract_vec_vec(ray.origin, sphere.pos), ray.direction), ray.direction));
-        // shortest distance from point to ray
-        float distance = magnitude(distanceVec);
-        //// printf("\tdistance: %f\n", distance);
+        tab_pad(TTL);
+        printf("\t\t%d\033[0m: %s%f\n", i, CYAN, lambda);
 
-        if (distance > sphere.r) {
+        if (lambda > 0) {
             surfaceDistances[i] = INFINITY;
         } else {
-            // point of closest approach
-            Vec closestPoint = add_vec_vec(sphere.pos, distanceVec);
 
-            // point on surface of sphere that the ray hit
-            Vec intersectionPoint = subtract_vec_vec(closestPoint, multiply_vec_float(ray.direction, sqrt(sphere.r*sphere.r - distance * distance)));
+            // shortest vector from point to ray
+            Vec distanceVec = subtract_vec_vec(subtract_vec_vec(ray.origin, sphere.pos), multiply_float_vec(lambda, ray.direction));
+            // shortest distance from point to ray
+            float distance = magnitude(distanceVec);
+            // printf("\tdistance: %f\n", distance);
 
-            float distanceToHit = magnitude(subtract_vec_vec(intersectionPoint, ray.origin));
+            if (distance > sphere.r) {
+                surfaceDistances[i] = INFINITY;
+            } else {
+                // point of closest approach
+                Vec closestPoint = add_vec_vec(sphere.pos, distanceVec);
 
-            surfaceDistances[i] = distanceToHit;
+                // point on surface of sphere that the ray hit
+                Vec intersectionPoint = subtract_vec_vec(closestPoint, multiply_vec_float(ray.direction, sqrt(sphere.r*sphere.r - distance * distance)));
+
+                float distanceToHit = magnitude(subtract_vec_vec(intersectionPoint, ray.origin));
+
+                surfaceDistances[i] = distanceToHit;
+            }
         }
 
         
@@ -122,6 +137,8 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     printf("\n");
     
     // diffuse
+    // Vec lightRay = subtract_vec_vec(lightPos, intersectionPoint);
+
     float brightness = dotp(lightRay, minus_vec(normal));
     RGB diffuseColour;
 
@@ -135,7 +152,7 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     RGB specularColour = calculate(reflectedRay, lightRay, spheres, n, TTL - 1);
     
     // combine
-    RGB colour = lerp(specularColour, diffuseColour, sphere.specularity);
+    RGB colour = lerp(specularColour, diffuseColour, sphere.reflectivity);
 
     tab_pad(TTL);
     printRGB("\tdiffuse:  ", diffuseColour);

@@ -15,13 +15,15 @@ int main() {
     Image image = make_bmp(WIDTH, HEIGHT);
 
     // define objects ===========================================
-    int num = 5;
+    int num = 3;
     Sphere spheres[] = {
-//       position       colour           specularity    radius
+//       position       colour           reflectivity   radius
         {{64, 0, 128},  {255, 64, 64},   0,             64},
         {{-64, 0, 192}, {255, 255, 255}, 0.5,           64},
         {{0, -96, 160}, {0, 255, 0},     0,             32},
     };
+
+    Vec light = {-64, -64, 128};
 
     // make image ===============================================
     uint8_t *pixelArray = image.imageData + image.headerSize;
@@ -43,7 +45,7 @@ int main() {
             printVec(MAGENTA, "\tRay", ray);
 
             RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, normalised((Vec) {1, -1, .5}), spheres, num, MAX_BOUNCES + 1);
-            printRGB("\tcolour:" , colour);
+            printRGB("\tcolour: " , colour);
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
             *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;
