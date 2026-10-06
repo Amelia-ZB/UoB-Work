@@ -380,3 +380,177 @@ makes the code much more readable by indicating your intentions
 
 
 
+# Lists
+
+in every haskell file 'include Prelude' is included implicitly
+
+strings are just lists of characters, the prelude has `type String = [Char]`
+
+## list vs tuple
+
+could be implemented as a tuple `egTuple::(int, char, bool)`
+- fixed length
+- fixed type
+
+```hs
+egList::[int]
+egList = 1;2;3;[]
+```
+
+lists hare homogeneous, tuples are hererogeneous
+
+## constructors
+
+empty constructor:
+```hs
+foo::[Int]
+foo = []
+```
+
+cons:
+```hs
+foo'::[Int]
+foo' = 1 : []
+```
+
+- this does not modify the list, it creates a new one
+
+## pattern matching with lists
+
+```hs
+is123 :: [Int] -> Bool
+is123 x = case x of
+    1 : 2 : 3 : [] -> True
+    _ -> False
+
+head xs = case xs of
+    x : xs' -> x
+
+tail (_ : x) = x
+
+{-
+
+>>> head (1:2:3:[])
+1
+>>> tail (3:2:1:[])
+[2,1]
+
+-}
+
+```
+these are partial functions
+
+### syntactic sugar
+
+```hs
+-- >>> tail [1, 2, 3, 4]
+-- [2,3,4]
+
+foo :: [Int] -> Int
+foo [x, y, z] = x + z
+foo _ = 0
+
+-- >>> foo [1, 2, 3]
+-- 4
+
+-- >>> foo [1, 4]
+-- 0
+
+```
+
+## lists + recursion
+
+```hs
+sum :: [Int] -> Int
+sum l = case l of
+    [] -> 0
+    x : l' -> x + sum l'
+
+
+-- >>> sum [1, 2, 3]
+-- 6
+
+
+allTrue l = case l of
+    [] -> True
+    True : l' -> allTrue l'
+    False : l' -> False
+
+-- >>> allTrue [True, True, False]
+-- >>> allTrue [True, True, True]
+-- False
+-- True
+
+
+```
+
+## strings
+
+(lists of characters)
+
+```hs
+
+lower :: String -> String
+lower [] = []
+lower (c : s') = ((toLower c) : (lower s'))
+
+upper :: String -> String
+upper [] = []
+upper (c : s') = ((toUpper c) : (upper s'))
+-- 
+
+
+{-
+    >>> lower "HIIII!"
+    "hiiii!"
+
+    >>> upper "Hello World!"
+    "HELLO WORLD!"
+
+
+>>> upper "abc"
+> toUpper 'a' : upper "bc"
+>     toUpper 'b' : upper "c"
+>         toUpper 'c' : upper ""
+>             -- base case --
+>             ""
+>         "C"
+>     "BC"
+"ABC"
+
+-}
+
+
+strcmp :: String -> String -> Int
+strcmp [] [] = 0
+strcmp [] (r:rs) = -1
+strcmp (l:ls) [] = 1
+strcmp (l:ls) (r:rs)
+    | l < r = -1
+    | r < l = 1
+    | l == r = strcmp ls rs
+
+{-
+
+>>> strcmp "apple" "aardvark"
+>>> strcmp "apple" "apples"
+>>> strcmp "apple" "apple"
+1
+-1
+0
+
+-}
+
+
+reverse :: String -> String
+reverse str = helper [] str
+    where
+        helper :: String -> String -> String
+        helper acc (c : cs) = helper (c : acc) cs
+        helper acc [] = acc
+
+
+-- >>> reverse "Hello World!"
+-- "!dlroW olleH"
+
+```
