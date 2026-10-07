@@ -3,5 +3,5 @@
 
 #define FOV 90
 
-#define MAX_BOUNCES 1
+#define MAX_BOUNCES 4
 //#define DEBUG

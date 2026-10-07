@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 #include "libs/bmp.c"
 #include "libs/vector.c"
@@ -13,8 +14,8 @@ int main() {
     // define objects ===========================================
     Sphere spheres[] = {
 //       position       colour           reflectivity   radius
-        {{64, 0, 128},  {255, 64, 64},   0,             64},
-        {{-64, 0, 192}, {255, 255, 255}, 0.5,           64},
+        {{64, 0, 128},  {255, 64, 64},   0.5,           64},
+        {{-64, 0, 192}, {64, 255, 64},   0.5,           64},
         {{0, -96, 160}, {64, 200, 200},  0,             32},
         {{0, 32, 96},   {255, 64, 128},  0,             16},
     };
@@ -31,7 +32,7 @@ int main() {
     for (int y = 0; y < image.height; y++){
         unsigned int yOffsettBytes = (image.height - y - 1) * image.rowSize;
 
-        printf("%d / %d\n", y, HEIGHT);
+        //printf("%d / %d\n", y, HEIGHT);
 
         for (int x = 0; x < image.width; x++) {
             unsigned int xOffsettBytes = x * (image.bpp / 8);
