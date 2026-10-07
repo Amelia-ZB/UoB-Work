@@ -5,12 +5,10 @@
 #include "rgb.h"
 #include "vector.c"
 #include "rgb.c"
+#include "consts.h"
 
 #include <math.h>
 #include <stdio.h>
-
-#define MAX_BOUNCES 2
-#define DEBUG
 
 struct Ray {
     Vec direction;
@@ -27,11 +25,11 @@ struct Sphere {
 };
 
 
-RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
+RGB calculate(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
 
-    
+    #ifdef DEBUG
     tab_pad(TTL + 1);
     printf("\t%siteration %d\033[0m:\n", YELLOW, MAX_BOUNCES + 2 - TTL);
 
@@ -43,6 +41,7 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
 
     tab_pad(TTL);
     printf("\t%sLambdas:\033[0m\n", BLUE);
+    #endif
     
     float surfaceDistances[n];
 
@@ -59,8 +58,10 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
         // lambda at closest approach
         float lambda = dotp(subtract_vec_vec(ray.origin, sphere.pos), ray.direction);
 
+        #ifdef DEBUG
         tab_pad(TTL);
         printf("\t\t%d\033[0m: %s%f\n", i, CYAN, lambda);
+        #endif
 
         if (lambda > 0) {
             surfaceDistances[i] = INFINITY;
@@ -92,21 +93,27 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
 
     int sphereIndex = min_float_index(surfaceDistances, n);
 
+    #ifdef DEBUG
     tab_pad(TTL);
     printf("\t%sdistances%s: [%s", GREEN, END, CYAN);
     for (int i = 0; i < n; i++) printf("%f ", surfaceDistances[i]);
     printf("%s]\n", END);
 
     tab_pad(TTL);
+    #endif
 
     if (surfaceDistances[sphereIndex] == INFINITY) {
+        #ifdef DEBUG
         printf("\tclosest: none!\n");
+        #endif
         return (RGB) {0, 0, 0};
     }
 
+    #ifdef DEBUG
     printf("\t%sclosest%s: %s%d%s\n", GREEN, END, GREEN, sphereIndex, END);
     tab_pad(TTL);
     printf("\n");
+    #endif
 
     Sphere sphere = spheres[sphereIndex];
 
@@ -129,6 +136,7 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
     
     Ray reflectedRay = {reflectedDirection, intersectionPoint, sphereIndex};
 
+    #ifdef DEBUG
     tab_pad(TTL);
     printVec(BLUE, "\tradial", normal);
     
@@ -138,14 +146,18 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
     printVec(MAGENTA, "\t\033[0m\tdir", ray.direction);
     tab_pad(TTL);
     printf("\n");
+    #endif
 
     // specular
     RGB specularColour;
     if (sphere.reflectivity > 0) {
 
         specularColour = calculate(reflectedRay, lightPos, spheres, n, TTL - 1);
+
+        #ifdef DEBUG
         tab_pad(TTL);
         printf("\n");
+        #endif
 
     } else {
         specularColour = (RGB) {0, 0, 0};
@@ -161,16 +173,17 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
         diffuseColour = (RGB) {0, 0, 0};
 
     } else {
+        float brightness = dotp(normalised(lightRay.direction), normal);
+
+        #ifdef DEBUG
         tab_pad(TTL);
         printVec(GREEN, "\tl-ray\033[0m: \tpos", lightRay.origin);
         tab_pad(TTL);
         printVec(GREEN, "\t     \033[0m  \tdir", lightRay.direction);
 
-        float brightness = dotp(normalised(lightRay.direction), normal);
-
         tab_pad(TTL);
         printf("\t%sbrightness\033[0m: %s%f\033[0m\n", GREEN, BLUE, brightness);
-
+        #endif
         
 
         if (brightness < 0) { // fully in shadow
@@ -185,6 +198,7 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
     // combine
     RGB colour = lerp(specularColour, diffuseColour, sphere.reflectivity);
 
+    #ifdef DEBUG
     tab_pad(TTL);
     printRGB("\tdiffuse:  ", diffuseColour);
     tab_pad(TTL);
@@ -194,13 +208,14 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
 
     tab_pad(TTL + 1);
     printf("\n");
+    #endif
 
     return colour;
 
 
 }
 
-int intersects(Ray ray, Sphere* spheres, int n) {
+int intersects(const Ray ray, const Sphere* spheres, const int n) {
 
     _Bool intersect = 0;
 
@@ -244,13 +259,13 @@ int intersects(Ray ray, Sphere* spheres, int n) {
 
 
 
-void tab_pad(int TTL) {
+void tab_pad(const int TTL) {
     for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) {
         printf("\t%s|%s", YELLOW, END);
     }
 }
 
-int min_float_index(float *arr, int n) {
+int min_float_index(const float *arr, const int n) {
     int index = 0;
     float min = arr[0];
 

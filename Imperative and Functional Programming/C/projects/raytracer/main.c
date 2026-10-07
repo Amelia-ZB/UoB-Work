@@ -5,25 +5,21 @@
 #include "libs/vector.c"
 #include "libs/rays.c"
 #include "libs/rgb.h"
-
-#define WIDTH 512
-#define HEIGHT 512
-
-#define FOV 90
+#include "libs/consts.h"
 
 int main() {
     Image image = make_bmp(WIDTH, HEIGHT);
 
     // define objects ===========================================
-    int num = 3;
     Sphere spheres[] = {
 //       position       colour           reflectivity   radius
-        // {{0, 2048 + 128, 512}, {255, 255, 255}, 0, 2048},
-        // {{0, 0, 512}, {0, 128, 255}, 0, 64},
         {{64, 0, 128},  {255, 64, 64},   0,             64},
         {{-64, 0, 192}, {255, 255, 255}, 0.5,           64},
-        {{0, -96, 160}, {0, 255, 0},     0.5,             32},
+        {{0, -96, 160}, {64, 200, 200},  0,             32},
+        {{0, 32, 96},   {255, 64, 128},  0,             16},
     };
+
+    int num = sizeof(spheres) / sizeof(Sphere);
 
     Vec light = {-64, 64, 64};
 
@@ -40,14 +36,22 @@ int main() {
         for (int x = 0; x < image.width; x++) {
             unsigned int xOffsettBytes = x * (image.bpp / 8);
 
+            #ifdef DEBUG
             printf("\n(%d, %d): \n", x, y);
+            #endif
 
             Vec ray = {x - (float) WIDTH / 2, y - (float) HEIGHT / 2, camera_distance};
             normalise(&ray);
+
+            #ifdef DEBUG
             printVec(MAGENTA, "\tRay", ray);
+            #endif
 
             RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, light, spheres, num, MAX_BOUNCES + 1);
+            
+            #ifdef DEBUG
             printRGB("\tcolour: " , colour);
+            #endif
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
             *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;

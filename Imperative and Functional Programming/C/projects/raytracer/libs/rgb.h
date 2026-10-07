@@ -16,11 +16,11 @@
 
 typedef struct RGB RGB;
 
-RGB tint(RGB colour, float x);
+RGB tint(const RGB colour, const float x);
 
-RGB lerp(RGB a, RGB b, float x);
+RGB lerp(const RGB a, const RGB b, const float x);
 
-void printVec(char* col, char* name, Vec v);
-void printRGB(char* name, RGB v);
+void printVec(const char* col, const char* name, const Vec v);
+void printRGB(const char* name, const RGB v);
 
 #endif

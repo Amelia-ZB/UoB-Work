@@ -7,10 +7,10 @@
 typedef struct Ray Ray;
 typedef struct Sphere Sphere;
 
-RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL);
-int intersects(Ray ray, Sphere* spheres, int n);
+RGB calculate(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL);
+int intersects(const Ray ray, const Sphere* spheres, const int n);
 
-void tab_pad(int TTL);
-int min_float_index(float *arr, int n);
+void tab_pad(const int TTL);
+int min_float_index(const float *arr, const int n);
 
 #endif
