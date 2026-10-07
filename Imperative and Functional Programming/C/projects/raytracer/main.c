@@ -18,17 +18,19 @@ int main() {
     int num = 3;
     Sphere spheres[] = {
 //       position       colour           reflectivity   radius
+        // {{0, 2048 + 128, 512}, {255, 255, 255}, 0, 2048},
+        // {{0, 0, 512}, {0, 128, 255}, 0, 64},
         {{64, 0, 128},  {255, 64, 64},   0,             64},
         {{-64, 0, 192}, {255, 255, 255}, 0.5,           64},
         {{0, -96, 160}, {0, 255, 0},     0,             32},
     };
 
-    Vec light = {-64, -64, 128};
+    Vec light = {-64, 0, 64};
 
     // make image ===============================================
     uint8_t *pixelArray = image.imageData + image.headerSize;
 
-    float camera_distance = WIDTH / 2.0 / tan((FOV / 2.0) / 180.0 * M_PI);
+    float camera_distance = WIDTH / 2.0 / tan((FOV / 2.0) / 180.0 * 3.1415926);
 
     for (int y = 0; y < image.height; y++){
         unsigned int yOffsettBytes = (image.height - y - 1) * image.rowSize;
@@ -44,7 +46,7 @@ int main() {
             normalise(&ray);
             printVec(MAGENTA, "\tRay", ray);
 
-            RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, normalised((Vec) {1, -1, .5}), spheres, num, MAX_BOUNCES + 1);
+            RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, light, spheres, num, MAX_BOUNCES + 1);
             printRGB("\tcolour: " , colour);
 
             *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;

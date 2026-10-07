@@ -5,6 +5,7 @@
 #include "rgb.h"
 #include "vector.c"
 #include "rgb.c"
+
 #include <math.h>
 #include <stdio.h>
 
@@ -25,7 +26,7 @@ struct Sphere {
 };
 
 
-RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
+RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
 
@@ -87,7 +88,7 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
         
     }
 
-    int index = min_float_index(surfaceDistances, n);
+    int sphereIndex = min_float_index(surfaceDistances, n);
 
     tab_pad(TTL);
     printf("\t%sdistances%s: [%s", GREEN, END, CYAN);
@@ -96,16 +97,16 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
 
     tab_pad(TTL);
 
-    if (surfaceDistances[index] == INFINITY) {
+    if (surfaceDistances[sphereIndex] == INFINITY) {
         printf("\tclosest: none!\n");
         return (RGB) {0, 0, 0};
     }
 
-    printf("\t%sclosest%s: %s%d%s\n", GREEN, END, GREEN, index, END);
+    printf("\t%sclosest%s: %s%d%s\n", GREEN, END, GREEN, sphereIndex, END);
     tab_pad(TTL);
     printf("\n");
 
-    Sphere sphere = spheres[index];
+    Sphere sphere = spheres[sphereIndex];
 
     // shortest vector from point to ray
     Vec distanceVec = subtract_vec_vec(subtract_vec_vec(ray.origin, sphere.pos), multiply_float_vec(dotp(subtract_vec_vec(ray.origin, sphere.pos), ray.direction), ray.direction));
@@ -124,7 +125,7 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     // direction of the reflected ray
     Vec reflectedDirection = normalised(subtract_vec_vec(ray.direction, multiply_float_vec(2 * dotp(ray.direction, normal), normal)));
     
-    Ray reflectedRay = {reflectedDirection, intersectionPoint, index};
+    Ray reflectedRay = {reflectedDirection, intersectionPoint, sphereIndex};
 
     tab_pad(TTL);
     printVec(BLUE, "\tradial", normal);
@@ -135,21 +136,49 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     printVec(MAGENTA, "\t\033[0m\tdir", ray.direction);
     tab_pad(TTL);
     printf("\n");
-    
-    // diffuse
-    // Vec lightRay = subtract_vec_vec(lightPos, intersectionPoint);
-
-    float brightness = dotp(lightRay, minus_vec(normal));
-    RGB diffuseColour;
-
-    if (brightness < 0) { // fully in shadow
-        diffuseColour = (RGB) {0, 0, 0};
-    } else { // visible
-        diffuseColour = tint(sphere.colour, brightness);
-    }
 
     // specular
-    RGB specularColour = calculate(reflectedRay, lightRay, spheres, n, TTL - 1);
+    RGB specularColour;
+    if (sphere.reflectivity > 0) {
+
+        specularColour = calculate(reflectedRay, lightPos, spheres, n, TTL - 1);
+        tab_pad(TTL);
+        printf("\n");
+
+    } else {
+        specularColour = (RGB) {0, 0, 0};
+    }
+
+    // diffuse
+    Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
+
+    RGB diffuseColour;
+
+    if (intersects(lightRay, spheres, n)) {
+        // in shadow
+        diffuseColour = (RGB) {0, 0, 0};
+
+    } else {
+        tab_pad(TTL);
+        printVec(GREEN, "\tl-ray\033[0m: \tpos", lightRay.origin);
+        tab_pad(TTL);
+        printVec(GREEN, "\t     \033[0m  \tdir", lightRay.direction);
+
+        float brightness = dotp(normalised(lightRay.direction), normal);
+
+        tab_pad(TTL);
+        printf("\t%sbrightness\033[0m: %s%f\033[0m\n", GREEN, BLUE, brightness);
+
+        
+
+        if (brightness < 0) { // fully in shadow
+            diffuseColour = (RGB) {0, 0, 0};
+        } else { // visible
+            diffuseColour = tint(sphere.colour, brightness);
+        }
+    }
+
+    
     
     // combine
     RGB colour = lerp(specularColour, diffuseColour, sphere.reflectivity);
@@ -164,13 +193,54 @@ RGB calculate(Ray ray, Vec lightRay, Sphere *spheres, int n, int TTL) {
     tab_pad(TTL + 1);
     printf("\n");
 
-
-
     return colour;
-    
 
 
 }
+
+int intersects(Ray ray, Sphere* spheres, int n) {
+
+    _Bool intersect = 0;
+
+    for (int i = 0; i < n && !intersect; i++) {
+
+        if (i != ray.exclude) {
+            Sphere sphere = spheres[i];
+        
+            // lambda at closest approach
+            float lambda = dotp(subtract_vec_vec(ray.origin, sphere.pos), normalised(ray.direction));
+
+            if (lambda < 0) {
+
+                // shortest vector from point to ray
+                Vec distanceVec = subtract_vec_vec(subtract_vec_vec(ray.origin, sphere.pos), multiply_float_vec(lambda, normalised(ray.direction)));
+                // shortest distance from point to ray
+                float distance = magnitude(distanceVec);
+                // printf("\tdistance: %f\n", distance);
+
+                if (distance <= sphere.r) {
+
+                    // point of closest approach
+                    Vec closestPoint = add_vec_vec(sphere.pos, distanceVec);
+
+                    // point on surface of sphere that the ray hit
+                    Vec intersectionPoint = subtract_vec_vec(closestPoint, multiply_vec_float(normalised(ray.direction), sqrt(sphere.r*sphere.r - distance * distance)));
+
+                    float distanceToHit = magnitude(subtract_vec_vec(intersectionPoint, ray.origin));
+
+                    intersect = distanceToHit < magnitude(ray.direction);
+                }
+            }
+        }
+    }
+
+    return intersect;
+}
+
+
+
+
+
 
 void tab_pad(int TTL) {
     for (int i = 0; i < MAX_BOUNCES + 2 - TTL; i++) {
