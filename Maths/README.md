@@ -418,3 +418,74 @@ be carefull with existential qualifier and vacuous truths
 there exists - should combine things with conjunction
 
 for all - should combine things with implication
+
+## formula
+
+- atomic formula, formed by applying predicates to terms
+- all atomic formulas are well-formed
+
+## e.g.
+- variables: VL = {x,y}
+- objects: CL = {Gomit, Walice}
+- functions: FNL = {owner, mother, father}
+- predicates: PNL = {Rich, Happy}
+
+## Informal proofs
+
+- what we've seen so far
+![](./images/proofs%20old.jpeg)
+
+- new for Predicates
+![](./images/proofs%20new.png)
+
+## proving universal statemnents
+
+1. **let** $x$ **be an arbitary element of** $D$, make _no_ extra assumptions about $x$ beyond $x \in D$
+
+2. show that $P(x)$ holds (with any proof stratergy)
+
+3. conclude "sice $x$ was arbitrary, $\forall x : D.P(x)$."
+
+To use a hypothesis
+
+1. write "sice $\forall x : D.P(x)$, in particulare $P(t)$", for any specific term $t \in D$.
+
+2. work with $P(t)$
+
+3. you may instanciate the same universal statement multiple times, with different choices of t
+
+To disprove $\forall x : D.P(x)$
+
+- , find a single counterexample $x_0 \in D$ such that $\neg P(X_0)$ holds true
+
+## Proving Existential Statements
+
+1. find (or construct) a specific term $t \in D$
+2. show $P(t)$ holds
+3. conclude: "therefore $\exists x : D.P(x)$" taking $x = t$
+
+to use
+
+1. say "let $x_0$ be a witness i.e. $P(x_0)$ holds"
+2. work iwht $x_0$ bout all you know is that $P(x_0)$ holds
+3. any conclusion must not depend on the specific identity of $x_0$
+
+to disprove $\exists x : D.P(x)$
+
+- show $\forall x : \neg D.P(x)$
+
+## Informal(!) Proof eg
+S = student, W = works hard, Pass = passes
+
+$\forall x : S(x) \Rightarrow W(x)$ and $\forall x : W(x) \Rightarrow Pass(x)$
+
+1. let x be an arbitrary person
+2. assume they are a student
+3. since $\forall x : S(x) \Rightarrow W(x)$, by modes ponens with $S(x)$: so we get W(x)
+4. since $\forall x : W(x) \Rightarrow Pass(x)$, by modes ponens with $W(x)$: so we get Pass(x)
+4. therefore $S(x) \Rightarrow Pass(x)$
+
+
+## Uniqueness
+
+$\exists! x .P(x)\; \equiv\; \exists. (P(x) \land \forall y.(P(y) \Rightarrow...?))$

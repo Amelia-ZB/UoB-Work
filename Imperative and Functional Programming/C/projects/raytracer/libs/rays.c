@@ -9,7 +9,8 @@
 #include <math.h>
 #include <stdio.h>
 
-#define MAX_BOUNCES 1
+#define MAX_BOUNCES 2
+#define DEBUG
 
 struct Ray {
     Vec direction;
@@ -30,6 +31,7 @@ RGB calculate(Ray ray, Vec lightPos, Sphere *spheres, int n, int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
 
+    
     tab_pad(TTL + 1);
     printf("\t%siteration %d\033[0m:\n", YELLOW, MAX_BOUNCES + 2 - TTL);
 
