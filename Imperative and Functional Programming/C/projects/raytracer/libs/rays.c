@@ -9,6 +9,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <float.h>
 
 struct Ray {
     Vec direction;
@@ -24,7 +25,7 @@ struct Sphere {
     float r;
 };
 
-struct Plane {
+struct Triangle {
     Vec a, b, c;
     Vec normal; // AB x AC == (B-A) x (C-A)
 };
@@ -35,11 +36,48 @@ struct Object {
     RGB colour;
     float reflectivity;
 
-    Plane planes[];
+    Triangle planes[];
 };
 
 
-int /*bool*/ intersection(const Ray ray, const Object object);
+Bool intersection(const Ray ray, const Triangle triangle) {
+    Vec edge1 = subtract_vec_vec(triangle.b, triangle.a);
+    Vec edge2 = subtract_vec_vec(triangle.c, triangle.a);
+
+    // Backface culling, assuming CCW-wound triangles.
+    const Vec normal = crossp(edge1, edge2); // No need to normalize
+	if (dotp(normal, ray.direction) > 0) return false;
+
+    Vec ray_cross_e2 = crossp(ray.direction, edge2);
+    float det = dotp(edge1, ray_cross_e2);
+
+    if (abs(det) < FLT_EPSILON) return false; // Ray is parallel to triangle
+
+    float inv_det = 1.0 / det;
+    Vec s = subtract_vec_vec(ray.origin, triangle.a);
+    float u = inv_det * dotp(s, ray_cross_e2);
+
+    if (u < -FLT_EPSILON || u - 1 > FLT_EPSILON) return false; // Ray passes outside edge2's bounds
+
+    Vec s_cross_e1 = crossp(s, edge1);
+    float v = inv_det * dotp(ray.direction, s_cross_e1);
+
+    if (v < -FLT_EPSILON || u + v - 1 > FLT_EPSILON) return false; // Ray passes outside edge1's bounds
+
+    // The ray line intersects with the triangle.
+    // We compute t to find where on the ray the intersection is.
+    float t = inv_det * dotp(edge2, s_cross_e1);
+
+    if (t > FLT_EPSILON) // Ray intersection
+    {
+        return true;
+        Vec point = add_vec_vec(ray.origin, multiply_vec_float(ray.direction, t));
+    }
+    else // This means that there is a line intersection but not a ray intersection.
+        return false;
+}
+
+
 RGB bounce(const Ray ray, const Object objects[], const int n, const int TTL);
 
 RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL) {

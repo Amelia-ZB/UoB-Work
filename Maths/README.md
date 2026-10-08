@@ -488,4 +488,6 @@ $\forall x : S(x) \Rightarrow W(x)$ and $\forall x : W(x) \Rightarrow Pass(x)$
 
 ## Uniqueness
 
-$\exists! x .P(x)\; \equiv\; \exists. (P(x) \land \forall y.(P(y) \Rightarrow...?))$
+$\exists! x .P(x)\; \equiv \; \exists. x\ (P(x) \land \forall y.(P(y) \Rightarrow y = x))$
+
+effectively: x is true, and if y is true, it is the same as x

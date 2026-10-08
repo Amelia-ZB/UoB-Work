@@ -554,3 +554,62 @@ reverse str = helper [] str
 -- "!dlroW olleH"
 
 ```
+
+
+# algebraic data types (ADTs)
+
+- algebraic data types
+
+types and constructors are always capitalised
+
+## Sum types
+
+```hs
+data Bool = True | False
+
+-- chess example
+
+data Player = White | Black
+white :: Player
+white = White
+black :: Player
+black = Black
+
+data PieceType = Pawn | Knight | Bishop | Rook | Queen | King
+
+data Suit = Hearts | Diamonds | Spades | Clubs
+
+showSuit :: Suit -> String
+showSuit Hearts = "Hearts"
+showSuit Diamonds = "Diamonds"
+showSuit Spades = "Spades"
+showSuit Clubs = "Clubs"
+
+```
+
+## Product types
+
+- generalisation over tuples
+
+```hs
+data Piece = MakePiece Player PieceType
+MakePiece :: Player -> PieceType -> Piece
+
+whiteQueen = MakePiece White Queen
+
+promoteToQueen :: Piece -> Piece
+promoteToQueen (MakePiece player, Pawn) -> (MakePiece player, Queen)
+
+```
+
+
+## Record syntax
+
+allows you to name each component
+
+```hs
+data Piece' = Piece'_ {player :: Player, pieceType :: PieceType}
+
+promoteToQueen' :: Piece' -> Piece'
+promoteToQueen' p = p {pieceType = Queen}
+```
