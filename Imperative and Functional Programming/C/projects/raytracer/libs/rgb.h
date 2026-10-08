@@ -20,6 +20,8 @@ RGB tint(const RGB colour, const float x);
 
 RGB lerp(const RGB a, const RGB b, const float x);
 
+RGB average_RGB(const RGB* colours, const int n);
+
 void printVec(const char* col, const char* name, const Vec v);
 void printRGB(const char* name, const RGB v);
 

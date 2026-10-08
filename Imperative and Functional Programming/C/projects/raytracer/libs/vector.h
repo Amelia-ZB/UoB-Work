@@ -8,8 +8,6 @@ typedef struct Vec Vec;
 
 typedef struct Mat Mat;
 
-float abs(const float a);
-
 //MARK: misc
 float dotp(const Vec a, const Vec b);
 Vec crossp(const Vec a, const Vec b);

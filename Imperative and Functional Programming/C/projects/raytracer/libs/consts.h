@@ -6,12 +6,13 @@
 #define false 0
 
 
-#define WIDTH 512
-#define HEIGHT 512
+#define WIDTH 4096
+#define HEIGHT 4096
 
 #define FOV 90
 
-#define MAX_BOUNCES 4
+#define MAX_BOUNCES 10
+#define SAMPLES 1
 //#define DEBUG
 
 

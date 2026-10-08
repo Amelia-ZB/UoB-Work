@@ -20,7 +20,7 @@ struct Ray {
 struct Sphere {
     Vec pos;
     RGB colour;
-    float reflectivity;
+    float specularity;
 
     float r;
 };
@@ -39,47 +39,6 @@ struct Object {
     Triangle planes[];
 };
 
-
-Bool intersection(const Ray ray, const Triangle triangle) {
-    Vec edge1 = subtract_vec_vec(triangle.b, triangle.a);
-    Vec edge2 = subtract_vec_vec(triangle.c, triangle.a);
-
-    // Backface culling, assuming CCW-wound triangles.
-    const Vec normal = crossp(edge1, edge2); // No need to normalize
-	if (dotp(normal, ray.direction) > 0) return false;
-
-    Vec ray_cross_e2 = crossp(ray.direction, edge2);
-    float det = dotp(edge1, ray_cross_e2);
-
-    if (abs(det) < FLT_EPSILON) return false; // Ray is parallel to triangle
-
-    float inv_det = 1.0 / det;
-    Vec s = subtract_vec_vec(ray.origin, triangle.a);
-    float u = inv_det * dotp(s, ray_cross_e2);
-
-    if (u < -FLT_EPSILON || u - 1 > FLT_EPSILON) return false; // Ray passes outside edge2's bounds
-
-    Vec s_cross_e1 = crossp(s, edge1);
-    float v = inv_det * dotp(ray.direction, s_cross_e1);
-
-    if (v < -FLT_EPSILON || u + v - 1 > FLT_EPSILON) return false; // Ray passes outside edge1's bounds
-
-    // The ray line intersects with the triangle.
-    // We compute t to find where on the ray the intersection is.
-    float t = inv_det * dotp(edge2, s_cross_e1);
-
-    if (t > FLT_EPSILON) // Ray intersection
-    {
-        return true;
-        Vec point = add_vec_vec(ray.origin, multiply_vec_float(ray.direction, t));
-    }
-    else // This means that there is a line intersection but not a ray intersection.
-        return false;
-}
-
-
-RGB bounce(const Ray ray, const Object objects[], const int n, const int TTL);
-
 RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
@@ -97,7 +56,7 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     tab_pad(TTL);
     printf("\t%sLambdas:\033[0m\n", BLUE);
     #endif
-    
+
     float surfaceDistances[n];
 
     for (int i = 0; i < n; i++) {
@@ -109,7 +68,7 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
         // printf("%d: \n", i);
         Sphere sphere = spheres[i];
-        
+
         // lambda at closest approach
         float lambda = dotp(subtract_vec_vec(ray.origin, sphere.pos), ray.direction);
 
@@ -142,8 +101,6 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
                 surfaceDistances[i] = distanceToHit;
             }
         }
-
-        
     }
 
     int sphereIndex = min_float_index(surfaceDistances, n);
@@ -188,13 +145,13 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     Vec normal = normalised(subtract_vec_vec(intersectionPoint, sphere.pos)); // correct
     // direction of the reflected ray
     Vec reflectedDirection = normalised(subtract_vec_vec(ray.direction, multiply_float_vec(2 * dotp(ray.direction, normal), normal)));
-    
+
     Ray reflectedRay = {reflectedDirection, intersectionPoint, sphereIndex};
 
     #ifdef DEBUG
     tab_pad(TTL);
     printVec(BLUE, "\tradial", normal);
-    
+
     tab_pad(TTL);
     printVec(MAGENTA, "\tr-ray: \033[0m\tpos", ray.origin);
     tab_pad(TTL);
@@ -205,7 +162,9 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
     // specular
     RGB specularColour;
-    if (sphere.reflectivity > 0) {
+    if (sphere.specularity > 0) {
+
+        RGB samples[SAMPLES];
 
         specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
 
@@ -239,7 +198,7 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
         tab_pad(TTL);
         printf("\t%sbrightness\033[0m: %s%f\033[0m\n", GREEN, BLUE, brightness);
         #endif
-        
+
 
         if (brightness < 0) { // fully in shadow
             diffuseColour = (RGB) {0, 0, 0};
@@ -248,10 +207,9 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
         }
     }
 
-    
-    
+
     // combine
-    RGB colour = lerp(specularColour, diffuseColour, sphere.reflectivity);
+    RGB colour = lerp(specularColour, diffuseColour, sphere.specularity);
 
     #ifdef DEBUG
     tab_pad(TTL);
@@ -278,7 +236,7 @@ int intersects(const Ray ray, const Sphere* spheres, const int n) {
 
         if (i != ray.exclude) {
             Sphere sphere = spheres[i];
-        
+
             // lambda at closest approach
             float lambda = dotp(subtract_vec_vec(ray.origin, sphere.pos), normalised(ray.direction));
 

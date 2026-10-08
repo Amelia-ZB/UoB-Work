@@ -13,10 +13,6 @@ struct Mat {
     Vec x, y, z;
 };
 
-float abs(const float a){
-    return (a >= 0) ? a : -a;
-}
-
 //MARK: misc
 float dotp(const Vec a, const Vec b) {
     return a.x * b.x + a.y * b.y + a.z * b.z;

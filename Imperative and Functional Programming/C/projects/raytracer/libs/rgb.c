@@ -21,6 +21,17 @@ RGB lerp(const RGB a, const RGB b, const float x) {
                   a.b * x + b.b * (1 - x)};
 }
 
+RGB average_RGB(const RGB* colours, const int n) {
+    int r = 0, g = 0, b = 0;
+    for (int i = 0; i < n; i++) {
+        r += colours[i].r;
+        g += colours[i].g;
+        b += colours[i].b;
+    }
+
+    return (RGB) {r/n, g/n, b/n};
+}
+
 
 void printVec(const char* col, const char* name, const Vec v) {
     printf("%s%s\033[0m: [%s%f %f %f\033[0m]\n", col, name, CYAN, v.x, v.y, v.z);

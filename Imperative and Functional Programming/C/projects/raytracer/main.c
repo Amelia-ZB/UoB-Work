@@ -12,10 +12,10 @@ int main() {
 
     // define objects ===========================================
     Sphere spheres[] = {
-//       position       colour           reflectivity   radius
+//       position       colour           specularity    radius
         {{64, 0, 128},  {255, 64, 64},   0.5,           64},
         {{-64, 0, 192}, {64, 255, 64},   0.5,           64},
-        {{0, -96, 160}, {64, 200, 200},  0,             32},
+        {{0, -96, 160}, {128, 255, 255},  0.75,             32},
         {{0, 32, 96},   {255, 64, 128},  0,             16},
     };
 
@@ -48,7 +48,7 @@ int main() {
             #endif
 
             RGB colour = calculate_sphere((Ray) {ray, {0, 0, 0}, -1}, light, spheres, num, MAX_BOUNCES + 1);
-            
+
             #ifdef DEBUG
             printRGB("\tcolour: " , colour);
             #endif
