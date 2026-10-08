@@ -567,10 +567,33 @@ __/            \__
 
 - encoders & decoders (similar to a mux but with the input always 1)
 
-<!--
-          ______
+<!--      ______
          /      \
 ==encoder--------decoder==
          \______/
 -->
+
+
+## General-purpose Derivation
+
+1. for each row of the truth table
+    - if the output should be on, AND together all bits in the input, negating any that are 0
+2. or together all the ouptus of the ANDed rows
+
+- the number of terms ORed together = the hamming weight of the output column
+
+![](./images/general-purpose%20derivation.png)
+
+
+## Karnaugh maps
+
+**Remember to put 0s in empty cells**
+
+the total grid for a K-map with n inputs must be $p$ by $q$ where:
+1. $p \equiv p \equiv 0\ (\text{mod } 2)$ and
+2. $p \cdot q = 2^n$
+
+(i.e. must have sides of length $2^p$ +and $2^q$ such that $p+q=n$)
+
+- when there are unknown values, expand rectangles over them when possible, even if it doesn't add any move 1s, because it will reduce the number of gates needed
 

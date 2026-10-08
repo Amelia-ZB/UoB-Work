@@ -24,8 +24,25 @@ struct Sphere {
     float r;
 };
 
+struct Plane {
+    Vec a, b, c;
+    Vec normal; // AB x AC == (B-A) x (C-A)
+};
 
-RGB calculate(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL) {
+struct Object {
+    Vec origin;
+
+    RGB colour;
+    float reflectivity;
+
+    Plane planes[];
+};
+
+
+int /*bool*/ intersection(const Ray ray, const Object object);
+RGB bounce(const Ray ray, const Object objects[], const int n, const int TTL);
+
+RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
 
@@ -152,7 +169,7 @@ RGB calculate(const Ray ray, const Vec lightPos, const Sphere *spheres, const in
     RGB specularColour;
     if (sphere.reflectivity > 0) {
 
-        specularColour = calculate(reflectedRay, lightPos, spheres, n, TTL - 1);
+        specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
 
         #ifdef DEBUG
         tab_pad(TTL);

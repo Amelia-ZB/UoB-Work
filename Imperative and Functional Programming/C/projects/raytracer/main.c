@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <math.h>
-#include <string.h>
 
 #include "libs/bmp.c"
 #include "libs/vector.c"
@@ -48,7 +47,7 @@ int main() {
             printVec(MAGENTA, "\tRay", ray);
             #endif
 
-            RGB colour = calculate((Ray) {ray, {0, 0, 0}, -1}, light, spheres, num, MAX_BOUNCES + 1);
+            RGB colour = calculate_sphere((Ray) {ray, {0, 0, 0}, -1}, light, spheres, num, MAX_BOUNCES + 1);
             
             #ifdef DEBUG
             printRGB("\tcolour: " , colour);
