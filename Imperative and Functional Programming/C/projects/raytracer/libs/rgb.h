@@ -16,7 +16,9 @@
 
 typedef struct RGB RGB;
 
-RGB tint(const RGB colour, const float x);
+RGB tint(const RGB colour, const float f);
+RGB tintVec(const RGB colour, const Vec f);
+Vec RGBToVec(const RGB colour);
 
 RGB lerp(const RGB a, const RGB b, const float x);
 

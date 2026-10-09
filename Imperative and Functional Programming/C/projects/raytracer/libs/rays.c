@@ -25,20 +25,6 @@ struct Sphere {
     float r;
 };
 
-struct Triangle {
-    Vec a, b, c;
-    Vec normal; // AB x AC == (B-A) x (C-A)
-};
-
-struct Object {
-    Vec origin;
-
-    RGB colour;
-    float reflectivity;
-
-    Triangle planes[];
-};
-
 RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL) {
 
     if (TTL == 0) return (RGB) {0, 0, 0};
@@ -161,27 +147,42 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     #endif
 
     // specular
-    RGB specularColour;
-    if (sphere.specularity > 0) {
+    // RGB specularColour;
+    // if (sphere.specularity > 0) {
 
-        RGB samples[SAMPLES];
+    //     RGB samples[SAMPLES];
 
-        specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
+    //     specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
 
-        #ifdef DEBUG
-        tab_pad(TTL);
-        printf("\n");
-        #endif
+    //     #ifdef DEBUG
+    //     tab_pad(TTL);
+    //     printf("\n");
+    //     #endif
 
+    // } else {
+    //     specularColour = (RGB) {0, 0, 0};
+    // }
+
+    RGB lightColour;
+    if (sphere.specularity == 1) {
+        lightColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
     } else {
-        specularColour = (RGB) {0, 0, 0};
+        RGB lightSamples[SAMPLES];
+        for (int i = 0; i < SAMPLES; i++) {
+            Ray sampleRay = {
+                add_vec_vec(reflectedRay.direction, randomDirection(sphere.specularity)),
+                reflectedRay.origin,
+                reflectedRay.exclude
+            };
+
+            lightSamples[i] = calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1);
+        }
     }
 
     // diffuse
     Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
 
     RGB diffuseColour;
-
     if (intersects(lightRay, spheres, n)) {
         // in shadow
         diffuseColour = (RGB) {0, 0, 0};
@@ -209,7 +210,7 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
 
     // combine
-    RGB colour = lerp(specularColour, diffuseColour, sphere.specularity);
+    RGB colour = tintVec(diffuseColour, RGBToVec(lightColour));
 
     #ifdef DEBUG
     tab_pad(TTL);
@@ -225,6 +226,10 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
     return colour;
 
+
+}
+
+Vec randomDirection(const float specularity) {
 
 }
 

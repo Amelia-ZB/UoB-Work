@@ -6,14 +6,24 @@
 
 #include "rgb.h"
 #include "vector.c"
+#include "vector.h"
 
 struct RGB {
     uint8_t r, g, b;
 };
 
-RGB tint(const RGB c, const float f) {
-    return (RGB) {c.r * f, c.g * f, c.b * f};
+RGB tint(const RGB colour, const float f) {
+    return (RGB) {colour.r * f, colour.g * f, colour.b * f};
 }
+
+RGB tintVec(const RGB colour, const Vec f) {
+    return (RGB) {colour.r * f.x, colour.g * f.y, colour.b * f.z};
+}
+
+Vec RGBToVec(const RGB colour) {
+    return (Vec) {(float) colour.r / 255, (float) colour.g / 255, (float) colour.b / 255};
+}
+
 
 RGB lerp(const RGB a, const RGB b, const float x) {
     return (RGB) {a.r * x + b.r * (1 - x),
