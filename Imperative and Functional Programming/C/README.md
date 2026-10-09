@@ -383,3 +383,73 @@ it also provides:
     - printf but puts the result into a string rather than the stream
 
 
+# 03.2 Bits
+
+4 bits in a nibble (1 hex char)
+2 nibbles in a byte
+any number of bytes in a word (typicaly 64)
+
+## Ints
+
+- ints overflow / underflow
+
+**typical sizes**, if you need a specific size, use `stdint.h`
+
+TYPE | USUAL SIZE | USUAL RANGE | ACTUAL RANGE SPECS see <limits.h> | CONVERSION SPECIFIER
+-|-|-|-|-
+signed char |     8bit | $[−128,\;127]$ |         `CHAR_MIN` `CHAR_MAX`   | %hhi (or %c)
+unsigned char |   8bit | $[0,\;255]$ |            `UCHAR_MAX`             | %hhu (or %c)
+short |          16bit | $[−2^{15},\;2^{15}−1]$ | `SHRT_MIN` `SHRT_MAX`   | %hi
+unsigned short | 16bit | $[0,\;65535]$ |          `USHRT_MAX`             | %hu
+int |            32bit | $[−2^{31},\;2^{31}−1]$ | `INT_MIN` `INT_MAX`     | %d (or %i)
+unsigned |       32bit | $[0,\;2^{32}−1]$ |       `UINT_MAX`              | %u
+long |           64bit | $[−2^{63},\;2^{63}−1]$ | `LONG_MIN` `LONG_MAX`   | %li
+unsigned long |  64bit | $[0,\;2^{64}−1]$ |       `ULONG_MAX`             | %lu
+long long |      64bit | $[−2^{63},\;2^{63}−1]$ | `LLONG_MIN` `LLONG_MAX` | %lli
+
+using known length integers may hinder compiler optimisations.
+
+## Endian-ness
+
+most architectures use big-endian, where the least significant byte is stored first
+
+e.g. a 4-byte int:
+- each byte is in 'reverse' order: $\{0, 1, 2, 3\}$
+<!--                               LSB^     MSB^ -->
+
+
+
+## Type convertions
+
+in general, just avoid mixing types
+
+### Coercion
+
+when different types are combined without casts, implicit rules are applied
+
+e.g. in the expression `int x = y`, if y has more bits than x, they are removed (truncation). and if y has fewer bits, it is extended with 0s or 1s to preserve the sign of the value.
+
+### promotion
+
+in all integer calculations, all variables, constants and intermediates are **promoted** to at least an int, they are then truncated back to the origionaly type
+
+```C
+signed char a = 100, b = 4, c = 8, result;
+result = (a * b) / c; // promotion to int, so a * b is stored ok
+printf("%hhi\n", result); // result fits char, so prints 50 ok
+
+signed char a = 64, b = 8, c = 2, result;
+result = (a * b) / c; // promoted result 0x100 truncated to 0
+printf("%hhi\n", result); // 0, since result did not fit char
+
+signed char a = 64, b = 4, c = 2, result;
+result = (a * b) / c; // promoted result 0x80 fits 8bits
+printf("%hhi\n", result); // however, interpreted as -128
+```
+
+## Packing
+
+you may want to pack multiple smaller types into a larger type
+
+e.g. packing 4 unsigned chars into an int to represent colours on the screen
+
