@@ -20,19 +20,19 @@
 propositions are basically statements e.g. 
 _"the temperature is 20°C"_
 
-1. can be evaluated ~~"theis statement is false"~~
+1. can be evaluated ~~"this statement is false"~~
 2. must be unambiguous ~~"the temperature is too hot"~~
 3. can include free variables "the temperature is $x$°C"
 4. can be represented using a short-hand variable or function: f = ... or g(x) = ...
 
 
-## Conectives can combine statements
+## Connectives can combine statements
 
 - NOT $\neg$
 - AND $\land$
-- NAND $\overline\land$ (universal / functionaly complete)
+- NAND $\overline\land$ (universal / functionally complete)
 - OR $\lor$
-- NOR $\overline\lor$ (universal / functionaly complete)
+- NOR $\overline\lor$ (universal / functionally complete)
 <!-- - XOR $\oplus$ (derived)
 - XNOR $\overline\oplus$ (derived) -->
 
@@ -57,13 +57,13 @@ very similar to the mathematical tree approach
 |T|F|T|
 |T|T|F|
 
-- usefull as a lookup table
+- useful as a lookup table
 
 - or use it as a specification
 
 ![data-flow diagram with truth table](./images/data%20flow%20and%20truth%20table.png)
 
-- it can be helpfull to ad intermediates to truth tables
+- it can be helpful to ad intermediates to truth tables
 
 
 
@@ -82,7 +82,7 @@ XOR, NAND, NOR, XNOR are _derived_ operators
 1. $ \mathbb{B} = \{0, 1\} $
 2. shorten every statement to either a _variable_ or _function_
 3. use _unary operators_ and _binary operators_ to form expressions
-4. manimulate expressions according to axioms
+4. manipulate expressions according to axioms
 
 
 ## New Truth Tables
@@ -113,7 +113,7 @@ XOR, NAND, NOR, XNOR are _derived_ operators
 - disjunctive normal form
 
 **PoS**
-- make maxterms and $\land$ togeter
+- make maxterms and $\land$ together
 - conjunctive normal form
 
 ### Electronic Design AUtomation (EDA)
@@ -134,7 +134,7 @@ XOR, NAND, NOR, XNOR are _derived_ operators
 
 # 02.1 Integer Representation
 
-we can think of integars as a sequance
+we can think of integers as a sequence
 123 ≡ ⟨3, 2, 1⟩
 
 so we can think of binary bytes as a sequence of bytes
@@ -150,11 +150,11 @@ these bit sequences can represent _anything_
 $\hat X \mapsto X\\\equiv\\$
 the representation of X maps to the value of X
 
-the representation is a sequance of bits, and the value could be anything
+the representation is a sequence of bits, and the value could be anything
 
 - mappings must yield the correct value _and_ be consistent (in both directions)
 
-## Endianess
+## Endianness
 
 1. little-endian
 $\hat X_{LE} = ⟨X_0, X_1, X_2, X_3, X_4, X_5, X_6 ⟩ = ⟨1, 1, 0, 1, 1, 1, 1⟩$.
@@ -182,7 +182,7 @@ assume we pad the shorter one with zeros if they have different lengths
 
 ## Hamming Properties
 
-- Hamming weigth: the number of times $X_i = 1$
+- Hamming weight: the number of times $X_i = 1$
 
   HW(X) = $\sum\limits_{i=0}^{n-1}{X_i}$
 
@@ -193,7 +193,7 @@ assume we pad the shorter one with zeros if they have different lengths
 
 ## Positional number systems
 
-a prositional number system expresses the value of a number $x$ using a base-$b$ (or radix-$b$) expansion
+a positional number system expresses the value of a number $x$ using a base-$b$ (or radix-$b$) expansion
 
 $\hat x = ⟨\hat x_0, \hat x_1, ..., \hat x_{n−1}⟩$
 
@@ -232,10 +232,10 @@ $\quad\quad\quad\quad\quad = 321_{(10)}$
 
 ![](./images/hexadecimal.png)
 
-## Standard integars
+## Standard integers
 
 we need to represent elements of $\mathbb Z$, but
-1. its an infinete set
+1. its an infinite set
 2. it has negative numbers
 
 ### Solution - from C
@@ -258,7 +258,7 @@ $\text{char} ≃ \text{int8\_t} \mapsto \{ −2^7 , ..., 0, ..., +2^7 − 1 \}$
 ![](./images/2s%20complement%20definition.png)
 ![](./images/2s%20complement%20numberline.png)
 
-- problem: asymetric limits
+- problem: asymmetric limits
 
 ## Take Away Points
 
@@ -272,9 +272,9 @@ $\text{char} ≃ \text{int8\_t} \mapsto \{ −2^7 , ..., 0, ..., +2^7 − 1 \}$
   - a number in a matrix
   - ...
 2.
-  beyond this knowing various standerd representations is usefull
+  beyond this knowing various standard representations is useful
 
-# 02.2 Integer Arithmatic
+# 02.2 Integer Arithmetic
 
 $\hat x \mapsto x$
 
@@ -321,14 +321,14 @@ $ci$|$x$|$y$||$co$|$s$
 1|1|0||1|0
 1|1|1||1|1
 
-- this is a symetric expression
+- this is a symmetric expression
 
 by unrolling the loop in the algorithm, a simple circuit can be produced:
 
 ![a ripple carry adder circuit](./images/adder%20circuit.png)
 this is a ripple carry adder, the carry out of each individual adder is chained into the next one
 
-However, 
+However,
 - the magnitude of $x+y$ can exceed what we can represent via $\hat r$
   - if $\hat x$ and $\hat y$ are _unsigned_ and there is a carry out $\Rightarrow$ **carry** condition
   - if $\hat x$ and $\hat y$ are _signed_ and the sign of $\hat r$ is incorrect $\Rightarrow$ **overflow** condition
@@ -356,7 +356,7 @@ Micro-electronic switches (transistors) must be
 - fast
 - reliable
 - useable - packaged into higher level blocks
-- manufacturble
+- manufacturable
 
 The most detail we go into is "transistors are just switches"
 
@@ -381,10 +381,10 @@ The most detail we go into is "transistors are just switches"
   2. it can be _doped_ by adding different elements
       - P / As $\rightarrow$ extra electrons
       - B / Al $\rightarrow$ extra holes
-  3. it's fairly inert, so it won't degrade or go wierd over time
+  3. it's fairly inert, so it won't degrade or go weird over time
 
   - this results in a sime-conductor
-    - **N-type** = extra electrons 
+    - **N-type** = extra electrons
     - **P-type** = extra holes
     - by making a 'sandwich' you can make a switch
 
@@ -392,7 +392,7 @@ Historically the switches were vacuum tubes
 - relatively reliable
 - failed on power on / off
 
-Replaced with transistors relitively quickly for their size
+Replaced with transistors relatively quickly for their size
 - many types
   - 1925: Field Effect Transistor (FET).
   - 1953: Junction FET (or JFET).
@@ -405,17 +405,17 @@ Replaced with transistors relitively quickly for their size
 ![](./images/MOSFET.png)
 
 - source & drain are the input & output
-- gate is the controll
+- gate is the control
 
 ![](./images/MOSFET%20types.png)
 
 - N-MOSFET / N-type MOSFET / N-channel MOSFET / NPN MOSFET
-  - applyinga P.D. to the gate widens the conductive channel, allowing it to conduct from the source to drain
-  - equivalent to a normaly open relay
+  - applying a P.D. to the gate widens the conductive channel, allowing it to conduct from the source to drain
+  - equivalent to a normally open relay
 
 - P-MOSFET / P-type MOSFET / P-channel MOSFET / PNP MOSFET
-  - applyinga P.D. to the gate narrows the conductive channel, stopping it from conducting from the source to drain
-  - equivalent to a normaly closed relay
+  - applying a P.D. to the gate narrows the conductive channel, stopping it from conducting from the source to drain
+  - equivalent to a normally closed relay
 
 - (Complimentary Metal Oxide Semi-conductor) CMOS cell
   - only switching uses much power and no leakage (static consumption)
@@ -432,7 +432,7 @@ Replaced with transistors relitively quickly for their size
 6. etch away uncovered substrate
 7. strip hardened photoresist
 
-The algorithm is repeted many times to create a finished wafer. It also works in parallel across the entire wafer, allowing many to be made at once.
+The algorithm is repeated many times to create a finished wafer. It also works in parallel across the entire wafer, allowing many to be made at once.
 
 The wafers are packaged before use, protecting them from damage and often providing a heat sink. it also provides an interface in the form of an array of pins or contacts
 
@@ -443,7 +443,7 @@ The wafers are packaged before use, protecting them from damage and often provid
 
 # 03.1 -  Logic Gates
 
-transistor with blob is P-type (normaly open)
+transistor with blob is P-type (normally open)
 
 ## NOT
 
@@ -481,7 +481,7 @@ $V_{ss}$ = 0V ≃ GND |= 0
 
 $V_{dd}$ = 5V |= 1
 
-- logic gates can be moade from a combination of
+- logic gates can be made from a combination of
   - a pull-up network of P-MOSFETs connected to $V_{dd}$
   - a pull-down network of N-MOSFETs connected to $V_{ss}$
 
@@ -489,7 +489,7 @@ $V_{dd}$ = 5V |= 1
 
 ## Delay
 
-- wire delay + gate delay (typicaly larger)
+- wire delay + gate delay (typically larger)
 
 - critical path is the longest sequential path
 
@@ -524,7 +524,7 @@ $\textbf Z$|$\textbf Z$|$\textbf Z$
 
 # 03.2 - Combinatorial logic
 
-combining logic gates to do coputation
+combining logic gates to do computation
 
 **there are no states**, the output solely depends on the inputs
 
@@ -542,11 +542,11 @@ you can remove one of the AND gates and share the output ($r = r'$)
 
 split a big function into many small functions
 
-### 3. independant replication
+### 3. independent replication
 
 similar to decomposition but it is split to work on individual bits
 
-### 4. dependant replicatoin
+### 4. dependant replication
 
 chain small functions together to make a complex circuit
 
@@ -563,7 +563,7 @@ __/            \__
 
 - half & full adder
 
-- `=` & `<` comparitors
+- `=` & `<` comparators
 
 - encoders & decoders (similar to a mux but with the input always 1)
 
@@ -578,7 +578,7 @@ __/            \__
 
 1. for each row of the truth table
     - if the output should be on, AND together all bits in the input, negating any that are 0
-2. or together all the ouptus of the ANDed rows
+2. or together all the outputs of the ANDed rows
 
 - the number of terms ORed together = the hamming weight of the output column
 
@@ -597,3 +597,48 @@ the total grid for a K-map with n inputs must be $p$ by $q$ where:
 
 - when there are unknown values, expand rectangles over them when possible, even if it doesn't add any move 1s, because it will reduce the number of gates needed
 
+# 04.1 - Sequential logic
+
+this allows for:
+- the synchronisation of components (clocks)
+- components that maintain state (latches flip-flops and registers)
+- mechanism for computational steps (structure & strategy)
+
+## The Clock
+
+- oscillates between 0 and 1
+- either given to a device or generated internally (clock generator)
+- used to trigger events and synchronise components
+- ~~rising~~ positive edge & ~~falling~~ negative edge
+- fast enough to satisfy design goals
+- slow enough for the critical path
+
+### multiphase clocks
+- an n phase clock has it signals spread across multiple wires
+- it is made up of n single phase clocks
+- it is guaranteed that at most 1 will be high at once
+
+## Bistables
+
+- a bistable component can be in 1 of 2 states
+- can retain a current state (provided as output)
+- can be updated to some next state (taken as input)
+- it's behaviour is typically expressed with an excitation table, and sometimes a characteristic equation. Not with a truth table
+- the components can either be
+  - level-triggered (latch)
+  - edge-triggered (flip-flop)
+
+### SR Latch
+
+$Q' = S \lor (\neg R \land Q)$
+
+![](./images/SR%20excitation%20table.png)
+![](./images/SR%20circuit.png)
+
+
+
+### D Latch / Flip-Flop
+
+on the rising edge: $ Q' = D$
+
+![](./images/D%20excitation%20table.png)

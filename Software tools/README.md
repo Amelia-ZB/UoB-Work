@@ -7,7 +7,7 @@
 
 - ssh identity spoofing
 
-- dont run everything as root
+- don't run everything as root
 
 > [!CRITICAL]
 > **root user is id 0**

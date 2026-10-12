@@ -13,7 +13,7 @@ Notes & Practice for the Imperative & Functional Programming unit - COMS10016.
 
 ### Languages
 
-- inperative -> oop & procedural programming
+- imperative -> oop & procedural programming
 
 - declarative -> logic & functional programming
 
@@ -21,7 +21,7 @@ Notes & Practice for the Imperative & Functional Programming unit - COMS10016.
 
 - in logical programming, there is no state
 
-- you can proove the correctness of an output by proving the steps
+- you can prove the correctness of an output by proving the steps
 
 
 ## C

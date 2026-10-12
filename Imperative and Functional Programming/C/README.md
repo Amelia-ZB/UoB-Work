@@ -12,7 +12,7 @@
 
 ## exams
 
-- Sumative: 80% exam + 2x 10% mini coursework
+- Summative: 80% exam + 2x 10% mini coursework
 - coursework split in half: closed & open ended tasks
 
 

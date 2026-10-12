@@ -51,7 +51,7 @@ Implication - IF .. THEN .. $\Rightarrow$
 
 - for it to be false, condition met, but not the consequence
 
-- Paren, Neg, conj, disj, impl 
+- Parentheses, Negation, conjunction, disjunction, implication
 
 ### Vacuous Truths
 
@@ -60,7 +60,7 @@ Implication - IF .. THEN .. $\Rightarrow$
 |⊥|⊥|⊤|
 |⊥|⊤|⊤|
 
-valid but doesnt mean anything
+valid but doesn't mean anything
 
 _"if pigs can fly, its time to finish work"_
 
@@ -87,18 +87,18 @@ $p \Rightarrow (q \Rightarrow r) \equiv (p \land q) \Rightarrow r$
 
 expressions can be written as trees. Nodes are operators and Leaves are variables.
 
-- Means that parenthases are not needed
+- Means that parentheses are not needed
 
 ## Functional Completeness
 
 $\neg, \land, \lor$ together are together functionally complete
 
-a functionaly complete set of operators can represent _any_ boolean expression
+a functionally complete set of operators can represent _any_ boolean expression
 
 Use a sum of products to turn any truth table into an expression.
 $(.. \land ..) \lor (.. \land ..) .. \lor ..$
 
-just NAND $\overline\land$ is also functionaly complete
+just NAND $\overline\land$ is also functionally complete
 
 ## Identities
 
@@ -116,8 +116,8 @@ $\top \Rightarrow x \equiv \top \\ \bot \Rightarrow x \equiv \neg x$
 - semantics is the meaning
 
 
-- conjunction $\land$ & disjunction $\lor$ are both _asociative_ & _commutative_
-    - they are _symetric_ functions
+- conjunction $\land$ & disjunction $\lor$ are both _associative_ & _commutative_
+    - they are _symmetric_ functions
 
 
 ## propositional Equivalent
@@ -187,7 +187,7 @@ $\sqrt 2$ cannot be expressed as a fraction
 - follow proof steps to move from what is know to what is proven
 
 > [!IMPORTANT]
-> dont start with the goal, work towards it
+> don't start with the goal, work towards it
 
 > [!IMPORTANT]
 > conjunction in an assumption is like 2 assumptions
@@ -195,7 +195,7 @@ $\sqrt 2$ cannot be expressed as a fraction
 ## Formal Proofs
 
 - natural deduction
-    - within a true formual there is some evidence
+    - within a true formula there is some evidence
     - propositions as evidence for their own truth
     - proof ≈ providing evidence
 
@@ -213,7 +213,7 @@ $\Phi \Rightarrow \Psi$
 
 ## Implication
 
-Introcucion:
+Introduction:
 - to prove, assume $\Phi$ is true, then prove $\Psi$
 
 Elimination:
@@ -241,11 +241,11 @@ indentation shows the scope of each assumption
 
 Introduction rule:
 - to prove $\Phi \land \Psi$
-    - we must prove $\Phi$ _and_ $\Psi$ independantly
+    - we must prove $\Phi$ _and_ $\Psi$ independently
 
 Elimination rule
 - if we have $\Phi \land \Psi$
-    - we may conlude $\Phi$ and $\Psi$ seperately
+    - we may conclude $\Phi$ and $\Psi$ separately
 
 ### Example
 
@@ -279,11 +279,11 @@ Introduction rule:
 - assume $\Phi$ and show $\bot$
 
 Elimination rule:
-- if we have $\Phi$ and $\bot \Phi$ we can colclude false
+- if we have $\Phi$ and $\bot \Phi$ we can conclude false
 
 > the only way to get $\bot$ is from a contradictory assumptions ($\neg$ elimination)
 
-$\bot$ Elimination rule: if we have $\bot$ then you can have anything, as the assumptions make everything vacuos truths
+$\bot$ Elimination rule: if we have $\bot$ then you can have anything, as the assumptions make everything vacuous truths
 
 ### Examples
 
@@ -310,7 +310,7 @@ Claim $\neg\neg p \Rightarrow p$
 
 # 03 - Predicates and Quantifiers
 
-- atomic propostitions: statements that are true or false
+- atomic propositions: statements that are true or false
 
 - propositions connected with $\land, \lor, \neg, \Rightarrow$
 
@@ -342,9 +342,9 @@ by assigning values to the variables in a propositional function, we can determi
 
 ## Quantifiers
 
-- universal quantifer "for all" elements in the domain $\forall x\ P(x)$
+- universal quantifier "for all" elements in the domain $\forall x\ P(x)$
 
-- existential qualifer "there exists" one or more elements in the domain $\exists x\ P(x)$
+- existential qualifier "there exists" one or more elements in the domain $\exists x\ P(x)$
 
 - the domain is the set of all values a variable can take
     - let P(x) be x^2 over $\Z$ $\forall x\ P(x)$ is true but not $\R$
@@ -352,7 +352,7 @@ by assigning values to the variables in a propositional function, we can determi
 
 $\forall x\ P(x)$ is true when P(x) is true for _every_ value of x in the domain
 
-$\forall x\ P(x)$ is alse when P(x) is false for _at least one_ value of x in the domain
+$\forall x\ P(x)$ is false when P(x) is false for _at least one_ value of x in the domain
 
 
 $\exists x\ P(x)$ is true when P(x) is true for _at least one_ value of x in the domain
@@ -367,7 +367,7 @@ only true when domain is not empty
 ### Finite
 **you can list every element**
 
-- the universal qualification ($\forall$) is a conjuction of all $P(x_i)$
+- the universal qualification ($\forall$) is a conjunction of all $P(x_i)$
     - to check: assume true and search for a counterexample
 
 - the existential qualification ($\exists$) is a disjunction of all $P(x_i)$
@@ -392,7 +392,7 @@ $\forall x:D.\ P(x)$ and $\exists x:D.\ P(x)$ for a given domain $D$
 
 variables are **bound** when a quantifier is used on them, otherwise they are **Free**
 
-so all variables must either be bound or assinged a value to be able to evaluate
+so all variables must either be bound or assigned a value to be able to evaluate
 
 bound variables are scoped to the qualifier they are bound in
 
@@ -400,7 +400,7 @@ this means that you can rename bound variables to anything you want
 
 ## negation
 
-**negation is the de morang's law**
+**negation is the de Morgan's law**
 
 $\neg \forall x.\ P(x) \equiv \exists x.\ \neg P(x)\\$
 $\neg \exists x.\ P(x) \equiv \forall x.\ \neg P(x)$
@@ -408,12 +408,12 @@ $\neg \exists x.\ P(x) \equiv \forall x.\ \neg P(x)$
 ## Nesting
 - Let Mother(x, y) denote x is the mother of y
 - "Every person has a mother": $\forall y\ \exists x\ Mother(x, y)$
-- but $\exists x\ \forall y\ Mother(x, y)$ means that there is someone who is everyones mother
+- but $\exists x\ \forall y\ Mother(x, y)$ means that there is someone who is everyone's mother
 
 
 ## translating from NL
 
-be carefull with existential qualifier and vacuous truths
+be careful with existential qualifier and vacuous truths
 
 there exists - should combine things with conjunction
 
@@ -426,7 +426,7 @@ for all - should combine things with implication
 
 ## e.g.
 - variables: VL = {x,y}
-- objects: CL = {Gomit, Walice}
+- objects: CL = {Gromit, Walace}
 - functions: FNL = {owner, mother, father}
 - predicates: PNL = {Rich, Happy}
 
@@ -438,21 +438,21 @@ for all - should combine things with implication
 - new for Predicates
 ![](./images/proofs%20new.png)
 
-## proving universal statemnents
+## proving universal statements
 
-1. **let** $x$ **be an arbitary element of** $D$, make _no_ extra assumptions about $x$ beyond $x \in D$
+1. **let** $x$ **be an arbitrary element of** $D$, make _no_ extra assumptions about $x$ beyond $x \in D$
 
-2. show that $P(x)$ holds (with any proof stratergy)
+2. show that $P(x)$ holds (with any proof strategy)
 
-3. conclude "sice $x$ was arbitrary, $\forall x : D.P(x)$."
+3. conclude "since $x$ was arbitrary, $\forall x : D.P(x)$."
 
 To use a hypothesis
 
-1. write "sice $\forall x : D.P(x)$, in particulare $P(t)$", for any specific term $t \in D$.
+1. write "since $\forall x : D.P(x)$, in particular $P(t)$", for any specific term $t \in D$.
 
 2. work with $P(t)$
 
-3. you may instanciate the same universal statement multiple times, with different choices of t
+3. you may instantiate the same universal statement multiple times, with different choices of t
 
 To disprove $\forall x : D.P(x)$
 
@@ -467,7 +467,7 @@ To disprove $\forall x : D.P(x)$
 to use
 
 1. say "let $x_0$ be a witness i.e. $P(x_0)$ holds"
-2. work iwht $x_0$ bout all you know is that $P(x_0)$ holds
+2. work with $x_0$ bout all you know is that $P(x_0)$ holds
 3. any conclusion must not depend on the specific identity of $x_0$
 
 to disprove $\exists x : D.P(x)$
