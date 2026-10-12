@@ -642,3 +642,32 @@ $Q' = S \lor (\neg R \land Q)$
 on the rising edge: $ Q' = D$
 
 ![](./images/D%20excitation%20table.png)
+
+by adding an enable (2 and gates) and a D input (with a not gate) to turn an SR into D latch
+
+$S = D\\$
+$R = \neg D$
+
+$en = 0:\\$
+$\quad S' = S ∧ en = D ∧ 0 = 0\\$
+$\quad R' = R ∧ en = \neg D ∧ 0 = 0$
+
+$en = 1:\\$
+$\quad S' = S ∧ en = D ∧ 1 = D\\$
+$\quad R' = R ∧ en = \neg D ∧ 1 = \neg D$
+
+![](./images/D%20latch%20circuit.png)
+
+adding a pulse generator to the enable line, making it (positive) edge triggered
+
+![](./images/D%20circuit.png)
+by stacking 2 it works with a clock signal
+![](./images/D%20latch%20circuit%202.png)
+![](./images/D%20flip-flop%20graph.png)
+
+## Registers
+
+by combining $n$ D latches or flip-flops into a register you can store $n$ bit values
+
+![](./images/D%20flip%20flop%20device.png)
+![](./images/D%20flip%20flop%20incrementer.png)
