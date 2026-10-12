@@ -453,3 +453,25 @@ you may want to pack multiple smaller types into a larger type
 
 e.g. packing 4 unsigned chars into an int to represent colours on the screen
 
+# 04.1 Pointers
+
+- point to the first byte of an object
+
+## Initialisation
+
+```C
+int a = 7;
+int *p = a; // makes p point at the numerical address that is the value of a (e.g. 0x00000007) *NOT the address of a*
+int *p = &a; // makes p point at a
+```
+## String constant
+
+```C
+char *p = "Abc" // constant
+```
+
+## Dangling Pointers
+
+returning a pointer to a variable that goes out of scope when the function ends
+
+either use memory lower on the stack (pass in a pointer to the function for it to modify) or use memory on the heap
