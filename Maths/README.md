@@ -426,7 +426,7 @@ for all - should combine things with implication
 
 ## e.g.
 - variables: VL = {x,y}
-- objects: CL = {Gromit, Walace}
+- objects: CL = {Gromit, Wallace}
 - functions: FNL = {owner, mother, father}
 - predicates: PNL = {Rich, Happy}
 
@@ -491,3 +491,36 @@ $\forall x : S(x) \Rightarrow W(x)$ and $\forall x : W(x) \Rightarrow Pass(x)$
 $\exists! x .P(x)\; \equiv \; \exists. x\ (P(x) \land \forall y.(P(y) \Rightarrow y = x))$
 
 effectively: x is true, and if y is true, it is the same as x
+
+# 04 - Set theory
+
+sets are _unordered_ collections of _distinct_ objects called _elements_
+
+- empty set: $\empty$
+    - $\empty \neq \{0\}$
+- universal set: $\mathcal{U}$
+    - $\mathcal{U} \notin \mathcal{U}$
+- is in: $0 \in \N$
+- is not in: $3.14 \notin \Z$
+- union: $\N\ \cup\ -\N = \Z$
+- intersection: $\N\ \cap\ -\N = \{0\}$
+- difference: $\Z \setminus \N = \{-1, -2, -3, ...\}$
+- subset: $\N \subseteq \Z $
+    - $A \subseteq B \equiv \forall x. (x \in A \Rightarrow x \in B)$
+    - for every set, $A$, $\empty \subseteq A \subseteq \mathcal{U}$
+- compliment: $\overline X \equiv \{x \in \mathcal{U}\mid x \notin X\}$
+- double compliment: $\overline{\overline X} = X$
+- restriction (even numbers): $\{y \mid y = 2x \land x \in \N\}$
+
+## links to predicate logic
+
+given that:
+- $A = \{x \mid P(x)\}$
+- $B = \{x \mid Q(x)\}$
+
+then:
+- $A \cap B \equiv \{x \mid P(x) \land Q(x) \}$
+- $A \cup B \equiv \{x \mid P(x) \lor Q(x) \}$
+- $A \subseteq B \equiv \forall x. (P(x) \Rightarrow Q(x))$
+
+the laws work the exact same as in propositional logic

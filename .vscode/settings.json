@@ -5,6 +5,7 @@
         "Karnaugh",
         "maxterms",
         "minterms",
-        "MOSFET"
+        "MOSFET",
+        "unsatisfiable"
     ]
 }
