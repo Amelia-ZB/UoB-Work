@@ -168,18 +168,27 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     if (sphere.specularity == 1) {
         lightColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
     } else {
-        int diffuseSamples = SAMPLES / (1.0f - sphere.specularity);
+        int diffuseSamples = SAMPLES * (1.0f - sphere.specularity);
+        printf("%f: %d\n", sphere.specularity, diffuseSamples);
 
-        VecI lightSamples;
+        VecI lightSamples = {0};
         for (int i = 0; i < diffuseSamples; i++) {
             Ray sampleRay = {
                 randomDirection(normal, ray.direction),
                 reflectedRay.origin,
                 reflectedRay.exclude
             };
-            inc_VecI_RGB(&lightSamples, calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1));
+
+            RGB sampleLightColour = calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1);
+
+            lightSamples = add_VecI_RGB(lightSamples, sampleLightColour);
         }
+        printf("%d, %d, %d\n", lightSamples.x, lightSamples.y, lightSamples.z);
         lightColour = divide_VecI_int(lightSamples, diffuseSamples);
+
+
+
+
         if (sphere.specularity > 0) {
             RGB specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
             lightColour = lerp(lightColour, specularColour, (float) diffuseSamples / SAMPLES);
@@ -191,7 +200,7 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
 
     RGB diffuseColour;
-    if (0 && intersects(lightRay, spheres, n)) {
+    if (intersects(lightRay, spheres, n)) {
         // in shadow
         diffuseColour = (RGB) {0, 0, 0};
 
@@ -209,10 +218,10 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
         #endif
 
 
-        if (brightness < 0) { // fully in shadow
+        if (brightness < 0) { // on the back half of the sphere from the light
             diffuseColour = (RGB) {0, 0, 0};
         } else { // visible
-            diffuseColour = tint(sphere.colour, brightness);
+            diffuseColour = sphere.colour;
         }
     }
 

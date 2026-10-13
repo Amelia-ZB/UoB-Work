@@ -67,10 +67,12 @@ static RGB divide_VecI_int(const VecI a, const int f) {
     return (RGB) {a.x / f, a.y / f, a.z / f};
 }
 
-static void inc_VecI_RGB(VecI *a, const RGB b) {
-    a->x += b.r;
-    a->y += b.g;
-    a->z += b.b;
+VecI add_VecI_RGB(VecI a, const RGB b) {
+    return (VecI) {
+        a.x + b.r,
+        a.y + b.g,
+        a.z + b.b
+    };
 }
 
 #endif
