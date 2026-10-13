@@ -102,20 +102,16 @@ cat :: join files
 comm :: find common lines
 cp :: copy files
 crontab :: run commands at a time
-cut :: extract fields
-from lines
-dd :: bulk write to
-disks/tapes
+cut :: extract fields from lines
+dd :: bulk write to disks/tapes
 df :: find free space
 diff :: find differences
 du :: how much space is this using
 ed :: the standard text editor… (for use when you don’t have a screen)
 env :: inspect
 environment variables
-file :: what are you
-looking it?
-finger :: what are other
-people doing
+file :: what are you looking it?
+finger :: what are other people doing
 gz :: compress stuff
 head :: get the top of a file
 install :: like cp with permissions
@@ -204,3 +200,37 @@ awk: general, for semi-structured data
 - `\{,n\}` match 0 to n times
 -
 - \n match whatever was matched in the nth group
+
+
+
+# 04 & 05 - Git
+
+- tracks progress & changes
+- allows for rollbacks and collaboration
+- lets you version each release easily & work out what was changed when
+- lets you try things out without breaking the main version
+- lets you make changes to previous versions easily
+- lets you track each collaborators edits
+
+## usage
+
+- `git init .` init a repo
+- `git add <file>` tell git to track a new file & stages changes
+- `git commit` commit the change
+    - `-m <message>` to supply a message
+    - `-a` stage all changes
+- `git log` show the changes log
+- `git restore ⟨file⟩` revert changes to a file
+- `git diff [commitID] [file]` show changes to a commit
+- `git revert ⟨commitID⟩` revert an entire commit
+- `git checkout ⟨commitID⟩` go back in time to a commit
+- `git checkout main` go back to the current
+
+## Branches
+
+- `git branch` list name
+- `git branch <name>` create branch
+- `git switch <name>` change current branch
+- `git merge <name>` bring edits from one branch to another
+
+## conflicts
