@@ -158,5 +158,4 @@ static Mat divide_mat_int(const Mat a, const int b);
         )                                 \
     )(a, b)
 
-
 #endif

@@ -54,4 +54,23 @@ void printRGB(const char* name, const RGB c) {
 }
 
 
+
+
+
+
+
+struct VecI {
+    int x, y, z;
+};
+
+static RGB divide_VecI_int(const VecI a, const int f) {
+    return (RGB) {a.x / f, a.y / f, a.z / f};
+}
+
+static void inc_VecI_RGB(VecI *a, const RGB b) {
+    a->x += b.r;
+    a->y += b.g;
+    a->z += b.b;
+}
+
 #endif

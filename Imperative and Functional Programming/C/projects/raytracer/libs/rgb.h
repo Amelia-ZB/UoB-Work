@@ -27,4 +27,12 @@ RGB average_RGB(const RGB* colours, const int n);
 void printVec(const char* col, const char* name, const Vec v);
 void printRGB(const char* name, const RGB v);
 
+
+
+
+typedef struct VecI VecI;
+
+static void inc_VecI_RGB(VecI *a, const RGB b);
+static RGB divide_VecI_int(const VecI a, const int x);
+
 #endif

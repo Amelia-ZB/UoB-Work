@@ -46,8 +46,6 @@ int triangle(long a, long b, long c) {
 // ===================================================================
 // User interface and testing.
 
-
-
 void print(int type) {
     switch (type) {
         case Equilateral: printf("Equilateral"); break;

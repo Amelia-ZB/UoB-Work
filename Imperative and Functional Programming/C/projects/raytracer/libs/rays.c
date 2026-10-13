@@ -10,6 +10,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <float.h>
+#include <stdlib.h>
 
 struct Ray {
     Vec direction;
@@ -167,23 +168,30 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     if (sphere.specularity == 1) {
         lightColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
     } else {
-        RGB lightSamples[SAMPLES];
-        for (int i = 0; i < SAMPLES; i++) {
+        int diffuseSamples = SAMPLES / (1.0f - sphere.specularity);
+
+        VecI lightSamples;
+        for (int i = 0; i < diffuseSamples; i++) {
             Ray sampleRay = {
-                add_vec_vec(reflectedRay.direction, randomDirection(sphere.specularity)),
+                randomDirection(normal, ray.direction),
                 reflectedRay.origin,
                 reflectedRay.exclude
             };
-
-            lightSamples[i] = calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1);
+            inc_VecI_RGB(&lightSamples, calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1));
         }
+        lightColour = divide_VecI_int(lightSamples, diffuseSamples);
+        if (sphere.specularity > 0) {
+            RGB specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
+            lightColour = lerp(lightColour, specularColour, (float) diffuseSamples / SAMPLES);
+        }
+
     }
 
     // diffuse
     Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
 
     RGB diffuseColour;
-    if (intersects(lightRay, spheres, n)) {
+    if (0 && intersects(lightRay, spheres, n)) {
         // in shadow
         diffuseColour = (RGB) {0, 0, 0};
 
@@ -210,7 +218,12 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
 
     // combine
-    RGB colour = tintVec(diffuseColour, RGBToVec(lightColour));
+    //RGB colour = tintVec(diffuseColour, RGBToVec(lightColour));
+    RGB colour = {
+        (diffuseColour.r + lightColour.r) / 2,
+        (diffuseColour.g + lightColour.g) / 2,
+        (diffuseColour.b + lightColour.b) / 2,
+    };
 
     #ifdef DEBUG
     tab_pad(TTL);
@@ -229,8 +242,37 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
 }
 
-Vec randomDirection(const float specularity) {
+Vec randomDirection(const Vec normal, const Vec helper) {
+    // find 2 tangents
+    Vec tang1 = normalised(crossp(normal, helper));
+    Vec tang2 = normalised(crossp(normal, tang1));
 
+    // generate random values
+    float sin_theta = sqrt(random());
+    float cos_theta = sqrt(1-sin_theta*sin_theta);
+
+    // random in plane angle
+    float psi = random() * 2.0f * M_PI;
+
+    // three vector components
+    float a = sin_theta*cos(psi);
+    float b = sin_theta*sin(psi);
+    float c = cos_theta;
+
+    // multiply by corresponding directions
+    Vec v1 = multiply_vec_float(tang1, a);
+    Vec v2 = multiply_vec_float(tang2, b);
+    Vec v3 = multiply_vec_float(normal, c);
+
+
+    // add up to get velocity, vel=v1+v2+v3
+    Vec vel = {
+        v1.x + v2.x + v3.x,
+        v1.y + v2.y + v3.y,
+        v1.z + v2.z + v3.z,
+    };
+
+    return vel;
 }
 
 int intersects(const Ray ray, const Sphere* spheres, const int n) {
@@ -274,6 +316,11 @@ int intersects(const Ray ray, const Sphere* spheres, const int n) {
 
 
 
+
+float randomfloat(void) {
+    float r = (float) rand() / (float) RAND_MAX;
+    return r;
+}
 
 
 

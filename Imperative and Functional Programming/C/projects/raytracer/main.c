@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 #include "libs/bmp.c"
 #include "libs/vector.c"
@@ -8,6 +9,7 @@
 #include "libs/consts.h"
 
 int main() {
+    srand(time(NULL));
     Image image = make_bmp(WIDTH, HEIGHT);
 
     // define objects ===========================================
