@@ -115,15 +115,15 @@ strcmp (l:ls) (r:rs)
 -}
 
 
-reverse :: String -> String
-reverse str = helper [] str
-    where
-        helper :: String -> String -> String
-        -- helper acc (c : cs) = helper (c : acc) cs
-        -- helper acc [] = acc
-        helper acc str = case str of
-            [] -> acc
-            _ -> 
+-- reverse :: String -> String
+-- reverse str = helper [] str
+--     where
+--         helper :: String -> String -> String
+--         -- helper acc (c : cs) = helper (c : acc) cs
+--         -- helper acc [] = acc
+--         helper acc str = case str of
+--             [] -> acc
+--             _ -> 
 
 
 -- >>> reverse "Hello World!"

@@ -6,7 +6,6 @@
 
 #include "rgb.h"
 #include "vector.c"
-#include "vector.h"
 
 struct RGB {
     uint8_t r, g, b;

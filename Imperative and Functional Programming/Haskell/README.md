@@ -613,3 +613,222 @@ data Piece' = Piece'_ {player :: Player, pieceType :: PieceType}
 promoteToQueen' :: Piece' -> Piece'
 promoteToQueen' p = p {pieceType = Queen}
 ```
+## ADTs
+
+combines sum & product types
+
+```hs
+data Suit = Hearts | Diamonds | Spades | Clubs
+data Value = A | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | J | Q | K
+data Card = Card_ Suit Value | Joker
+```
+
+## Inhabitants
+
+the possible values of a type
+
+```hs
+data Unit = MkUnit
+unitInhabitant :: Unit
+unitInhabitant = MkUnit
+
+data BoolOrUnit = B Bool | U Unit
+
+boolOrUnitInhabitantOne,boolOrUnitInhabitantTwo,boolOrUnitInhabitantThree :: BoolOrUnit
+boolOrUnitInhabitantOne = B True
+boolOrUnitInhabitantTwo = B False
+boolOrUnitInhabitantThree = U MkUnit
+
+
+data BoolAndUnit = BU Bool Unit
+
+boolAndUnitInhabitantOne,boolAndUnitInhabitantTwo :: BoolAndUnit
+boolAndUnitInhabitantOne = BU True MkUnit
+boolAndUnitInhabitantTwo = BU False MkUnit
+```
+
+sum types add to the number of inhabitants inhabitants
+product types multiply the number of inhabitants
+a -> b has |b| ^ |a| inhabitants
+
+## Recursive ADTs
+
+```hs
+data RobotInstr
+    = Dance
+    | Move Int
+    | Teleport {x :: Int, y :: Int}
+
+data RobotSequence = Stop | AddInstr RobotInstr RobotSequence
+
+doNothing = Stop
+danceThenStop = AddInstr Dance Stop
+danceThenMove = AddInstr Dance (AddInstr (Move 2) Stop)
+```
+
+## Monomorphic Lists
+
+```hs
+data IntList = IntEmpty | IntCons Int IntList
+```
+
+
+## misc
+
+to hide from an import use `hiding (Bool(..))` the `(..)` is to also ignore the constructor as well as the type.
+
+# Polymorphism and Type Classes
+
+polymorphic is the opposite of monomorphic
+
+## Polymorphic ADT
+
+```hs
+-- any lowercase latter is allowed for generic types
+data List a = Empty | Cons a (List a)
+```
+
+```hs
+data Either a b = Left a | Right b
+
+exampleEitherL :: Either Int Char
+exampleEitherL = Left 8
+
+exampleEitherR :: Either Int Char
+exampleEitherR = Right 'A'
+```
+
+```hs
+data Maybe a = Nothing | Just a
+
+exampleMaybeI :: Maybe Int
+exampleMaybeI = Just 1
+
+exampleMaybeJ :: Maybe Int
+exampleMaybeJ = Nothing
+```
+
+## Polymorphic -> Monomorphic
+
+you can put specific types into a polymorphic ADT to make it monomorphic
+
+```hs
+data Pair a b = MkPair a b
+
+egPair :: Pair Int Bool
+egPair = MkPair 5 True
+```
+
+
+## Isomorphic Types
+
+```hs
+
+data Bool   = True  | False
+data Player = White | Black
+```
+
+Bool $\cong$ Player
+
+sum types are isomorphic if they have the same number of inhabitants
+
+## Polymorphic Functions
+
+```hs
+
+data IntList = IntEmpty | IntCons Int IntList
+data CharList = CharEmpty | CharCons Char CharList
+
+lengthIntList :: IntList -> Int
+lengthIntList IntEmpty = 0
+lengthIntList (IntCons i is) = 1 + lengthIntList is
+
+lengthCharList :: CharList -> Int
+lengthCharList CharEmpty = 0
+lengthCharList (CharCons i is) = 1 + lengthCharList is
+
+length :: List a -> Int
+length Empty = 0 -- how does it know that IntEmpty == Empty???
+length (Cons _ xs) = 1 + length xs
+```
+
+
+## Type Classes
+
+```hs
+
+data Player = P1 | P2
+data Colour = Red | Green
+
+data List a = Empty | Cons a (List a)
+
+class Equality a where
+    (===) :: a -> a -> Bool
+
+instance Equality Player where
+    P1 === P1 = True
+    P2 === P2 = False
+    _  === _  = False
+
+instance Equality Colour where
+    Red  === Red    = True
+    Green === Green = False
+    _     === _     = False
+
+eqList :: Equality a => List a -> List a -> Bool
+eqList Empty Empty = True
+eqList (Cons x xs) (Cons y ys) = x === y && eqList xs ys
+
+-- >>> eqList (Cons P1 Empty) (Cons P1 Empty)
+-- True
+-- >>> eqList (Cons P1 Empty) (Cons P2 Empty)
+-- False
+
+-- >>> eqList (Cons Red Empty) (Cons Red Empty)
+-- True
+{-
+eqListPairs :: (Equality a, Equality b) => List (a, b) -> list (a, b) -> Bool
+eqListPairs = undefined
+
+eqListTris :: (Equality a, Equality b, Equality c) => List (a, b, c) -> list (a, b, c) -> Bool
+eqListTris = undefined
+
+
+instance Equality a => Equality (list a) where
+    (===) = eqList
+
+-- ????????????????????????
+
+-}
+
+
+```
+
+
+
+### Show (Built in)
+
+```hs
+data Player = White | Black
+
+instance Show Player where
+    show :: Player -> String
+    show White = "White"
+    show Black = "Black"
+
+data CarOrInt = I int | C Char deriving (Show, Eq)
+
+-- >>> show (I 8)
+-- "I 8"
+-- >>> (C 'a') == (C 'a')
+-- True
+-- >>> (C 'a') == (C 'b')
+-- False
+-- >>> (C 'a') == (I 2)
+-- False
+
+```
+
+## idk
+
+**use :i in ghci**
