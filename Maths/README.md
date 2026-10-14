@@ -524,3 +524,95 @@ then:
 - $A \subseteq B \equiv \forall x. (P(x) \Rightarrow Q(x))$
 
 the laws work the exact same as in propositional logic
+
+## next lecture
+
+- operations on multiple sets
+- Sets of Sets - subset vs membership
+- Cardinality
+- Power Set
+- Cartesian Product
+
+## operations on multiple sets
+
+$\forall e (e \in \displaystyle\bigcup^n_{i=1} A_i \Leftrightarrow e \in A_1 \lor ... \lor e \in A_n)$
+
+$\forall e (e \in \displaystyle\bigcap^n_{i=1} A_i \Leftrightarrow e \in A_1 \land ... \land e \in A_n)$
+
+## Indexing sets
+
+we can index any set _I_: a family of sets $\{A_I\}_{i \in I}$
+union & intersection $\bigcup _{i \in I}\{A_i\}$
+
+
+e.g.
+let I = {+, 0, -}
+- define:
+    - $\Z_+$ = {1, 2, 3}
+    - $\Z_0$ = {0}
+    - $\Z_-$ = {-1, -2, -3}
+    - $\Z$ = $\bigcup _{i \in I}\Z_i$ (which means) $\Z_+ \cup \Z_0 \cup \Z_-$
+
+## subset vs membership
+$A = \{1\}\quad$
+$B = \{1,2\}\quad$
+$C = \{\{1\}, 1, 2\}\quad$
+$D = \{\{1\}\}$
+
+- $A \subseteq B \qquad A \not\in B$
+- $A \subseteq C \qquad A \in C$
+- $B \subseteq C \qquad B \not\in C$
+- $A \not\subseteq D \qquad A \in D$
+
+all combinations of $\subseteq$ and $\in$ are possible with the right sets
+
+## Peano construction
+
+the empty set can be an element of other sets:
+- $\empty = \{\}$ contains 0 elements
+- $\{\empty\}$ contains 1 element (the empty set)
+- $\{\{\empty\}\}$ contains a set that contains the empty set
+
+### peano Axioms
+- starts with: 0, defined as the empty set
+- $S(X)$ = $X \cup \{X\}$
+
+so
+- $0 = \empty$
+- $1 = \{\empty\}$
+- $2 = \{\empty, \{\empty\}\}$
+- $3 = \{\empty, \{\empty, \{\empty\}\}\}$
+
+## Cardinality
+the number of elements
+
+- $|\empty| = 0$
+- $|A \cup B| \leqslant |A| + |B|$
+- $|A \cup B| \leqslant \text{min}(|A|, |B|)$
+- $|A \cup B| = |A| + |B| - |A \cap B|$
+
+## Power Set
+$\mathcal{P}(A)$ (or $2^A$)
+the set that contains all subsets of $A$ (including $\empty$ and $A$)
+
+$|\mathcal{P}(A)| = 2^{|A|}$
+
+> like a truth table
+
+## Cartesian Product
+
+$A \times B$ is the set of ordered pairs $\{(x, y) | x \in A \land y \in B\}$
+
+$A \times B \neq B \times A $
+
+$|A \times B| = |A| \cdot |B|$
+
+> like a 2 way table
+
+## Set restriction
+
+$\{x in D \mid P(x)\}$
+
+## set projection
+
+$\{f(x) \mid x \in D\}$
