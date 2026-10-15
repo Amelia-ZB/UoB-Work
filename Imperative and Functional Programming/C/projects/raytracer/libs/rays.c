@@ -22,6 +22,7 @@ struct Sphere {
     Vec pos;
     RGB colour;
     float specularity;
+    float emissivity;
 
     float r;
 };
@@ -164,12 +165,32 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     //     specularColour = (RGB) {0, 0, 0};
     // }
 
+    Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
+
+    RGB DirectLightColour;
+    if (intersects(lightRay, spheres, n)) {
+            // in shadow
+            DirectLightColour = (RGB) {0, 0, 0};
+        } else {
+            float brightness = dotp(normalised(lightRay.direction), normal);
+
+            if (brightness < 0) { // on the back half of the sphere from the light
+                DirectLightColour = (RGB) {0, 0, 0};
+            } else { // visible
+                DirectLightColour = (RGB) {255*brightness, 255*brightness, 255*brightness};
+            }
+        }
+
+
     RGB lightColour;
-    if (sphere.specularity == 1) {
+    if (TTL == 1) {
+        lightColour = DirectLightColour;
+
+    } else if (sphere.specularity == 1) {
         lightColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
     } else {
         int diffuseSamples = SAMPLES * (1.0f - sphere.specularity);
-        printf("%f: %d\n", sphere.specularity, diffuseSamples);
+        //printf("%f: %d\n", sphere.specularity, diffuseSamples);
 
         VecI lightSamples = {0};
         for (int i = 0; i < diffuseSamples; i++) {
@@ -183,11 +204,9 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
 
             lightSamples = add_VecI_RGB(lightSamples, sampleLightColour);
         }
-        printf("%d, %d, %d\n", lightSamples.x, lightSamples.y, lightSamples.z);
+        //printf("%d, %d, %d\n", lightSamples.x, lightSamples.y, lightSamples.z);
         lightColour = divide_VecI_int(lightSamples, diffuseSamples);
-
-
-
+        lightColour = DirectLightColour;
 
         if (sphere.specularity > 0) {
             RGB specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
@@ -197,42 +216,44 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
     }
 
     // diffuse
-    Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
-
-    RGB diffuseColour;
-    if (intersects(lightRay, spheres, n)) {
-        // in shadow
-        diffuseColour = (RGB) {0, 0, 0};
-
-    } else {
-        float brightness = dotp(normalised(lightRay.direction), normal);
-
-        #ifdef DEBUG
-        tab_pad(TTL);
-        printVec(GREEN, "\tl-ray\033[0m: \tpos", lightRay.origin);
-        tab_pad(TTL);
-        printVec(GREEN, "\t     \033[0m  \tdir", lightRay.direction);
-
-        tab_pad(TTL);
-        printf("\t%sbrightness\033[0m: %s%f\033[0m\n", GREEN, BLUE, brightness);
-        #endif
 
 
-        if (brightness < 0) { // on the back half of the sphere from the light
-            diffuseColour = (RGB) {0, 0, 0};
-        } else { // visible
-            diffuseColour = sphere.colour;
-        }
-    }
+    RGB diffuseColour = sphere.colour;
+
+    // if (intersects(lightRay, spheres, n)) {
+    //     // in shadow
+    //     diffuseColour = (RGB) {0, 0, 0};
+
+    // } else {
+    //     float brightness = dotp(normalised(lightRay.direction), normal);
+
+    //     #ifdef DEBUG
+    //     tab_pad(TTL);
+    //     printVec(GREEN, "\tl-ray\033[0m: \tpos", lightRay.origin);
+    //     tab_pad(TTL);
+    //     printVec(GREEN, "\t     \033[0m  \tdir", lightRay.direction);
+
+    //     tab_pad(TTL);
+    //     printf("\t%sbrightness\033[0m: %s%f\033[0m\n", GREEN, BLUE, brightness);
+    //     #endif
+
+
+    //     if (brightness < 0) { // on the back half of the sphere from the light
+    //         diffuseColour = (RGB) {0, 0, 0};
+    //     } else { // visible
+    //         diffuseColour = sphere.colour;
+    //     }
+    // }
 
 
     // combine
-    //RGB colour = tintVec(diffuseColour, RGBToVec(lightColour));
-    RGB colour = {
-        (diffuseColour.r + lightColour.r) / 2,
-        (diffuseColour.g + lightColour.g) / 2,
-        (diffuseColour.b + lightColour.b) / 2,
-    };
+    RGB colour = tintVec(diffuseColour, RGBToVec(lightColour));
+    // RGB colour = {
+    //     (diffuseColour.r + lightColour.r) / 2,
+    //     (diffuseColour.g + lightColour.g) / 2,
+    //     (diffuseColour.b + lightColour.b) / 2,
+    // };
+    // RGB colour = lightColour;
 
     #ifdef DEBUG
     tab_pad(TTL);

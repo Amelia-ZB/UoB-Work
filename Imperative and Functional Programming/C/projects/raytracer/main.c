@@ -14,11 +14,11 @@ int main() {
 
     // define objects ===========================================
     Sphere spheres[] = {
-//       position       colour           specularity    radius
-        {{64, 0, 128},  {255, 64, 64},   1,             64},
-        {{-64, 0, 192}, {255, 255, 255}, 0.5,           64},
-        {{0, -96, 160}, {128, 255, 255}, 0,             32},
-        {{0, 32, 96},   {255, 64, 128},  0,             16},
+//       position       colour           specularity  emissivity  radius
+        {{64, 0, 128},  {255, 64, 64},   0,           0,          64},
+        {{-64, 0, 192}, {255, 255, 255}, 0.5,         0,          64},
+        {{0, -96, 160}, {0, 200, 255},   0,           0,          32},
+        {{0, 32, 96},   {64, 255, 64},   0,           0,          16},
     };
 
     int num = sizeof(spheres) / sizeof(Sphere);
@@ -33,7 +33,7 @@ int main() {
     for (int y = 0; y < image.height; y++){
         unsigned int yOffsettBytes = (image.height - y - 1) * image.rowSize;
 
-        //printf("%d / %d\n", y, HEIGHT);
+        printf("%d / %d\n", y, HEIGHT);
 
         for (int x = 0; x < image.width; x++) {
             unsigned int xOffsettBytes = x * (image.bpp / 8);
