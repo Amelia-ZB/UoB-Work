@@ -1,5 +1,8 @@
 # Overview
 
+> $V_{ss}$ = 0V ≃ GND |= 0
+
+> $V_{dd}$ = 5V |= 1
 
 # 00 - Intro
 
@@ -17,7 +20,7 @@
 
 # 01.1 propositional logic
 
-propositions are basically statements e.g. 
+propositions are basically statements e.g.
 _"the temperature is 20°C"_
 
 1. can be evaluated ~~"this statement is false"~~
@@ -671,3 +674,126 @@ by combining $n$ D latches or flip-flops into a register you can store $n$ bit v
 
 ![](./images/D%20flip%20flop%20device.png)
 ![](./images/D%20flip%20flop%20incrementer.png)
+
+# 04.3 - Memory
+
+disadvantages of latch based registers
+- require a large number of transistors
+- not addressable
+
+memory fixes both of these
+- has $2^n$ addressable words with an $n$ bit address bus
+- each word is $w$ bits
+
+has 3 inputs
+- w bit data bus
+- n bit address bus
+- control bus
+
+categorisation:
+- volatility
+- interface type
+  - synchronous: clock  synchronises steps
+  - asynchronous: protocol synchronises steps
+- access types
+  - random / constrained (sequential)
+  - read only / writeable
+
+
+## Memory Cells
+
+### SRAM
+Static RAM
+- lower density
+- more expensive
+- faster access time
+- easier to interface with
+- ideal for latency-critical contexts - cache memory
+
+6T SRAM cell:
+![](./images/SRAM%20cell%201.png)
+![](./images/SRAM%20cell%202.png)
+
+
+### DRAM
+Dynamic RAM
+- higher density
+- less expensive
+- slower access time
+- harder to interface with
+- ideal for capacity-critical contexts - main memory
+
+![](./images/DRAM%20cell.png)
+
+destructive reads
+charge degrades to 0 over time
+
+## Memory Devices
+
+both SRAM & DRAM cells are combined in arrays, $r$ rows by $c$ columns, with total capacity of $r \cdot c$
+
+additional logic is required
+- **bit line conditioning**: keep bit line signals strong enough
+- **sense amplifiers**: ensure output is strong enough
+
+### SRAM
+
+Interface:
+- power pins
+- D - data pin
+- A - address pins
+- CS - chip select
+- OE - output enable
+- WE - Write enable
+
+![](./images/SRAM%20device.png)
+
+- **Reading**:
+  - drive the address onto A,
+  - set WE = false, OE = true and CS = true,
+- 1-bit of data is read and made available on D, then we set CS = false.
+
+- **Writing**:
+  - drive the data onto D,
+  - drive the address onto A,
+  - set WE = true, OE = false and CS = true,
+- 1-bit of data is written, then we set CS = false.
+
+### DRAM
+
+Interface:
+- power pins
+- D - data pin
+- A - address pins (half as many as SRAM)
+- CS - chip select
+- OE - output enable
+- WE - Write enable
+- RAS (row address strobe) - controls the row buffer
+- CAS (column address strobe) - controls the column buffer
+
+half as many address pins are used, and the address is provided in 2 steps
+
+![](./images/DRAM%20device.png)
+
+- **Reading**:
+  - drive the row address onto A,
+  - set RAS = true to latch row address,
+  - drive the column address onto A,
+  - set CAS = true to latch column address,
+  - set WE = false, OE = true and CS = true,
+- 1-bit of data is read and made available on D, then we set CS = RAS = CAS = false.
+
+- **Writing**:
+  - drive the data onto D,
+  - drive the row address onto A,
+  - set RAS = true to latch row address,
+  - drive the column address onto A,
+  - set CAS = true to latch column address,
+  - set WE = false, OE = true and CS = true,
+- 1-bit of data is written, then we set CS = RAS = CAS = false.
+
+### storing >1 bit
+
+copy the arrays for each bit
+
+![](./images/RAM%20device.png)
