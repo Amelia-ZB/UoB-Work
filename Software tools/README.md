@@ -108,8 +108,7 @@ df :: find free space
 diff :: find differences
 du :: how much space is this using
 ed :: the standard text editor… (for use when you don’t have a screen)
-env :: inspect
-environment variables
+env :: inspect environment variables
 file :: what are you looking it?
 finger :: what are other people doing
 gz :: compress stuff
@@ -234,3 +233,4 @@ awk: general, for semi-structured data
 - `git merge <name>` bring edits from one branch to another
 
 ## conflicts
+

@@ -453,7 +453,7 @@ you may want to pack multiple smaller types into a larger type
 
 e.g. packing 4 unsigned chars into an int to represent colours on the screen
 
-# 04.1 Pointers
+# 04.1 - Pointers
 
 - point to the first byte of an object
 
@@ -475,3 +475,84 @@ char *p = "Abc" // constant
 returning a pointer to a variable that goes out of scope when the function ends
 
 either use memory lower on the stack (pass in a pointer to the function for it to modify) or use memory on the heap
+
+## constancy
+
+```C
+void foo(
+        const int *x, // points to a constant
+        int *const y  // pointer cant change what it is pointing to
+    ) {
+    *x = 2 // illegal, value can't be changed
+    x = y // allowed because the pointer can be changed
+
+    y = x // illegal address can't be changed
+    *y = *x // allowed because the value can be changed
+}
+```
+
+# 03.3 - Structs & User defined types
+
+## Structs
+
+combines multiple types into an object
+
+### Packing
+
+types that take multiple bytes to store (e.g. short) are always stored at indexes that are multiples of their size. this speeds up the access of the struct
+
+```C
+struct foo {
+    char a;
+    short x;
+}
+
+sizeof(foo) // 4 bytes
+// memory:
+// |........|........|........|........|
+// |- char -|-unused-|----- short -----|
+
+
+
+struct bar {
+    short x;
+    char a;
+}
+
+sizeof(bar) // 3 bytes
+// memory:
+// |........|........|........|
+// |----- short -----|- char -|
+
+```
+
+## arrays in structs
+```C
+struct foo {
+    char s[30];
+    int n;
+} // allowed because the array is of a fixed size
+
+struct bar {
+    int n;
+    char s[]
+} // allowed because the array is the last element
+
+struct baz {
+    char *s
+    int n;
+} // allowed because the pointer has a constant size
+```
+
+## Aliases
+
+```C
+typedef struct foo foo;
+typedef const unsigned long int cul_i;
+```
+
+## Accessing elements
+
+- `a.x` gets element named `x` from struct `a`
+- `(*a).x` dereferences pointer to object `a` and access element `x`
+    - `a->x` is equivalent

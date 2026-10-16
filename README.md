@@ -7,11 +7,11 @@
 
 ### Year 1
 
-Imperative & functional coursework 1 - 5th Nov
+10% Imperative & functional coursework 1 - 5th Nov
 
-Imperative & functional coursework 2 - 3rd Dec
+10% Imperative & functional coursework 2 - 3rd Dec
 
-Programming Exam - TBC
+80% must pass Programming Exam - TBC
 
 Maths - TBC
 
@@ -23,26 +23,15 @@ Architecture encrypt coursework - 26th Nov
 
 Architecture Exam - TBC
 
-## Architecture
+## Guide
 
-### overview of topics:
+1st year = 0%
+2nd year = 
+3th year = 
+4th year = 
 
-1. Boolean algebra
-2. transistors & logic gates
-3. combinatorial logic
-4. sequential logic
-5. verilog
-6. Finite State Machines
-7. Register machines
+### Citing code
 
-### key points
-
-* from transistors to FSMs this TB
-* we have to learn Verilog
-* lots of practical tools for each section
-    * Logisim
-    * NANDboard
-    * it recomends Wikipedia for the basic concepts
-
+put a comment in the source code and put a note in the report, include a link to it
 
 
