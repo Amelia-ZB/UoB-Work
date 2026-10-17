@@ -15,6 +15,6 @@
 #define SAMPLES 64
 //#define DEBUG
 
-
+#define BACKGROUND ((RGB) {0, 0, 0})
 
 #endif

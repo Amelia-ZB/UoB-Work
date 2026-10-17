@@ -8,7 +8,7 @@
 typedef struct Ray Ray;
 typedef struct Sphere Sphere;
 
-RGB calculate(const Ray ray, const Vec lightPos, const Sphere *spheres, const int n, const int TTL);
+RGB calculate(const Ray ray, const Vec lightPos, const Sphere *const spheres, const int n, const int TTL);
 int intersects(const Ray ray, const Sphere* spheres, const int n);
 
 Vec randomDirection(const Vec normal, const Vec helper);
