@@ -7,6 +7,9 @@
 #include "libs/rays.c"
 #include "libs/rgb.h"
 #include "libs/consts.h"
+#include "libs/vector.h"
+
+// clang main.c -lm -O2 -o main.out && ./main.out
 
 int main() {
     srand(time(NULL));
@@ -19,6 +22,7 @@ int main() {
         {{-64, 0, 192}, {255, 255, 255}, 0.5,         0,          64},
         {{0, -96, 160}, {0, 200, 255},   0,           0,          32},
         {{0, 32, 96},   {64, 255, 64},   0,           0,          16},
+//        {{-64, 64, 64}, {255, 255, 255}, 0,           1,          16},
     };
 
     int num = sizeof(spheres) / sizeof(Sphere);

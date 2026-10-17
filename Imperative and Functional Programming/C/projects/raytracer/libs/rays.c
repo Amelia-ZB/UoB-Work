@@ -200,13 +200,14 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *spheres, c
                 reflectedRay.exclude
             };
 
-            RGB sampleLightColour = calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1);
+            RGB sampleLightColour = calculate_sphere(sampleRay, lightPos, spheres, n, TTL - 1); // Problem here!!!!
+            // printf("\t[%f, %f, %f]\n", sampleRay.direction.x, sampleRay.direction.y, sampleRay.direction.z);
 
             lightSamples = add_VecI_RGB(lightSamples, sampleLightColour);
         }
-        //printf("%d, %d, %d\n", lightSamples.x, lightSamples.y, lightSamples.z);
+        // printf("%d, %d, %d\n", lightSamples.x, lightSamples.y, lightSamples.z);
         lightColour = divide_VecI_int(lightSamples, diffuseSamples);
-        lightColour = DirectLightColour;
+        //lightColour = DirectLightColour;
 
         if (sphere.specularity > 0) {
             RGB specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
@@ -277,12 +278,18 @@ Vec randomDirection(const Vec normal, const Vec helper) {
     Vec tang1 = normalised(crossp(normal, helper));
     Vec tang2 = normalised(crossp(normal, tang1));
 
+    // printf("tangent1: [%f, %f, %f]\n", tang1.x, tang1.y, tang1.z);
+    // printf("tangent2: [%f, %f, %f]\n", tang2.x, tang2.y, tang2.z);
+
     // generate random values
-    float sin_theta = sqrt(random());
+    float sin_theta = sqrt((float)rand()/(float)RAND_MAX);
     float cos_theta = sqrt(1-sin_theta*sin_theta);
 
+    // printf("sin: %f\n", sin_theta);
+    // printf("cos: %f\n", cos_theta);
+
     // random in plane angle
-    float psi = random() * 2.0f * M_PI;
+    float psi = (float)rand()/(float)RAND_MAX * 2.0f * M_PI;
 
     // three vector components
     float a = sin_theta*cos(psi);
