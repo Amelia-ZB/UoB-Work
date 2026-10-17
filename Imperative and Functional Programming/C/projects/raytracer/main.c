@@ -1,5 +1,7 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 #include <time.h>
 //#include <omp.h>
 
@@ -17,7 +19,7 @@ int main() {
     Image image = make_bmp(WIDTH, HEIGHT);
 
     // define objects ===========================================
-    Sphere spheres[] = {
+    const Sphere spheres[] = {
 //       position       colour           specularity  emissive   radius
         {{64, 0, 128},  {255, 64, 64},   0,           0,         64},
         {{-64, 0, 192}, {255, 255, 255}, 0.5,         0,         64},
@@ -26,12 +28,14 @@ int main() {
       //{{-64, 0, 64},  {255, 255, 255}, 0,           1,         16},
     };
 
-    int num = sizeof(spheres) / sizeof(Sphere);
+    const int num = sizeof(spheres) / sizeof(Sphere);
 
     Vec light = {-64, 64, 64};
 
     // make image ===============================================
-    uint8_t *pixelArray = image.imageData + image.headerSize;
+
+
+    uint8_t *rows[HEIGHT];
 
     float camera_distance = WIDTH / 2.0 / tan((FOV / 2.0) / 180.0 * 3.1415926);
 
@@ -40,6 +44,9 @@ int main() {
         unsigned int yOffsettBytes = (image.height - y - 1) * image.rowSize;
 
         printf("%d / %d\n", y, HEIGHT);
+
+        uint8_t *const volatile row = malloc(image.rowSize);
+        rows[y] = row;
 
         for (int x = 0; x < image.width; x++) {
             unsigned int xOffsettBytes = x * (image.bpp / 8);
@@ -61,11 +68,19 @@ int main() {
             printRGB("\tcolour: " , colour);
             #endif
 
-            *(pixelArray + xOffsettBytes + yOffsettBytes + 2) = colour.r;
-            *(pixelArray + xOffsettBytes + yOffsettBytes + 1) = colour.g;
-            *(pixelArray + xOffsettBytes + yOffsettBytes + 0) = colour.b;
+            *(row + xOffsettBytes + 2) = colour.r;
+            *(row + xOffsettBytes + 1) = colour.g;
+            *(row + xOffsettBytes + 0) = colour.b;
         }
 
+    }
+
+    uint8_t *pixelArray = image.imageData + image.headerSize;
+
+    for (int i = 0; i < HEIGHT; i++) {
+        unsigned int yOffsettBytes = (image.height - i - 1) * image.rowSize;
+        memcpy(pixelArray + yOffsettBytes, rows[i], image.rowSize);
+        free(rows[i]);
     }
 
     // save =======================================================

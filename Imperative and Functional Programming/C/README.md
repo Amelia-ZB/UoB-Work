@@ -481,7 +481,7 @@ either use memory lower on the stack (pass in a pointer to the function for it t
 ```C
 void foo(
         const int *x, // points to a constant
-        int *const y  // pointer cant change what it is pointing to
+        int *const y  // pointer can't change what it is pointing to
     ) {
     *x = 2 // illegal, value can't be changed
     x = y // allowed because the pointer can be changed
