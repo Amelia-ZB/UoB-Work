@@ -169,24 +169,24 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *const sphe
 
     Ray lightRay = {subtract_vec_vec(lightPos, intersectionPoint), intersectionPoint, sphereIndex};
 
-    RGB DirectLightColour;
+    RGB directLightColour;
     if (intersects(lightRay, spheres, n)) {
         // in shadow
-        DirectLightColour = BACKGROUND;
+        directLightColour = BACKGROUND;
     } else {
         float brightness = dotp(normalised(lightRay.direction), normal);
 
         if (brightness < 0) { // on the back half of the sphere from the light
-            DirectLightColour = BACKGROUND;
+            directLightColour = BACKGROUND;
         } else { // visible
-            DirectLightColour = (RGB) {255*brightness, 255*brightness, 255*brightness};
+            directLightColour = (RGB) {255*brightness, 255*brightness, 255*brightness};
         }
     }
 
 
     RGB lightColour;
     if (TTL == 1) { // cheating
-        lightColour = DirectLightColour;
+        lightColour = directLightColour;
 
     } else if (sphere.specularity == 1) {
         lightColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);
@@ -209,7 +209,7 @@ RGB calculate_sphere(const Ray ray, const Vec lightPos, const Sphere *const sphe
         }
         // printf("%d, %d, %d\n", lightSamples.x, lightSamples.y, lightSamples.z);
         lightColour = divide_VecI_int(lightSamples, diffuseSamples);
-        lightColour = lerp(lightColour, DirectLightColour, 0.5);
+        lightColour = clamp_add_RGB(lightColour, directLightColour);
 
         if (sphere.specularity > 0) {
             RGB specularColour = calculate_sphere(reflectedRay, lightPos, spheres, n, TTL - 1);

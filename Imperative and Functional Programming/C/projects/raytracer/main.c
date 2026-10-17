@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+//#include <omp.h>
 
 #include "libs/bmp.c"
 #include "libs/vector.c"
@@ -9,7 +10,7 @@
 #include "libs/consts.h"
 #include "libs/vector.h"
 
-// clang main.c -lm -O2 -o main.out && ./main.out
+// clang main.c -lm -fopenmp -O2 -o main.out && ./main.out
 
 int main() {
     srand(time(NULL));
@@ -34,7 +35,8 @@ int main() {
 
     float camera_distance = WIDTH / 2.0 / tan((FOV / 2.0) / 180.0 * 3.1415926);
 
-    for (int y = 0; y < image.height; y++){
+    //#pragma omp parallel for num_threads(16) schedule(static)
+    for (int y = 0; y < image.height; y++) {
         unsigned int yOffsettBytes = (image.height - y - 1) * image.rowSize;
 
         printf("%d / %d\n", y, HEIGHT);

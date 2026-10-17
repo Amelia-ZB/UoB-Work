@@ -6,13 +6,13 @@
 #define false 0
 
 
-#define WIDTH 512
-#define HEIGHT 512
+#define WIDTH 1024
+#define HEIGHT 1024
 
 #define FOV 90
 
 #define MAX_BOUNCES 1
-#define SAMPLES 64
+#define SAMPLES 512
 //#define DEBUG
 
 #define BACKGROUND ((RGB) {0, 0, 0})

@@ -41,6 +41,18 @@ RGB average_RGB(const RGB* colours, const int n) {
     return (RGB) {r/n, g/n, b/n};
 }
 
+RGB clamp_add_RGB(const RGB c1, const RGB c2) {
+    int r = c1.r + c2.r;
+    int g = c1.g + c2.g;
+    int b = c1.b + c2.b;
+
+    r = r > 255 ? 255 : r;
+    g = g > 255 ? 255 : g;
+    b = b > 255 ? 255 : b;
+
+    return (RGB) {r, g, b};
+}
+
 
 void printVec(const char* col, const char* name, const Vec v) {
     printf("%s%s\033[0m: [%s%f %f %f\033[0m]\n", col, name, CYAN, v.x, v.y, v.z);
